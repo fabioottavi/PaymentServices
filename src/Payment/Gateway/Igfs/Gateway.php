@@ -98,7 +98,8 @@ class Gateway implements \Payment\Gateway\GatewayInterface
             'id' => $initObj->tid,
             'returnCode' => $initObj->rc,
             'error' => $initObj->errorDesc,
-            'paymentID' => $initObj->paymentID
+            'paymentID' => $initObj->paymentID,
+            'redirectURL' => $initObj->redirectURL,
         );
     }
 

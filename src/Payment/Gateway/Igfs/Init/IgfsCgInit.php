@@ -1,5 +1,6 @@
 <?php
 namespace Payment\Gateway\Igfs\Init;
+use Payment\Gateway\Igfs\IgfsUtils;
 
 class IgfsCgInit extends BaseIgfsCgInit
 {
@@ -378,6 +379,6 @@ class IgfsCgInit extends BaseIgfsCgInit
     
     protected function getFileName()
     {
-        return "init/IgfsCgInit.request";
+        return __DIR__ . "/IgfsCgInit.request";
     }
 }

@@ -1,5 +1,6 @@
 <?php
 namespace Payment\Gateway\Igfs;
+use \SimpleXMLElement;
 
 abstract class BaseIgfsCg
 {
