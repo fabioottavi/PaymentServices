@@ -29,3 +29,5 @@ zend_extension = ext\{xdebug_filename}
 xdebug.remote_enable = 1
 xdebug.remote_autostart = 1
 ```
+
+end
