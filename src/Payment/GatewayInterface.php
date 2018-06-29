@@ -14,4 +14,5 @@ interface GatewayInterface
      * @throws \Doctrine\Instantiator\Exception\ExceptionInterface
      */
     public function init(array $params);
+    public function verify(array $params);
 }

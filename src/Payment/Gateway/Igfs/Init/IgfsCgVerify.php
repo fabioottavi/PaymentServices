@@ -1,6 +1,9 @@
 <?php
 
 namespace Payment\Gateway\Igfs\Init;
+use Payment\Gateway\Igfs\IgfsMissingParException;
+use Payment\Gateway\Igfs\IgfsUtils;
+use Payment\Gateway\Igfs\Level3Info as Level3Info;
 
 class IgfsCgVerify extends BaseIgfsCgInit {
 
@@ -204,7 +207,7 @@ class IgfsCgVerify extends BaseIgfsCgInit {
 	}
 	
 	protected function getFileName() {
-		return "IGFS_CG_API/init/IgfsCgVerify.request";
+		return __DIR__ . "/IgfsCgVerify.request";
 	}
 
 }

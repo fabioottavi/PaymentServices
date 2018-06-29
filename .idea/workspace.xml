@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e268a359-0ed0-4638-9f63-82e515257279" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Payment/Gateway/Igfs/BaseIgfsCg.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Payment/Gateway/Igfs/BaseIgfsCg.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Payment/Gateway/Igfs/Gateway.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Payment/Gateway/Igfs/Gateway.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Payment/Gateway/Igfs/Init/IgfsCgInit.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Payment/Gateway/Igfs/Init/IgfsCgInit.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -19,20 +17,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="IgfcTest.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/IgfcTest.php">
+      <file leaf-file-name="Gateway.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Payment/Gateway/Igfs/Gateway.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="10" lean-forward="true" selection-start-line="11" selection-start-column="10" selection-end-line="11" selection-end-column="10" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BaseIgfsCg.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Payment/Gateway/Igfs/BaseIgfsCg.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="28" lean-forward="true" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
+            <state relative-caret-position="255">
+              <caret line="36" column="67" selection-start-line="36" selection-start-column="67" selection-end-line="36" selection-end-column="67" />
             </state>
           </provider>
         </entry>
@@ -93,11 +82,11 @@
       <path value="$PROJECT_DIR$/vendor/sebastian/recursion-context" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="-1741" />
     <option name="y" value="-8" />
-    <option name="width" value="1382" />
-    <option name="height" value="744" />
+    <option name="width" value="1346" />
+    <option name="height" value="688" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -116,6 +105,27 @@
               <item name="PaymentServices" type="b2602c69:ProjectViewProjectNode" />
               <item name="PaymentServices" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PaymentServices" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PaymentServices" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Payment" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PaymentServices" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PaymentServices" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Payment" type="462c0819:PsiDirectoryNode" />
+              <item name="Gateway" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PaymentServices" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PaymentServices" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Payment" type="462c0819:PsiDirectoryNode" />
+              <item name="Gateway" type="462c0819:PsiDirectoryNode" />
+              <item name="Igfs" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="PaymentServices" type="b2602c69:ProjectViewProjectNode" />
@@ -188,7 +198,7 @@
       <option name="presentableId" value="Default" />
       <updated>1529573509332</updated>
       <workItem from="1529573512804" duration="206000" />
-      <workItem from="1529573744025" duration="8024000" />
+      <workItem from="1529573744025" duration="9414000" />
     </task>
     <servers />
   </component>
@@ -222,19 +232,20 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8230000" />
+    <option name="totallyTimeSpent" value="9620000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-1928" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27598828" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19635417" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.4610493" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.30818278" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -327,13 +338,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/IgfcTest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="10" lean-forward="true" selection-start-line="11" selection-start-column="10" selection-end-line="11" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/autoload.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -347,8 +351,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Payment/Gateway/Igfs/BaseIgfsCg.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="28" lean-forward="true" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
+        <state relative-caret-position="102">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/IgfcTest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="10" selection-start-line="11" selection-start-column="10" selection-end-line="11" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Payment/Gateway/Igfs/Gateway.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="36" column="67" selection-start-line="36" selection-start-column="67" selection-end-line="36" selection-end-column="67" />
         </state>
       </provider>
     </entry>
