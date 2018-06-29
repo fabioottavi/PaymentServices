@@ -29,5 +29,25 @@ zend_extension = ext\{xdebug_filename}
 xdebug.remote_enable = 1
 xdebug.remote_autostart = 1
 ```
+for linux & mac
+````
+sudo apt-get install php5-xdebug
 
-end
+````
+```
+xdebug.remote_enable = 1
+xdebug.remote_port = 9000
+xdebug.idekey = PHPSTORM
+xdebug.show_error_trace = 1
+xdebug.remote_autostart = 0
+xdebug.file_link_format = phpstorm://open?%f:%l
+```
+```
+Linux
+sudo service apache2 restart
+
+# MacOS
+
+sudo apachectl restart
+
+```
