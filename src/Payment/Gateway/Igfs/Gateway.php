@@ -16,8 +16,14 @@ class Gateway implements \Payment\Gateway\GatewayInterface
         $this->serverUrl = $debug ? 
         'https://merchant.s2stest.bnlpositivity.it/BNL_CG_SERVICES/services/' : 
         'https://merchant.s2stest.bnlpositivity.it/BNL_CG_SERVICES/services/';
-     } 
-    
+     }
+
+    /**
+     * @param array $params
+     * @return array|object
+     * @throws ConnectionException
+     * @throws IgfsException
+     */
     public function init(array $params = [])
     {
         $initObj = new Init\IgfsCgInit(); 
@@ -74,6 +80,12 @@ class Gateway implements \Payment\Gateway\GatewayInterface
         );
     }
 
+    /**
+     * @param array $params
+     * @return array
+     * @throws ConnectionException
+     * @throws IgfsException
+     */
     public function verify(array $params = []){
         $initObj = new Init\IgfsCgVerify(); 
 
@@ -90,8 +102,6 @@ class Gateway implements \Payment\Gateway\GatewayInterface
             'id' => $initObj->tid,
             'returnCode' => $initObj->rc,
             'error' => $initObj->errorDesc,
-            'paymentID' => $initObj->paymentID,
-            'redirectURL' => $initObj->redirectURL,
         );
     }
 }

@@ -1,9 +1,11 @@
 <?php
 
 namespace Payment\Gateway\Igfs\Init;
+use Payment\Gateway\Igfs\BaseIgfsCg;
 use Payment\Gateway\Igfs\IgfsMissingParException;
 use Payment\Gateway\Igfs\IgfsUtils;
 use Payment\Gateway\Igfs\Level3Info;
+use SimpleXMLElement;
 
 class IgfsCgVerify extends BaseIgfsCgInit {
 

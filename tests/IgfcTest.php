@@ -31,11 +31,14 @@ final class IgfcTest extends TestCase
             'addInfo5' => '',
 
         ];
-        $initresponse = $payg->init($params);
-        var_dump($initresponse);
 
-        $verifyresponse = $payg->verify($params);
-        var_dump($initresponse);
+        //get response from gateway
+        $initResponse = $payg->init($params);
+        var_dump($initResponse);
+
+        // response for verify method
+        $verifyResponse = $payg->verify($params);
+        var_dump($verifyResponse);
     }
 }
 
