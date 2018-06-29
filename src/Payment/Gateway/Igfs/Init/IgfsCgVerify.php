@@ -3,7 +3,7 @@
 namespace Payment\Gateway\Igfs\Init;
 use Payment\Gateway\Igfs\IgfsMissingParException;
 use Payment\Gateway\Igfs\IgfsUtils;
-use Payment\Gateway\Igfs\Level3Info as Level3Info;
+use Payment\Gateway\Igfs\Level3Info;
 
 class IgfsCgVerify extends BaseIgfsCgInit {
 

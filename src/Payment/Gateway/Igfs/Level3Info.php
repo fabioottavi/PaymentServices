@@ -1,5 +1,6 @@
 <?php
 namespace Payment\Gateway\Igfs;
+use \SimpleXMLElement;
 
 class Level3Info 
 {
