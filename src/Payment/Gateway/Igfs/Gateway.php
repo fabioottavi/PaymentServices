@@ -12,7 +12,9 @@ class Gateway implements \Payment\Gateway\GatewayInterface
      */
 
      private $serverUrl;
+     private $debug;
      public function __construct ($debug){
+        $this->debug = $debug;
         $this->serverUrl = $debug ? 
         'https://merchant.s2stest.bnlpositivity.it/BNL_CG_SERVICES/services/' : 
         'https://merchant.s2stest.bnlpositivity.it/BNL_CG_SERVICES/services/';
@@ -35,12 +37,15 @@ class Gateway implements \Payment\Gateway\GatewayInterface
     public function init(array $params = [])
     {
         $initObj = new Init\IgfsCgInit(); 
-        $unique = IgfsUtils::getValue($params,'token');
+        $unique = IgfsUtils::getValue($params, 'shopID');
         $url= IgfsUtils::getValue($params,'baseURL','');
 
         $initObj->serverURL = $this->serverUrl;
+        if($this->debug){
+            $initObj->disableCheckSSLCert();
+        }
         $initObj->tid = IgfsUtils::getValue($params,'tid').IgfsUtils::getValue($params,'paymentMethod');
-        $initObj->shopID = IgfsUtils::getValue($params, 'shopID');
+        $initObj->shopID = $unique;
         $initObj->amount = IgfsUtils::getValue($params, 'amount', '0');
         $initObj->currencyCode =IgfsUtils::getValue($params,'currencyCode','EUR');
         $initObj->kSig = IgfsUtils::getValue($params,'kSig');
@@ -60,16 +65,9 @@ class Gateway implements \Payment\Gateway\GatewayInterface
         $initObj->payInstrToken = IgfsUtils::getValue($params, 'payInstrToken');
         $initObj->regenPayInstrToken = IgfsUtils::getValue($params, 'regenPayInstrToken');
 
-        //TODO: must be verified the use of this parameter. Add AddrCountryCode
-        //TODO: must be verified the use of this parameter. Add SellingPoint
-        //TODO: must be verified the use of this parameter. Add AccOwner
-        //TODO: must be verified the use of this parameter. Add Device
-        //TODO: must be verified the use of this parameter. Add Email
-        //TODO: must be verified the use of this parameter. Add Phone
-
         $initObj->execute();
         return array(
-            'id' => $initObj->tid,
+            'tid' => $initObj->tid,
             'returnCode' => $initObj->rc,
             'error' => $initObj->errorDesc,
             'paymentID' => $initObj->paymentID,
@@ -84,21 +82,53 @@ class Gateway implements \Payment\Gateway\GatewayInterface
      * @throws IgfsException
      */
     public function verify(array $params = []){
-        $initObj = new Init\IgfsCgVerify(); 
+        $verifyObj = new Init\IgfsCgVerify(); 
 
-        $initObj->serverURL = $this->serverUrl;
-        $initObj->kSig = IgfsUtils::getValue($params,'kSig');
-        $initObj->tid = IgfsUtils::getValue($params,'tid');
-        $initObj->shopID = IgfsUtils::getValue($params, 'shopID');
-        $initObj->langID =IgfsUtils::getValue($params, 'langID', 'IT');
-        $initObj->paymentID =IgfsUtils::getValue($params, 'paymentID', '00179695241108714733');
+        $verifyObj->serverURL = $this->serverUrl;
+        if($this->debug){
+            $verifyObj->disableCheckSSLCert();
+        }
+        $verifyObj->kSig = IgfsUtils::getValue($params,'kSig');
+        $verifyObj->tid = IgfsUtils::getValue($params,'tid');
+        $verifyObj->shopID = IgfsUtils::getValue($params, 'shopID');
+        $verifyObj->langID =IgfsUtils::getValue($params, 'langID', 'IT');
+        $verifyObj->paymentID =IgfsUtils::getValue($params, 'paymentID', '00179695241108714733');
 
 
-        $initObj->execute();
+        $verifyObj->execute();
         return array(
-            'id' => $initObj->tid,
-            'returnCode' => $initObj->rc,
-            'error' => $initObj->errorDesc,
+            'tid' => $verifyObj->tid,
+            'returnCode' => $verifyObj->rc,
+            'error' => $verifyObj->errorDesc,
+            'shopID' => $verifyObj->shopID,
+            'paymentID' => $verifyObj->paymentID,
+            'tranID' => $verifyObj->tranID,
         );
+    }
+
+    public function confirm(array $params = []){
+        $confirmObj = new tran\IgfsCgConfirm(); 
+
+        $confirmObj->serverURL = $this->serverUrl;
+        if($this->debug){
+            $confirmObj->disableCheckSSLCert();
+        }
+
+        $confirmObj->tid= IgfsUtils::getValue($params,'tid');
+        $confirmObj->kSig= IgfsUtils::getValue($params,'kSig');;
+        $confirmObj->shopID= IgfsUtils::getValue($params, 'shopID');
+        $confirmObj->refTranID= IgfsUtils::getValue($params, 'transactionId');
+        $confirmObj->amount= IgfsUtils::getValue($params, 'amount', '0');
+        
+        $confirmObj->execute();
+        return array(
+            'id' => $confirmObj->tid,
+            'returnCode' => $confirmObj->rc,
+            'error' => $confirmObj->errorDesc,
+        );
+    }
+
+    public function refund(array $params = []){
+
     }
 }

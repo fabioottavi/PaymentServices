@@ -1,7 +1,6 @@
 <?php
 namespace Payment\Gateway\Igfs\Init;
-
-use \Payment\Gateway\Igfs\IgfsMissingParException;
+use Payment\Gateway\Igfs\IgfsMissingParException;
 
 
 abstract class BaseIgfsCgInit extends \Payment\Gateway\Igfs\BaseIgfsCg

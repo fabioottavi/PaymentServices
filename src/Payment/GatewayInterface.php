@@ -15,4 +15,6 @@ interface GatewayInterface
      */
     public function init(array $params);
     public function verify(array $params);
+    public function confirm(array $params);
+    public function refund(array $params);
 }

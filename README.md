@@ -1,6 +1,16 @@
 # PaymentServices
 Payment services for BNL POSitivity
 
+# Useful links
+
+[https://www.bnlpositivity.it/area-sviluppatori/](https://www.bnlpositivity.it/area-sviluppatori/)
+
+[https://www.bnlpositivity.it/area-sviluppatori/api-e-webservices/](https://www.bnlpositivity.it/area-sviluppatori/api-e-webservices/)
+
+[https://www.bnlpositivity.it/code-snippets/tabella-5-script-php-pagamento-online/](https://www.bnlpositivity.it/code-snippets/tabella-5-script-php-pagamento-online/)
+
+[https://github.com/ravisaxena2006/igfs-payment-gateway](https://github.com/ravisaxena2006/igfs-payment-gateway)
+
 ## Install
 
 ```sh
