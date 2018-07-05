@@ -49,8 +49,8 @@ final class IgfcTest extends TestCase
         ];
 
         //get response from gateway
-        //$initResponse = $payg->init($params);
-        //var_dump($initResponse);
+        $initResponse = $payg->init($params);
+        var_dump($initResponse);
     }
 
     public function testVerify(){
@@ -61,10 +61,10 @@ final class IgfcTest extends TestCase
         );
 
         $params = [
-            'paymentID'=>'00185863552108757786', // paymentID => retrive from init() call
+            'paymentID'=>'00186701744108761715', // paymentID => retrive from init() call
             'tid' => '06231955_S', // tid => retrive the final tid from the notifyUrl/callbackUrl/errorUrl
             'kSig' => $this->ksig,
-            'shopID' => '5262654755b3cf42e13a662.07978114',
+            'shopID' => '11505390065b3dd1b830c4b1.77223084',
             'langID' => 'IT',
         ];
         // response for verify method
@@ -88,8 +88,8 @@ final class IgfcTest extends TestCase
         ];
         
         // response for verify method
-        //$confirmResponse = $payg->confirm($params);
-        //var_dump($confirmResponse);
+        $confirmResponse = $payg->confirm($params);
+        var_dump($confirmResponse);
     }
 }
 
