@@ -46,7 +46,7 @@ class Gateway implements \Payment\Gateway\GatewayInterface
         }
         $initObj->tid = IgfsUtils::getValue($params,'tid').IgfsUtils::getValue($params,'paymentMethod');
         $initObj->shopID = $unique;
-        $initObj->amount = IgfsUtils::getValue($params, 'amount', '0');
+        $initObj->amount = str_replace('.', '', number_format(IgfsUtils::getValue($params, 'amount', '0'), 2, '.', ''));
         $initObj->currencyCode =IgfsUtils::getValue($params,'currencyCode','EUR');
         $initObj->kSig = IgfsUtils::getValue($params,'kSig');
         $initObj->notifyURL =$url.IgfsUtils::getValue($params,'notifyUrl','').'?token='.urlencode($unique);
@@ -118,7 +118,7 @@ class Gateway implements \Payment\Gateway\GatewayInterface
         $confirmObj->kSig= IgfsUtils::getValue($params,'kSig');;
         $confirmObj->shopID= IgfsUtils::getValue($params, 'shopID');
         $confirmObj->refTranID= IgfsUtils::getValue($params, 'transactionId');
-        $confirmObj->amount= IgfsUtils::getValue($params, 'amount', '0');
+        $confirmObj->amount= str_replace('.', '', number_format(IgfsUtils::getValue($params, 'amount', '0'), 2, '.', ''));
         
         $confirmObj->execute();
         return array(

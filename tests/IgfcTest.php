@@ -8,6 +8,7 @@ final class IgfcTest extends TestCase
     private $orderNumber;
 
     public function setUp(){
+        //As long as the transaction is not finished you can create URLs with the same number
         $this->orderNumber = uniqid(rand(), true);
     }
 
@@ -39,7 +40,7 @@ final class IgfcTest extends TestCase
 
             'paymentMethod'=>$payg::PAYMENT_BY_SELECTION, //TODO: Test with: PAYMENT_BY_CC,PAYMENT_BY_MY_BANK,PAYMENT_BY_MASTERPASS,PAYMENT_BY_PAYPAL
             'baseURL' => "http://ipgadmin.sendabox.it/Callback",
-            'amount' => 17 * 100,
+            'amount' => 13.89,
 
             'description' => 'this is a test',
             'shopUserRef' => 'TestRef', // It's the client email
@@ -61,10 +62,10 @@ final class IgfcTest extends TestCase
         );
 
         $params = [
-            'paymentID'=>'00186701744108761715', // paymentID => retrive from init() call
+            'paymentID'=>'00190344435108790396', // paymentID => retrive from init() call
             'tid' => '06231955_S', // tid => retrive the final tid from the notifyUrl/callbackUrl/errorUrl
             'kSig' => $this->ksig,
-            'shopID' => '11505390065b3dd1b830c4b1.77223084',
+            'shopID' => '11116968065b437efd081729.18058802',
             'langID' => 'IT',
         ];
         // response for verify method
@@ -80,16 +81,16 @@ final class IgfcTest extends TestCase
         );
 
         $params = [
-            'transactionId'=>'3066015420386130', // tranID => retrive the final tid from the notifyUrl/callbackUrl/errorUrl
-            'amount' => 17 * 100,
+            'transactionId'=>'3066050230531847', // tranID => retrive the final tid from the notifyUrl/callbackUrl/errorUrl
+            'amount' => 5,
             'tid' => '06231955', // tid => retrive the final tid from the notifyUrl/callbackUrl/errorUrl
             'kSig' => $this->ksig,
-            'shopID' => '1032975365b3ce858093ba3.97953546',
+            'shopID' => '11116968065b437efd081729.18058802',
         ];
         
         // response for verify method
-        $confirmResponse = $payg->confirm($params);
-        var_dump($confirmResponse);
+        //$confirmResponse = $payg->confirm($params);
+        //var_dump($confirmResponse);
     }
 }
 

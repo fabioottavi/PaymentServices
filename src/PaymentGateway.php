@@ -27,7 +27,7 @@ final class PayGateway
             $return = new \Payment\Gateway\Igfs\Gateway($debug);
             break;
         case self::CMPT1:
-            $return = new \Payment\Gateway\Computop\Gateway();
+            $return = new \Payment\Gateway\Computop\Gateway($debug);
             break;
         case self::CMPT2:
             break;
