@@ -19,15 +19,15 @@ final class PayGateway
      * @param Payment\Gateway\GatewayInterface $paymenttype
      * @return void
      */
-    public static function getIstance($paymenttype, $debug)
+    public static function getIstance($paymenttype, $test)
     {
         $return =null;
         switch ($paymenttype) {
         case self::IGFC:
-            $return = new \Payment\Gateway\Igfs\Gateway($debug);
+            $return = new \Payment\Gateway\Igfs\Gateway($test);
             break;
         case self::CMPT1:
-            $return = new \Payment\Gateway\Computop\Gateway($debug);
+            $return = new \Payment\Gateway\Computop\Gateway($test);
             break;
         case self::CMPT2:
             break;

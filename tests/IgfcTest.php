@@ -4,7 +4,6 @@ use PHPUnit\Framework\TestCase;
 final class IgfcTest extends TestCase
 {
 
-    private $ksig = 'xHosiSb08fs8BQmt9Yhq3Ub99E8=';
     private $orderNumber;
 
     public function setUp(){
@@ -23,8 +22,6 @@ final class IgfcTest extends TestCase
         $params = [
             'trType' => PayGateway::TRANSACTION_TYPE_AUTH, //TODO: Test with: TRANSACTION_TYPE_VERIFY, TRANSACTION_TYPE_PURCHASE
             'checkoutMode' => PayGateway::CHECK_OUT_NORMAL, //TODO: Test with: CHECK_OUT_SYNTHESIS, CHECK_OUT_SELECT
-            'tid' => '06231955',
-            'kSig' => $this->ksig,
             'addInfo1' => '',
             'addInfo2' => '',
             'addInfo3' => '',
@@ -63,8 +60,6 @@ final class IgfcTest extends TestCase
 
         $params = [
             'paymentID'=>'00190344435108790396', // paymentID => retrive from init() call
-            'tid' => '06231955_S', // tid => retrive the final tid from the notifyUrl/callbackUrl/errorUrl
-            'kSig' => $this->ksig,
             'shopID' => '11116968065b437efd081729.18058802',
             'langID' => 'IT',
         ];
@@ -83,8 +78,6 @@ final class IgfcTest extends TestCase
         $params = [
             'transactionId'=>'3066050230531847', // tranID => retrive the final tid from the notifyUrl/callbackUrl/errorUrl
             'amount' => 5,
-            'tid' => '06231955', // tid => retrive the final tid from the notifyUrl/callbackUrl/errorUrl
-            'kSig' => $this->ksig,
             'shopID' => '11116968065b437efd081729.18058802',
         ];
         
