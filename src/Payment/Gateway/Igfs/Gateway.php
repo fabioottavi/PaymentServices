@@ -15,11 +15,11 @@ class Gateway implements \Payment\Gateway\GatewayInterface
      private $test;
      private $dTid = '';
      private $dKsig = '';
-     private $info1 = '';
-     private $info2 = '';
-     private $info3 = '';
-     private $info4 = '';
-     private $info5 = '';
+     private $dInfo1 = '';
+     private $dInfo2 = '';
+     private $dInfo3 = '';
+     private $dInfo4 = '';
+     private $dInfo5 = '';
 
      public function __construct ($test){
         $this->test = $test;
@@ -27,11 +27,11 @@ class Gateway implements \Payment\Gateway\GatewayInterface
             $this->serverUrl ='https://merchant.s2stest.bnlpositivity.it/BNL_CG_SERVICES/services/';
             $this->dTid = '06231955';
             $this->dKsig = 'xHosiSb08fs8BQmt9Yhq3Ub99E8=';
-            $this->info1 = '';
-            $this->info2 = '';
-            $this->info3 = '';
-            $this->info4 = '';
-            $this->info5 = '';
+            $this->dInfo1 = '';
+            $this->dInfo2 = '';
+            $this->dInfo3 = '';
+            $this->dInfo4 = '';
+            $this->dInfo5 = '';
         }
         else{
             $this->serverUrl = 'https://merchant.s2stest.bnlpositivity.it/BNL_CG_SERVICES/services/';
@@ -58,37 +58,36 @@ class Gateway implements \Payment\Gateway\GatewayInterface
     public function init(array $params = [])
     {
         $initObj = new Init\IgfsCgInit(); 
-        $unique = IgfsUtils::getValue($params, 'shopID');
+        $unique = IgfsUtils::getValue($params, 'paymentReference');
         $url= IgfsUtils::getValue($params,'baseURL','');
 
         $initObj->serverURL = $this->serverUrl;
         if($this->test){
             $initObj->disableCheckSSLCert();
         }
-        $initObj->tid = IgfsUtils::getValue($params,'tid',$this->dTid).IgfsUtils::getValue($params,'paymentMethod');
+        $initObj->tid = IgfsUtils::getValue($params,'terminalId',$this->dTid).IgfsUtils::getValue($params,'paymentMethod');
         $initObj->shopID = $unique;
         $initObj->amount = str_replace('.', '', number_format(IgfsUtils::getValue($params, 'amount', '0'), 2, '.', ''));
-        $initObj->currencyCode =IgfsUtils::getValue($params,'currencyCode','EUR');
-        $initObj->kSig = IgfsUtils::getValue($params,'kSig',$this->dKsig);
+        $initObj->currencyCode =IgfsUtils::getValue($params,'currency','EUR');
+        $initObj->kSig = IgfsUtils::getValue($params,'hashMessage',$this->dKsig);
         $initObj->notifyURL =$url.IgfsUtils::getValue($params,'notifyUrl','').'?token='.urlencode($unique);
         $initObj->errorURL =$url.IgfsUtils::getValue($params,'errorUrl','').'?token='.urlencode($unique);
         $initObj->callbackURL =$url.IgfsUtils::getValue($params,'callbackUrl','').'?token='.urlencode($unique);
-        $initObj->addInfo1 =IgfsUtils::getValue($params,'addInfo1',$this->info1);
-        $initObj->addInfo2 =IgfsUtils::getValue($params,'addInfo2',$this->info2);
-        $initObj->addInfo3 =IgfsUtils::getValue($params,'addInfo3',$this->info3);
-        $initObj->addInfo4 =IgfsUtils::getValue($params,'addInfo4',$this->info4);
-        $initObj->addInfo5 =IgfsUtils::getValue($params,'addInfo5',$this->info5);
-        $initObj->trType =IgfsUtils::getValue($params, 'trType', 'AUTH');
+        $initObj->addInfo1 =IgfsUtils::getValue($params,'addInfo1',$this->dInfo1);
+        $initObj->addInfo2 =IgfsUtils::getValue($params,'addInfo2',$this->dInfo2);
+        $initObj->addInfo3 =IgfsUtils::getValue($params,'addInfo3',$this->dInfo3);
+        $initObj->addInfo4 =IgfsUtils::getValue($params,'addInfo4',$this->dInfo4);
+        $initObj->addInfo5 =IgfsUtils::getValue($params,'addInfo5',$this->dInfo5);
+        $initObj->trType =IgfsUtils::getValue($params, 'transactionType', 'AUTH');
         $initObj->description =IgfsUtils::getValue($params, 'description');
         $initObj->shopUserRef =IgfsUtils::getValue($params, 'shopUserRef');
         $initObj->shopUserName =IgfsUtils::getValue($params, 'shopUserName');
-        $initObj->langID =IgfsUtils::getValue($params, 'langID', self::DEFAULT_LANGUAGE);
+        $initObj->langID =IgfsUtils::getValue($params, 'language', self::DEFAULT_LANGUAGE);
         $initObj->payInstrToken = IgfsUtils::getValue($params, 'payInstrToken');
         $initObj->regenPayInstrToken = IgfsUtils::getValue($params, 'regenPayInstrToken');
 
         $initObj->execute();
         return array(
-            'tid' => $initObj->tid,
             'returnCode' => $initObj->rc,
             'error' => $initObj->errorDesc,
             'paymentID' => $initObj->paymentID,
@@ -110,7 +109,7 @@ class Gateway implements \Payment\Gateway\GatewayInterface
             $verifyObj->disableCheckSSLCert();
         }
         $verifyObj->kSig = IgfsUtils::getValue($params,'kSig',$this->dKsig);
-        $verifyObj->tid = IgfsUtils::getValue($params,'tid',$this->dTid).'_S';
+        $verifyObj->tid = IgfsUtils::getValue($params,'terminalId',$this->dTid).'_S';
         $verifyObj->shopID = IgfsUtils::getValue($params, 'shopID');
         $verifyObj->langID =IgfsUtils::getValue($params, 'langID', 'IT');
         $verifyObj->paymentID =IgfsUtils::getValue($params, 'paymentID', '00179695241108714733');
@@ -135,7 +134,7 @@ class Gateway implements \Payment\Gateway\GatewayInterface
             $confirmObj->disableCheckSSLCert();
         }
 
-        $confirmObj->tid= IgfsUtils::getValue($params,'tid',$this->dTid);
+        $confirmObj->tid= IgfsUtils::getValue($params,'terminalId',$this->dTid);
         $confirmObj->kSig= IgfsUtils::getValue($params,'kSig',$this->dKsig);;
         $confirmObj->shopID= IgfsUtils::getValue($params, 'shopID');
         $confirmObj->refTranID= IgfsUtils::getValue($params, 'transactionId');

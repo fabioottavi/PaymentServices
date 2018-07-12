@@ -16,9 +16,9 @@ class ComputopCgInit extends BaseComputopCg {
     public $amount; // = 11;
     public $currency; // = "EUR";
     public $InpSend; // = "Select Payment";
+    public $capture; // = "AUTO";
 
     public $response = "encrypt";
-    public $capture = "AUTO";
 
     public function __construct()
     {
@@ -67,33 +67,21 @@ class ComputopCgInit extends BaseComputopCg {
         // encrypt plaintext
         $Data = $myPayGate->ctEncrypt($plaintext, $Len, $this->blowfishPassword);
 
-        //if (strlen($Data) > 0) {
-        //    $plaintextDec = $myPayGate->ctDecrypt($Data, $Len, $this->blowfishPassword);
-        //
-        //    // prepare information string
-        //
-        //    $a = "";
-        //    $a = explode('&', $plaintext);
-        //    $info = $myPayGate->ctSplit($a, '=');
-        //}
+        // format variables for URL
+        $pUrlMerchant = "MerchantID=$this->merchantId";
+        $pUrlLen = "Len=$Len";
+        $pUrlData = "Data=$Data";
+
+        $rQuery = array($pUrlMerchant,$pUrlLen,$pUrlData);
+
+        // create url
+        $retUrl = $this->serverUrl.'?'.join("&", $rQuery);
 
         return array(
-            'serverUrl' => $this->serverUrl,
-            'transId'=>$this->transId,
-            'amount'=>$this->amount,
-            'currency'=>$this->currency,
-            'UrlSuccess'=>$this->UrlSuccess,
-            'UrlFailure'=>$this->UrlFailure,
-            'UrlNotify'=>$this->UrlNotify,
-            'description'=>$this->description,
-            'userData'=>$this->userData,
-            'merchantId'=>$this->merchantId,
-            'MAC'=>$MAC,
-            'plaintext'=>$plaintext,
-            //'plaintextDec'=>$plaintextDec,
-            //'info'=>$info,
-            'Len'=>$Len,
-            'Data'=>$Data
+            'returnCode' => '',
+            'error' => '',
+            'paymentID' => '',
+            'redirectURL' => $retUrl,
         );
     }
 }

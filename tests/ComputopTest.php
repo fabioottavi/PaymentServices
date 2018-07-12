@@ -18,18 +18,22 @@ final class ComputopTest extends TestCase
         );
         
         $params = [
+            //Same fields on both payment methods
             'baseURL' => "http://ipgadmin.sendabox.it/Callback",
-            'amount' => 17,
-            'shopID' => $this->orderNumber,
             'notifyUrl' => '/Notify',
             'callbackUrl' => '/Success',
             'errorUrl' => '/Failure',
-            'merchantId' => 'bnlp_test',
-            'blowfishPassword' => 'X*b89Q=eG!s23rJ[',
-            'hMacPassword' => '8d)N?7Zg2Jz=(4Gs3y!T_Wx59k[R*6Cn',
+            'amount' => 17,
+            'paymentReference' => $this->orderNumber,
+            'transactionType' => null, 
             'description' => '',
+            'language' => null, 
+            'paymentMethod' => $payg::PAYMENT_BY_SSL,
+            'terminalId' => null,
+            'hashMessage' => null,
+            'currency' => null,
+
             'userData' => '',
-            'paymentMethod' => $payg::PAYMENT_BY_SSL
         ];
 
         //get response from gateway

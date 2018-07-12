@@ -20,7 +20,22 @@ final class IgfcTest extends TestCase
         );
         
         $params = [
-            'trType' => PayGateway::TRANSACTION_TYPE_AUTH, //TODO: Test with: TRANSACTION_TYPE_VERIFY, TRANSACTION_TYPE_PURCHASE
+            //Same fields on both payment methods
+            'baseURL' => "http://ipgadmin.sendabox.it/Callback",
+            'notifyUrl' => '/Save',
+            'callbackUrl' => '/Save',
+            'errorUrl' => '/Save',
+            'amount' => 13.89,
+            'paymentReference' => $this->orderNumber,
+            'transactionType' => PayGateway::TRANSACTION_TYPE_AUTH, //TODO: Test with: TRANSACTION_TYPE_VERIFY, TRANSACTION_TYPE_PURCHASE
+            'description' => 'this is a test',
+            'language' => 'IT',
+            'paymentMethod'=>$payg::PAYMENT_BY_SELECTION, //TODO: Test with: PAYMENT_BY_CC,PAYMENT_BY_MY_BANK,PAYMENT_BY_MASTERPASS,PAYMENT_BY_PAYPAL
+            'terminalId' => null,
+            'hashMessage' => null,
+            'currency' => 'EUR',
+
+
             'checkoutMode' => PayGateway::CHECK_OUT_NORMAL, //TODO: Test with: CHECK_OUT_SYNTHESIS, CHECK_OUT_SELECT
             'addInfo1' => '',
             'addInfo2' => '',
@@ -28,22 +43,9 @@ final class IgfcTest extends TestCase
             'addInfo4' => '',
             'addInfo5' => '',
             'payInstrToken' => '', // TODO:
-            'notifyUrl' => '/Save',
-            'callbackUrl' => '/Save',
-            'errorUrl' => '/Save',
-            'currencyCode' => 'EUR',
-            'shopID' => $this->orderNumber,
-            'langID' => 'IT',
-
-            'paymentMethod'=>$payg::PAYMENT_BY_SELECTION, //TODO: Test with: PAYMENT_BY_CC,PAYMENT_BY_MY_BANK,PAYMENT_BY_MASTERPASS,PAYMENT_BY_PAYPAL
-            'baseURL' => "http://ipgadmin.sendabox.it/Callback",
-            'amount' => 13.89,
-
-            'description' => 'this is a test',
             'shopUserRef' => 'TestRef', // It's the client email
             'shopUserName' => 'TestName',
             'regenPayInstrToken' => '',  // TODO: how do i use it?
-            
         ];
 
         //get response from gateway
@@ -62,6 +64,8 @@ final class IgfcTest extends TestCase
             'paymentID'=>'00190344435108790396', // paymentID => retrive from init() call
             'shopID' => '11116968065b437efd081729.18058802',
             'langID' => 'IT',
+            'terminalId' => null,
+            'hashMessage' => null,
         ];
         // response for verify method
         $verifyResponse = $payg->verify($params);
@@ -79,6 +83,8 @@ final class IgfcTest extends TestCase
             'transactionId'=>'3066050230531847', // tranID => retrive the final tid from the notifyUrl/callbackUrl/errorUrl
             'amount' => 5,
             'shopID' => '11116968065b437efd081729.18058802',
+            'terminalId' => null,
+            'hashMessage' => null,
         ];
         
         // response for verify method
