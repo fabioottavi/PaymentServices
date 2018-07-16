@@ -2,7 +2,10 @@
 namespace Payment\Gateway\Computop\Init;
 use Payment\Gateway\Computop\BaseComputopCg;
 
-
+/**
+ * Computop class
+ * Responsible for all the init() calls
+ */
 class ComputopCgInit extends BaseComputopCg {
 
     public $UrlSuccess; //$sUrlDirname . "/success.php";
@@ -35,6 +38,7 @@ class ComputopCgInit extends BaseComputopCg {
         parent::__construct();
     }
 
+    
     public function execute(){
         $this->currency = trim($this->currency);
         if (empty($currency)) {

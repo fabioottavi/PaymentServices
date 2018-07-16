@@ -6,5 +6,12 @@ class ComputopUtils{
     {
         return isset($map[$key]) ? $map[$key] : $default;
     }
+    public static function getPaymentResultParam($obj)
+    {
+        return $params = [
+            'Data' => $_GET["Data"],
+            'Len' => $_GET["Len"],
+        ];
+    }
 
 }

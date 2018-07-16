@@ -17,13 +17,19 @@ namespace Payment\Gateway\Computop\Init;
 class ctPaygate extends Blowfish
 {
 
+    /*
+    * Text values for status
+    */
+    const NO_DATA_FOUND = "No data found!";
+    const PAYMENT_FAILED = "Payment failed!";
+    const PAYMENT_SUCCESSFUL = "Payment successful!";
+    const UNKNOWN_STATUS = "Unknown status!";
+
     /**
      * ctPaygate constructor.
      */
     function ctPaygate()
     {
-        global $text;
-        $this->text = $text; // error messages
     }
 
     /**
@@ -40,23 +46,23 @@ class ctPaygate extends Blowfish
         switch ($sStatus) {
 
             case "OK":
-                $rs = $this->text['paymentsuccessful'];   // Payment succeeded. Correct response. (notify.php, success.php)
+                $rs = self::PAYMENT_SUCCESSFUL;   // Payment succeeded. Correct response. (notify.php, success.php)
                 break;
 
             case "AUTHORIZED":
-                $rs = $this->text['paymentsuccessful'];   // Payment succeeded. Correct response. (notify.php, success.php)
+                $rs = self::PAYMENT_SUCCESSFUL;   // Payment succeeded. Correct response. (notify.php, success.php)
                 break;
 
             case "FAILED":
-                $rs = $this->text['paymentfailed'];       // Payment failed. Correct response. (notify.php, failure.php)
+                $rs = self::PAYMENT_FAILED;       // Payment failed. Correct response. (notify.php, failure.php)
                 break;
 
             case "":
-                $rs = $this->text['nodata'];              // No data. Tried to open directly (e.g. with a browser)? (*.php)
+                $rs = self::NO_DATA_FOUND;              // No data. Tried to open directly (e.g. with a browser)? (*.php)
                 break;
 
             default:
-                $rs = $this->text['unknownstatus'];       // Unknown status (notify.php)
+                $rs = self::UNKNOWN_STATUS;       // Unknown status (notify.php)
         }
 
         return $rs;

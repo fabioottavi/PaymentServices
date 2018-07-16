@@ -4,13 +4,6 @@ namespace Payment\Gateway\Igfs;
 
 class Gateway implements \Payment\Gateway\GatewayInterface
 {
-    /**
-     * 
-     * @return object
-     *
-     * @throws \Exception
-     */
-
      private $serverUrl;
      private $test;
      private $dTid = '';
@@ -21,6 +14,21 @@ class Gateway implements \Payment\Gateway\GatewayInterface
      private $dInfo4 = '';
      private $dInfo5 = '';
 
+     const PAYMENT_BY_SELECTION = '_S';
+     const PAYMENT_BY_CC = '';
+     const PAYMENT_BY_MY_BANK = 'M';
+     const PAYMENT_BY_MASTERPASS = 'P';
+     const PAYMENT_BY_FINDOMESTIC = '';
+     const PAYMENT_BY_PAYPAL = 'PP';
+     
+     const DEFAULT_LANGUAGE = 'EN';
+
+     /**
+     * 
+     * @return object
+     *
+     * @throws \Exception
+     */
      public function __construct ($test){
         $this->test = $test;
         if($test){
@@ -39,22 +47,14 @@ class Gateway implements \Payment\Gateway\GatewayInterface
      }
 
     /**
+     * 
+     * Transaction initializer. Create the Redirect URL.
+     * 
      * @param array $params
      * @return array|object
      * @throws ConnectionException
      * @throws IgfsException
      */
-     
-
-    const PAYMENT_BY_SELECTION = '_S';
-    const PAYMENT_BY_CC = '';
-    const PAYMENT_BY_MY_BANK = 'M';
-    const PAYMENT_BY_MASTERPASS = 'P';
-    const PAYMENT_BY_FINDOMESTIC = '';
-    const PAYMENT_BY_PAYPAL = 'PP';
-    
-    const DEFAULT_LANGUAGE = 'EN';
-
     public function init(array $params = [])
     {
         $initObj = new Init\IgfsCgInit(); 
@@ -96,10 +96,11 @@ class Gateway implements \Payment\Gateway\GatewayInterface
     }
 
     /**
+     * 
+     * Verify transaction. Receive only the status of the specific transaction.
+     * 
      * @param array $params
-     * @return array
-     * @throws ConnectionException
-     * @throws IgfsException
+     * @return array|object
      */
     public function verify(array $params = []){
         $verifyObj = new Init\IgfsCgVerify(); 
@@ -126,6 +127,14 @@ class Gateway implements \Payment\Gateway\GatewayInterface
         );
     }
 
+    /**
+     * 
+     * Transaction confirmation. 
+     * Transfer a specific amount from an authorized transaction
+     * 
+     * @param array $params
+     * @return array|object
+     */
     public function confirm(array $params = []){
         $confirmObj = new tran\IgfsCgConfirm(); 
 
@@ -148,7 +157,25 @@ class Gateway implements \Payment\Gateway\GatewayInterface
         );
     }
 
+    /**
+     * 
+     * Refund transaction. Return a specific amount back to buyer.
+     * 
+     * @param array $params
+     * @return array|object
+     */
     public function refund(array $params = []){
 
+    }
+    /**
+     * 
+     * Payment resul extractor. Extract details from the payment response.
+     * 
+     * @param object $obj
+     * @return array|object
+     */
+    public function paymentResult(array $params)
+    {
+        
     }
 }

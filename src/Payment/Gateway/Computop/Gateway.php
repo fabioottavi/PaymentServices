@@ -4,12 +4,7 @@ namespace Payment\Gateway\Computop;
 
 class Gateway implements \Payment\Gateway\GatewayInterface
 {
-    /**
-     * 
-     * @return object
-     *
-     * @throws \Exception
-     */
+    
 
     private $test;
     private $dMerchantId = 'bnlp_test';
@@ -35,6 +30,12 @@ class Gateway implements \Payment\Gateway\GatewayInterface
 
     const DEFAULT_LANGUAGE = 'EN';
 
+    /**
+     * 
+     * @return object
+     *
+     * @throws \Exception
+     */
     public function __construct ($test){
        $this->test = $test;
 
@@ -45,14 +46,21 @@ class Gateway implements \Payment\Gateway\GatewayInterface
        }
     }
     
+    /**
+     * 
+     * Transaction initializer. Create the Redirect URL.
+     * 
+     * @param array $params
+     * @return array|object
+     * @throws ConnectionException
+     * @throws IgfsException
+     */
     public function init(array $params = [])
     {
         $initObj = new Init\ComputopCgInit(); 
-        $unique = ComputopUtils::getValue($params, 'paymentReference');
         $url= ComputopUtils::getValue($params,'baseURL','');
 
-        $initObj->transId = $unique;
-
+        $initObj->transId = ComputopUtils::getValue($params, 'paymentReference');
         $initObj->amount = ComputopUtils::getValue($params, 'amount', '0');
         $initObj->currency = ComputopUtils::getValue($params,'currency','EUR');
         $initObj->description = ComputopUtils::getValue($params,'description');
@@ -71,14 +79,56 @@ class Gateway implements \Payment\Gateway\GatewayInterface
 
         return $initObj->execute();
     }
+    /**
+     * 
+     * Payment resul extractor. Extract details from the payment response.
+     * 
+     * @param object $obj
+     * @return array|object
+     */
+    public function paymentResult(array $params)
+    {
+        $rsltObj = new Init\ComputopCgResult(); 
+
+        $rsltObj->blowfishPassword = ComputopUtils::getValue($params,'blowfishPassword',$this->dBlowfishPassword);
+        $rsltObj->len = ComputopUtils::getValue($params, 'Len');
+        $rsltObj->data = ComputopUtils::getValue($params, 'Data');
+
+        return $rsltObj->execute();
+    }
+
+
+    /**
+     * 
+     * Verify transaction. Receive only the status of the specific transaction.
+     * 
+     * @param array $params
+     * @return array|object
+     */
     public function verify(array $params = [])
     {
         
     }
+
+    /**
+     * 
+     * Transaction confirmation. 
+     * Transfer a specific amount from an authorized transaction
+     * 
+     * @param array $params
+     * @return array|object
+     */
     public function confirm(array $params = []){
         
     }
 
+    /**
+     * 
+     * Refund transaction. Return a specific amount back to buyer.
+     * 
+     * @param array $params
+     * @return array|object
+     */
     public function refund(array $params = []){
 
     }
