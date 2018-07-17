@@ -1,6 +1,7 @@
 <?php
 
-require_once("IGFS_CG_API/tran/BaseIgfsCgTran.php");
+namespace Payment\Gateway\Igfs\tran;
+use Payment\Gateway\Igfs\IgfsUtils;
 
 class IgfsCgCredit extends BaseIgfsCgTran {
 
@@ -156,7 +157,7 @@ class IgfsCgCredit extends BaseIgfsCgTran {
 	}
 	
 	protected function getFileName() {
-		return "IGFS_CG_API/tran/IgfsCgCredit.request";
+        return __DIR__ . "/IgfsCgCredit.request";
 	}
 
 }

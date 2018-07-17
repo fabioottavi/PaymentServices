@@ -4,14 +4,6 @@ final class PayGateway
     const IGFC = 'IGFC';
     const CMPT1 = 'CMPT1';
     const CMPT2 = 'CMPT2';
-    
-    const CHECK_OUT_NORMAL = 'CHECK OUT NORMAL'; //checkout BNLP
-    const CHECK_OUT_SYNTHESIS = 'CHECK OUT SYNTHESIS'; // checkout BNLP with web synthesis store
-    const CHECK_OUT_SELECT = 'CHECK OUT SELECT'; //checkout BNLP with selection of payment instrument on the web store
-
-    const TRANSACTION_TYPE_PURCHASE = 'PURCHASE';
-    const TRANSACTION_TYPE_AUTH = 'AUTH';
-    const TRANSACTION_TYPE_VERIFY = 'VERIFY';
 
     /**
      * Undocumented function

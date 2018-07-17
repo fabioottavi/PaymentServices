@@ -45,6 +45,17 @@ class ComputopCgInit extends BaseComputopCg {
             $this->currency = 'EUR';
         }
 
+        if ($this->hMacPassword == null) {
+            throw new IgfsMissingParException("Missing hMacPassword");
+        }
+        if ($this->blowfishPassword == null) {
+            throw new IgfsMissingParException("Missing blowfishPassword");
+        }
+        if ($this->merchantId == null) {
+            throw new IgfsMissingParException("Missing merchantId");
+        }
+
+
         // format data which is to be transmitted - required
         $pTransID = "TransID=$this->transId";
         $pAmount = "Amount=$this->amount";

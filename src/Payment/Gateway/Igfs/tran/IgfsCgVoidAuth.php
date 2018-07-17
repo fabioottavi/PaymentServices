@@ -1,6 +1,7 @@
 <?php
 
-require_once("IGFS_CG_API/tran/BaseIgfsCgTran.php");
+namespace Payment\Gateway\Igfs\tran;
+use Payment\Gateway\Igfs\IgfsUtils;
 
 class IgfsCgVoidAuth extends BaseIgfsCgTran {
 
@@ -76,7 +77,7 @@ class IgfsCgVoidAuth extends BaseIgfsCgTran {
 	}
 	
 	protected function getFileName() {
-		return "IGFS_CG_API/tran/IgfsCgVoidAuth.request";
+        return __DIR__ . "/IgfsCgVoidAuth.request";
 	}
 
 }

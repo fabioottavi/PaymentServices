@@ -9,8 +9,8 @@ class ComputopUtils{
     public static function getPaymentResultParam($obj)
     {
         return $params = [
-            'Data' => $_GET["Data"],
-            'Len' => $_GET["Len"],
+            'Data' => $obj["Data"],
+            'Len' => $obj["Len"],
         ];
     }
 

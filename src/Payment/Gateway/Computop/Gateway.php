@@ -81,25 +81,6 @@ class Gateway implements \Payment\Gateway\GatewayInterface
     }
     /**
      * 
-     * Payment resul extractor. Extract details from the payment response.
-     * 
-     * @param object $obj
-     * @return array|object
-     */
-    public function paymentResult(array $params)
-    {
-        $rsltObj = new Init\ComputopCgResult(); 
-
-        $rsltObj->blowfishPassword = ComputopUtils::getValue($params,'blowfishPassword',$this->dBlowfishPassword);
-        $rsltObj->len = ComputopUtils::getValue($params, 'Len');
-        $rsltObj->data = ComputopUtils::getValue($params, 'Data');
-
-        return $rsltObj->execute();
-    }
-
-
-    /**
-     * 
      * Verify transaction. Receive only the status of the specific transaction.
      * 
      * @param array $params
@@ -107,7 +88,13 @@ class Gateway implements \Payment\Gateway\GatewayInterface
      */
     public function verify(array $params = [])
     {
-        
+        $rsltObj = new Init\ComputopCgVerify(); 
+
+        $rsltObj->blowfishPassword = ComputopUtils::getValue($params,'blowfishPassword',$this->dBlowfishPassword);
+        $rsltObj->len = ComputopUtils::getValue($params, 'Len');
+        $rsltObj->data = ComputopUtils::getValue($params, 'Data');
+
+        return $rsltObj->execute();
     }
 
     /**

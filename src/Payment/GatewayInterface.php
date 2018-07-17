@@ -17,14 +17,6 @@ interface GatewayInterface
     public function init(array $params);
     /**
      * 
-     * Payment resul extractor. Extract details from the payment response.
-     * 
-     * @param object $obj
-     * @return array|object
-     */
-    public function paymentResult(array $params);
-    /**
-     * 
      * Verify transaction. Receive only the status of the specific transaction.
      * 
      * @param array $params
@@ -48,4 +40,12 @@ interface GatewayInterface
      * @return array|object
      */
     public function refund(array $params);
+    /**
+     * 
+     * Cancel pending transaction. Return a specific amount back to buyer.
+     * 
+     * @param array $params
+     * @return array|object
+     */
+    public function cancel(array $params);
 }

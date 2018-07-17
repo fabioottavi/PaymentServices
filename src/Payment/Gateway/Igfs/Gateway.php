@@ -4,24 +4,32 @@ namespace Payment\Gateway\Igfs;
 
 class Gateway implements \Payment\Gateway\GatewayInterface
 {
-     private $serverUrl;
-     private $test;
-     private $dTid = '';
-     private $dKsig = '';
-     private $dInfo1 = '';
-     private $dInfo2 = '';
-     private $dInfo3 = '';
-     private $dInfo4 = '';
-     private $dInfo5 = '';
+    private $serverUrl;
+    private $test;
+    private $dTid = '';
+    private $dKsig = '';
+    private $dInfo1 = '';
+    private $dInfo2 = '';
+    private $dInfo3 = '';
+    private $dInfo4 = '';
+    private $dInfo5 = '';
 
-     const PAYMENT_BY_SELECTION = '_S';
-     const PAYMENT_BY_CC = '';
-     const PAYMENT_BY_MY_BANK = 'M';
-     const PAYMENT_BY_MASTERPASS = 'P';
-     const PAYMENT_BY_FINDOMESTIC = '';
-     const PAYMENT_BY_PAYPAL = 'PP';
-     
-     const DEFAULT_LANGUAGE = 'EN';
+    const PAYMENT_BY_SELECTION = '_S';
+    const PAYMENT_BY_CC = '';
+    const PAYMENT_BY_MY_BANK = 'M';
+    const PAYMENT_BY_MASTERPASS = 'P';
+    const PAYMENT_BY_FINDOMESTIC = '';
+    const PAYMENT_BY_PAYPAL = 'PP';
+    
+    const DEFAULT_LANGUAGE = 'EN';
+         
+    const CHECK_OUT_NORMAL = 'CHECK OUT NORMAL'; //checkout BNLP
+    const CHECK_OUT_SYNTHESIS = 'CHECK OUT SYNTHESIS'; // checkout BNLP with web synthesis store
+    const CHECK_OUT_SELECT = 'CHECK OUT SELECT'; //checkout BNLP with selection of payment instrument on the web store
+
+    const TRANSACTION_TYPE_PURCHASE = 'PURCHASE';
+    const TRANSACTION_TYPE_AUTH = 'AUTH';
+    const TRANSACTION_TYPE_VERIFY = 'VERIFY';
 
      /**
      * 
@@ -144,7 +152,7 @@ class Gateway implements \Payment\Gateway\GatewayInterface
         }
 
         $confirmObj->tid= IgfsUtils::getValue($params,'terminalId',$this->dTid);
-        $confirmObj->kSig= IgfsUtils::getValue($params,'kSig',$this->dKsig);;
+        $confirmObj->kSig= IgfsUtils::getValue($params,'kSig',$this->dKsig);
         $confirmObj->shopID= IgfsUtils::getValue($params, 'shopID');
         $confirmObj->refTranID= IgfsUtils::getValue($params, 'transactionId');
         $confirmObj->amount= str_replace('.', '', number_format(IgfsUtils::getValue($params, 'amount', '0'), 2, '.', ''));
@@ -165,17 +173,39 @@ class Gateway implements \Payment\Gateway\GatewayInterface
      * @return array|object
      */
     public function refund(array $params = []){
+        
+        $rfdObj = new tran\IgfsCgCredit();
 
+        $rfdObj->serverURL = $this->serverUrl;
+        $rfdObj->tid= IgfsUtils::getValue($params,'terminalId',$this->dTid);
+        $rfdObj->kSig= IgfsUtils::getValue($params,'kSig',$this->dKsig);
+        $rfdObj->shopID= IgfsUtils::getValue($params, 'shopID');
+        $rfdObj->amount= str_replace('.', '', number_format(IgfsUtils::getValue($params, 'amount', '0'), 2, '.', ''));
+        $rfdObj->refTranID= IgfsUtils::getValue($params, 'transactionId');
+
+        $rfdObj->execute();
+        return $rfdObj;
     }
+
     /**
      * 
-     * Payment resul extractor. Extract details from the payment response.
+     * Cancel pending transaction. Return a specific amount back to buyer.
      * 
-     * @param object $obj
+     * @param array $params
      * @return array|object
      */
-    public function paymentResult(array $params)
-    {
+    public function cancel(array $params){
+        $rfdObj = new tran\IgfsCgVoidAuth();
         
+        $rfdObj->serverURL = $this->serverUrl;
+        $rfdObj->tid= IgfsUtils::getValue($params,'terminalId',$this->dTid);
+        $rfdObj->kSig= IgfsUtils::getValue($params,'kSig',$this->dKsig);
+        $rfdObj->shopID= IgfsUtils::getValue($params, 'shopID');
+        $rfdObj->amount= str_replace('.', '', number_format(IgfsUtils::getValue($params, 'amount', '0'), 2, '.', ''));
+        $rfdObj->refTranID= IgfsUtils::getValue($params, 'transactionId');
+        
+        $rfdObj->execute();
+        return $rfdObj;
+
     }
 }
