@@ -78,9 +78,9 @@ class Gateway implements \Payment\Gateway\GatewayInterface
         $initObj->amount = str_replace('.', '', number_format(IgfsUtils::getValue($params, 'amount', '0'), 2, '.', ''));
         $initObj->currencyCode =IgfsUtils::getValue($params,'currency','EUR');
         $initObj->kSig = IgfsUtils::getValue($params,'hashMessage',$this->dKsig);
-        $initObj->notifyURL =$url.IgfsUtils::getValue($params,'notifyUrl','').'?token='.urlencode($unique);
-        $initObj->errorURL =$url.IgfsUtils::getValue($params,'errorUrl','').'?token='.urlencode($unique);
-        $initObj->callbackURL =$url.IgfsUtils::getValue($params,'callbackUrl','').'?token='.urlencode($unique);
+        $initObj->notifyURL = IgfsUtils::appendParameter($url.IgfsUtils::getValue($params,'notifyUrl',''), 'token='.urlencode($unique));
+        $initObj->errorURL = IgfsUtils::appendParameter($url.IgfsUtils::getValue($params,'errorUrl',''), 'token='.urlencode($unique));
+        $initObj->callbackURL = IgfsUtils::appendParameter($url.IgfsUtils::getValue($params,'callbackUrl',''), 'token='.urlencode($unique));
         $initObj->addInfo1 =IgfsUtils::getValue($params,'addInfo1',$this->dInfo1);
         $initObj->addInfo2 =IgfsUtils::getValue($params,'addInfo2',$this->dInfo2);
         $initObj->addInfo3 =IgfsUtils::getValue($params,'addInfo3',$this->dInfo3);
@@ -99,6 +99,8 @@ class Gateway implements \Payment\Gateway\GatewayInterface
             'returnCode' => $initObj->rc,
             'error' => $initObj->errorDesc,
             'paymentID' => $initObj->paymentID,
+            'shopID' => $initObj->shopID,
+            'notifyURL' => $initObj->notifyURL,
             'redirectURL' => $initObj->redirectURL,
         );
     }

@@ -1,5 +1,6 @@
 <?php
 namespace Payment\Gateway\Igfs\Init;
+use Payment\Gateway\Igfs\IgfsMissingParException;
 use Payment\Gateway\Igfs\IgfsUtils;
 
 class IgfsCgInit extends BaseIgfsCgInit
@@ -361,6 +362,8 @@ class IgfsCgInit extends BaseIgfsCgInit
         $this->paymentID = IgfsUtils::getValue($response, "paymentID");
         // Opzionale
         $this->redirectURL = IgfsUtils::getValue($response, "redirectURL");
+        // Opzionale
+        $this->shopID = IgfsUtils::getValue($response, "shopID");
     }
 
     protected function getResponseSignature($response)

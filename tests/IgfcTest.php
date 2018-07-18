@@ -61,8 +61,8 @@ final class IgfcTest extends TestCase
         );
 
         $params = [
-            'paymentID'=>'00190344435108790396', // paymentID => retrive from init() call
-            'shopID' => '11116968065b437efd081729.18058802',
+            'paymentID'=>'00198222215108845543', // paymentID => retrive from init() call
+            'shopID' => '7251284915b4de217b183b5.95711638',
             'langID' => 'IT',
             'terminalId' => null,
             'hashMessage' => null,
@@ -80,16 +80,16 @@ final class IgfcTest extends TestCase
         );
 
         $params = [
-            'transactionId'=>'3066108060556050', // tranID => retrive the final tid from the notifyUrl/callbackUrl/errorUrl
-            'shopID' => '7251284915b4de217b183b5.95711638',
+            'transactionId'=>'3066114830711236', // tranID => retrive the final tid from the notifyUrl/callbackUrl/errorUrl
+            'shopID' => '4104327475b4f19ac562a28.77757816',
             'terminalId' => null,
             'hashMessage' => null,
-            'amount' => 11.69,
+            'amount' => 10,
         ];
         
         // response for verify method
-        $confirmResponse = $payg->confirm($params);
-        var_dump($confirmResponse);
+        //$confirmResponse = $payg->confirm($params);
+        //var_dump($confirmResponse);
     }
 
     public function testRefund(){
@@ -100,14 +100,14 @@ final class IgfcTest extends TestCase
         );
 
         $params = [
-            'transactionId'=>'3066108060556050', // tranID => retrive the final tid from the notifyUrl/callbackUrl/errorUrl
-            'shopID' => '7251284915b4de217b183b5.95711638',
+            'transactionId'=>'3066114890873273', // tranID => must contain the Transaction ID of the "SETTLEMENT"/"PURCHASE"
+            'shopID' => '4104327475b4f19ac562a28.77757816',
             'terminalId' => null,
             'hashMessage' => null,
-            'amount' => 2.2,
+            'amount' => 10,
         ];
         
-        // response for verify method
+        // response for refund method
         //$refResponse = $ref->refund($params);
         //var_dump($refResponse);
     }
@@ -120,14 +120,14 @@ final class IgfcTest extends TestCase
         );
 
         $params = [
-            'transactionId'=>'3066108060556050', // tranID => retrive the final tid from the notifyUrl/callbackUrl/errorUrl
-            'shopID' => '7251284915b4de217b183b5.95711638',
+            'transactionId'=>'3066114830711236', // tranID => Must contain the "TRANSACTION ID" of the "Authorization"
+            'shopID' => '4104327475b4f19ac562a28.77757816',
             'terminalId' => null,
             'hashMessage' => null,
-            'amount' => 2.2,
+            'amount' => 3.89,
         ];
         
-        // response for verify method
+        // response for cancel method
         //$refResponse = $ref->cancel($params);
         //var_dump($refResponse);
     }

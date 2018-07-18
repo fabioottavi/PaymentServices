@@ -84,4 +84,8 @@ class IgfsUtils
     {
         return isset($map[$key]) ? $map[$key] : $default;
     }
+
+    public static function appendParameter($url, $param){
+        return strpos($url, '?') ? $url.'&'.$param : $url.'?'.$param;
+    }
 }
