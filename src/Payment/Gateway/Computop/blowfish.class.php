@@ -1,6 +1,6 @@
 <?php
 
-namespace Payment\Gateway\Computop\Init;
+namespace Payment\Gateway\Computop;
 
 /**
  * Class Blowfish

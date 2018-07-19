@@ -27,6 +27,11 @@ class Gateway implements \Payment\Gateway\GatewayInterface
     const PAYMENT_BY_SSL = '/payssl.aspx';
     const PAYMENT_BY_ELV = '/payelv.aspx';
     const PAYMENT_BY_PPL = '/paypal.aspx';
+    
+    // Action methods 
+    const ACTION_CAPTURE = '/capture.aspx';
+    const ACTION_CREDIT = '/credit.aspx';
+    const ACTION_REVERSE = '/reverse.aspx';
 
     const DEFAULT_LANGUAGE = 'EN';
 
@@ -57,12 +62,16 @@ class Gateway implements \Payment\Gateway\GatewayInterface
      */
     public function init(array $params = [])
     {
-        $initObj = new Init\ComputopCgInit(); 
+        $mId = ComputopUtils::getValue($params,'terminalId',$this->dMerchantId);    
+        $bPs = ComputopUtils::getValue($params,'blowfishPassword',$this->dBlowfishPassword);
+        $hMcPd = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword);
+        $initObj = new Init\ComputopCgInit($mId,$bPs,$hMcPd); 
+
         $url= ComputopUtils::getValue($params,'baseURL','');
 
         $initObj->transId = ComputopUtils::getValue($params, 'paymentReference');
         $initObj->amount = ComputopUtils::getValue($params, 'amount', '0');
-        $initObj->currency = ComputopUtils::getValue($params,'currency','EUR');
+        $initObj->currency = ComputopUtils::getValue($params,'currency',BaseComputopCg::DEFAULT_CURRENCY);
         $initObj->description = ComputopUtils::getValue($params,'description');
         $initObj->UrlSuccess = $url.ComputopUtils::getValue($params,'callbackUrl','');
         $initObj->UrlFailure = $url.ComputopUtils::getValue($params,'errorUrl','');
@@ -73,9 +82,7 @@ class Gateway implements \Payment\Gateway\GatewayInterface
         $initObj->userData = ComputopUtils::getValue($params,'userData');
 
         $initObj->serverUrl = $this->sUrl.ComputopUtils::getValue($params,'paymentMethod');
-        $initObj->merchantId = ComputopUtils::getValue($params,'terminalId',$this->dMerchantId);     
-        $initObj->blowfishPassword = ComputopUtils::getValue($params,'blowfishPassword',$this->dBlowfishPassword);
-        $initObj->hMacPassword = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword);
+        $initObj->payId = ComputopUtils::getValue($params,'payId','');     
 
         return $initObj->execute();
     }
@@ -88,12 +95,7 @@ class Gateway implements \Payment\Gateway\GatewayInterface
      */
     public function verify(array $params = [])
     {
-        $rsltObj = new Init\ComputopCgVerify(); 
-
-        $rsltObj->blowfishPassword = ComputopUtils::getValue($params,'blowfishPassword',$this->dBlowfishPassword);
-        $rsltObj->len = ComputopUtils::getValue($params, 'Len');
-        $rsltObj->data = ComputopUtils::getValue($params, 'Data');
-
+        $rsltObj = new Init\ComputopCgVerify(ComputopUtils::getValue($params,'blowfishPassword',$this->dBlowfishPassword),ComputopUtils::getValue($params, 'UrlParams')); 
         return $rsltObj->execute();
     }
 
@@ -106,7 +108,29 @@ class Gateway implements \Payment\Gateway\GatewayInterface
      * @return array|object
      */
     public function confirm(array $params = []){
+        $mId = ComputopUtils::getValue($params,'terminalId',$this->dMerchantId);    
+        $bPs = ComputopUtils::getValue($params,'blowfishPassword',$this->dBlowfishPassword);
+        $hMcPd = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword);
+        $obj = new S2S\ComputopCgCapture($mId,$bPs,$hMcPd); 
         
+        $obj->payId = ComputopUtils::getValue($params,'payId','');     
+        $obj->transId = ComputopUtils::getValue($params, 'paymentReference');
+        $obj->amount = ComputopUtils::getValue($params, 'amount', '0');
+        $obj->currency = ComputopUtils::getValue($params,'currency',BaseComputopCg::DEFAULT_CURRENCY);
+        $obj->serverUrl = $this->sUrl.ComputopUtils::getValue($params,'action');
+
+        $obj->execute();
+        return array(
+            'MID' => $obj->mId,
+            'PayID' => $obj->payId,
+            'XID' => $obj->xId,
+            'TransID' => $obj->transId,
+            'Status' => $obj->status,
+            'Description' => $obj->description,
+            'Code' => $obj->code,
+            'MAC' => $obj->mac,
+            'RefNr' => $obj->refNr,
+        ); 
     }
 
     /**
@@ -117,6 +141,63 @@ class Gateway implements \Payment\Gateway\GatewayInterface
      * @return array|object
      */
     public function refund(array $params = []){
+        $mId = ComputopUtils::getValue($params,'terminalId',$this->dMerchantId);    
+        $bPs = ComputopUtils::getValue($params,'blowfishPassword',$this->dBlowfishPassword);
+        $hMcPd = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword);
+        $obj = new S2S\ComputopCgCredit($mId,$bPs,$hMcPd); 
+        
+        $obj->payId = ComputopUtils::getValue($params,'payId','');     
+        $obj->transId = ComputopUtils::getValue($params, 'paymentReference');
+        $obj->amount = ComputopUtils::getValue($params, 'amount', '0');
+        $obj->currency = ComputopUtils::getValue($params,'currency',BaseComputopCg::DEFAULT_CURRENCY);
+        $obj->serverUrl = $this->sUrl.ComputopUtils::getValue($params,'action');
+
+        $obj->execute();
+        return array(
+            'MID' => $obj->mId,
+            'PayID' => $obj->payId,
+            'XID' => $obj->xId,
+            'TransID' => $obj->transId,
+            'Status' => $obj->status,
+            'Description' => $obj->description,
+            'Code' => $obj->code,
+            'MAC' => $obj->mac,
+        ); 
+    }
+
+    /**
+     * 
+     * Cancel pending transaction. Return a specific amount back to buyer.
+     * 
+     * @param array $params
+     * @return array|object
+     */
+    public function cancel(array $params){
+        
+        $mId = ComputopUtils::getValue($params,'terminalId',$this->dMerchantId);    
+        $bPs = ComputopUtils::getValue($params,'blowfishPassword',$this->dBlowfishPassword);
+        $hMcPd = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword);
+        $obj = new S2S\ComputopCgCapture($mId,$bPs,$hMcPd); 
+        
+        $obj->payId = ComputopUtils::getValue($params,'payId','');   
+        $obj->xId = ComputopUtils::getValue($params,'xId','');
+        $obj->transId = ComputopUtils::getValue($params, 'paymentReference');
+        $obj->amount = ComputopUtils::getValue($params, 'amount', '0');
+        $obj->currency = ComputopUtils::getValue($params,'currency',BaseComputopCg::DEFAULT_CURRENCY);
+        $obj->serverUrl = $this->sUrl.ComputopUtils::getValue($params,'action');
+
+        $obj->execute();
+        return array(
+            'MID' => $obj->mId,
+            'PayID' => $obj->payId,
+            'XID' => $obj->xId,
+            'TransID' => $obj->transId,
+            'Status' => $obj->status,
+            'Description' => $obj->description,
+            'Code' => $obj->code,
+            'MAC' => $obj->mac,
+            'RefNr' => $obj->refNr,
+        ); 
 
     }
 }

@@ -2,34 +2,30 @@
 
 namespace Payment\Gateway\Computop\Init;
 use Payment\Gateway\Computop\BaseComputopCg;
+use Payment\Gateway\Computop\ComputopUtils;
 
 class ComputopCgVerify extends BaseComputopCg {
-    public $len;
-    public $data;
+    public $responseParams;
 
-    public function __construct(){
+    public function __construct($blowfishPassword,$rsParams){
         $this->len = null;
         $this->data = null;
-        parent::__construct();
+        parent::__construct(null,$blowfishPassword,null);
+        $this->responseParams = $rsParams;
     }
-
+    protected function checkFields() {
+        if (!$this->blowfishPassword) {
+            throw new CmptpMissingParException("Missing blowfishPassword");
+        }
+	}
     public function execute(){
-        // decrypt the data string
-        $myPayGate = new ctPaygate;
-        $plaintext = $myPayGate->ctDecrypt($this->data, $this->len, $this->blowfishPassword);
+        $this->checkFields();
 
-        // prepare information string
-        $a = "";
-        $a = explode('&', $plaintext);
-        $info = $myPayGate->ctSplit($a, '=');
-        $status = $myPayGate->ctSplit($a, '=', 'Status');
+        $respDetails = $this->decryptResponse($this->responseParams);
 
-        // check transmitted decrypted status
-        $realstatus = $myPayGate->ctRealstatus($status);
+        $status = ComputopUtils::getValue($respDetails, "Status");
 
-        array_push($a,$realstatus);
-        return $a;
+        array_push($respDetails,parent::mapStatus($status));
+        return $respDetails;
     }
-
-
 }

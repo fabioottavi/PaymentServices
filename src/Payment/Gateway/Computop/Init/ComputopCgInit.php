@@ -1,12 +1,12 @@
 <?php
 namespace Payment\Gateway\Computop\Init;
-use Payment\Gateway\Computop\BaseComputopCg;
+use Payment\Gateway\Computop\CmptpMissingParException;
 
 /**
  * Computop class
  * Responsible for all the init() calls
  */
-class ComputopCgInit extends BaseComputopCg {
+class ComputopCgInit extends \Payment\Gateway\Computop\BaseComputopCg {
 
     public $UrlSuccess; //$sUrlDirname . "/success.php";
     public $UrlFailure; //$sUrlDirname . "/failure.php";
@@ -15,47 +15,23 @@ class ComputopCgInit extends BaseComputopCg {
     public $description; // = "your order description";
     public $userData; // = "your user data";
     public $payGate; // = "PHP - PayGate";
-    public $transId; // = "TransID";
-    public $amount; // = 11;
-    public $currency; // = "EUR";
     public $InpSend; // = "Select Payment";
     public $capture; // = "AUTO";
 
     public $response = "encrypt";
 
-    public function __construct()
-    {
+    protected function resetFields(){
         $this->UrlSuccess = null;
         $this->UrlFailure = null;
         $this->UrlNotify = null;
         $this->description = null;
         $this->userData = null;
         $this->payGate = null;
-        $this->transId = null;
-        $this->amount = null;
-        $this->currency = null;
         $this->InpSend = null;
-        parent::__construct();
+        parent::resetFields();
     }
 
-    
-    public function execute(){
-        $this->currency = trim($this->currency);
-        if (empty($currency)) {
-            $this->currency = 'EUR';
-        }
-
-        if ($this->hMacPassword == null) {
-            throw new IgfsMissingParException("Missing hMacPassword");
-        }
-        if ($this->blowfishPassword == null) {
-            throw new IgfsMissingParException("Missing blowfishPassword");
-        }
-        if ($this->merchantId == null) {
-            throw new IgfsMissingParException("Missing merchantId");
-        }
-
-
+    protected function getParams(){
         // format data which is to be transmitted - required
         $pTransID = "TransID=$this->transId";
         $pAmount = "Amount=$this->amount";
@@ -68,29 +44,13 @@ class ComputopCgInit extends BaseComputopCg {
         $pCapture = "Capture=$this->capture";
         $pResponse = "Response=$this->response";
 
-        //Creating MAC value
-        $myPayGate = new ctPaygate;
-        $MAC = $myPayGate->ctHMAC("", $this->transId, $this->merchantId, $this->amount, $this->currency, $this->hMacPassword);
-        $pMAC = "MAC=$MAC";
-
-        $query = array($pTransID, $pAmount, $pCurrency, $pURLSuccess, $pURLFailure, $pURLNotify, $pOrderDesc, $pUserData, $pCapture, $pResponse, $pMAC);
+        return array($pTransID, $pAmount, $pCurrency, $pURLSuccess, $pURLFailure, $pURLNotify, $pOrderDesc, $pUserData, $pCapture, $pResponse);
+    }
+    public function execute(){
+        $this->checkFields();
         
-        // building the string MerchantID, Len and Data (encrypted)
-        $plaintext = join("&", $query);
-        $Len = strlen($plaintext);  // Length of the plain text string
-
-        // encrypt plaintext
-        $Data = $myPayGate->ctEncrypt($plaintext, $Len, $this->blowfishPassword);
-
-        // format variables for URL
-        $pUrlMerchant = "MerchantID=$this->merchantId";
-        $pUrlLen = "Len=$Len";
-        $pUrlData = "Data=$Data";
-
-        $rQuery = array($pUrlMerchant,$pUrlLen,$pUrlData);
-
         // create url
-        $retUrl = $this->serverUrl.'?'.join("&", $rQuery);
+        $retUrl = $this->buildRequest();
 
         return array(
             'returnCode' => '',
