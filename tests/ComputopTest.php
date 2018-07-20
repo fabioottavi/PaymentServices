@@ -28,10 +28,10 @@ final class ComputopTest extends TestCase
             'amount' => 17,
             'orderReference' => $this->orderNumber,
             'paymentReference' => $this->paymentNumber,
-            'transactionType' => null, 
+            'transactionType' => $payg::TRASACTION_AUTO, 
             'description' => 'test',
             'language' => null, 
-            'paymentMethod' => $payg::PAYMENT_BY_SSL,
+            'paymentMethod' => $payg::PAYMENT_BY_GRP,
             'terminalId' => null,
             'hashMessage' => null,
             'currency' => null,
@@ -39,6 +39,19 @@ final class ComputopTest extends TestCase
             'userData' => 'test',
             'blowfishPassword' => null,
             'hMacPassword' => null,
+            
+            // Extra values
+            'addrCountryCode' => null,
+            'sellingPoint' => null,
+            'accOwner' => null,
+            'device' => null,
+            'email' => null,
+            'phone' => null,
+            'scheme' => null,
+            'bic' => null,
+            'expirationTime' => null,
+            'iban' => null,
+            'mobileNo' => null,
         ];
 
         //get response from gateway

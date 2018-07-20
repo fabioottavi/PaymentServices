@@ -6,11 +6,15 @@ class ComputopCgCredit extends BaseComputopCgS2S{
 
 	public $textField1;
     public $textField2;
+    public $refNr;
+    public $userData; // = "your user data";
     
     protected function resetFields() {
         parent::resetFields();
         $this->textField1 = null;
         $this->textField2 = null;
+        $this->refNr = null;
+        $this->userData = null;
     }
 
     protected function checkFields() {
@@ -38,6 +42,12 @@ class ComputopCgCredit extends BaseComputopCgS2S{
         }
         if($this->textField2 !== null){
             array_push($params, "&Textfeld2=".$this->textField2);
+        }
+        if($this->refNr !== null){
+            array_push($params, "&RefNr=".$this->refNr);
+        }
+        if($this->userData !== null){
+            array_push($params, "&UserData=".$this->userData);
         }
 
         return $params;

@@ -35,19 +35,20 @@ class ComputopCgInit extends \Payment\Gateway\Computop\BaseComputopCg {
 
     protected function getParams(){
         // format data which is to be transmitted - required
-        $pTransID = "TransID=$this->transId";
+        $pTransId = "TransID=$this->transId";
+        $pRefNr = "RefNr=$this->refNr";
         $pAmount = "Amount=$this->amount";
         $pCurrency = "Currency=$this->currency";
         $pURLSuccess = "URLSuccess=$this->UrlSuccess";
         $pURLFailure = "URLFailure=$this->UrlFailure";
+        $pResponse = "Response=$this->response";
         $pURLNotify = "URLNotify=$this->UrlNotify";
-        $pOrderDesc = "OrderDesc=$this->description";
         $pUserData = "UserData=$this->userData";
         $pCapture = "Capture=$this->capture";
-        $pResponse = "Response=$this->response";
-        $pRefNr = "RefNr=$this->refNr";
+        $pOrderDesc = "OrderDesc=$this->description";
+        $pReqId = "ReqID=$this->refNr";
 
-        return array($pTransID, $pAmount, $pCurrency, $pURLSuccess, $pURLFailure, $pURLNotify, $pOrderDesc, $pUserData, $pCapture, $pResponse, $pRefNr);
+        return array($pTransId, $pRefNr, $pAmount, $pCurrency, $pURLSuccess, $pURLFailure, $pResponse, $pURLNotify, $pUserData, $pCapture, $pOrderDesc, $pReqId);
     }
     public function execute(){
         $this->checkFields();
