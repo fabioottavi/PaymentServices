@@ -10,7 +10,7 @@ class Gateway implements \Payment\Gateway\GatewayInterface
     private $dMerchantId = 'bnlp_test';
     private $dBlowfishPassword = 'X*b89Q=eG!s23rJ[';
     private $dHsMacPassword = '8d)N?7Zg2Jz=(4Gs3y!T_Wx59k[R*6Cn';
-    private $sUrl = 'https://ecpay.bnlpositivity.it/paymentpage';
+    private $sUrl = 'https://www.computop-paygate.com';
     
     const PAYMENT_BY_MBK = '/myBank.aspx';
     const PAYMENT_BY_ALP = '/alipay.aspx';
@@ -115,6 +115,7 @@ class Gateway implements \Payment\Gateway\GatewayInterface
         
         $obj->payId = ComputopUtils::getValue($params,'payId','');     
         $obj->transId = ComputopUtils::getValue($params, 'paymentReference');
+        $obj->refNr = ComputopUtils::getValue($params, 'orderReference');
         $obj->amount = ComputopUtils::getValue($params, 'amount', '0');
         $obj->currency = ComputopUtils::getValue($params,'currency',BaseComputopCg::DEFAULT_CURRENCY);
         $obj->serverUrl = $this->sUrl.ComputopUtils::getValue($params,'action');
@@ -148,6 +149,7 @@ class Gateway implements \Payment\Gateway\GatewayInterface
         
         $obj->payId = ComputopUtils::getValue($params,'payId','');     
         $obj->transId = ComputopUtils::getValue($params, 'paymentReference');
+        $obj->refNr = ComputopUtils::getValue($params, 'orderReference');
         $obj->amount = ComputopUtils::getValue($params, 'amount', '0');
         $obj->currency = ComputopUtils::getValue($params,'currency',BaseComputopCg::DEFAULT_CURRENCY);
         $obj->serverUrl = $this->sUrl.ComputopUtils::getValue($params,'action');

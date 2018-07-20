@@ -4,9 +4,11 @@ use PHPUnit\Framework\TestCase;
 final class ComputopTest extends TestCase
 {
     private $orderNumber;
+    private $paymentNumber;
 
     public function setUp(){
         $this->orderNumber = uniqid(rand(), true);
+        $this->paymentNumber = uniqid(rand(), true);
     }
 
     public function testInit()
@@ -19,12 +21,13 @@ final class ComputopTest extends TestCase
         
         $params = [
             //Same fields on both payment methods
-            'baseURL' => "http://ipgadmin.sendabox.it/Callback",
-            'notifyUrl' => '/Save',
-            'callbackUrl' => '/Save',
-            'errorUrl' => '/Save',
+            'baseURL' => "https://localhost/ctPaygatePHP",
+            'notifyUrl' => '/notify.php',
+            'callbackUrl' => '/success.php',
+            'errorUrl' => '/failure.php',
             'amount' => 17,
-            'paymentReference' => $this->orderNumber,
+            'orderReference' => $this->orderNumber,
+            'paymentReference' => $this->paymentNumber,
             'transactionType' => null, 
             'description' => 'test',
             'language' => null, 
@@ -39,8 +42,8 @@ final class ComputopTest extends TestCase
         ];
 
         //get response from gateway
-        //$initResponse = $payg->init($params);
-        //var_dump($initResponse);
+        $initResponse = $payg->init($params);
+        var_dump($initResponse);
     }
 
     public function testVerify()
@@ -75,8 +78,9 @@ final class ComputopTest extends TestCase
             'terminalId' => null,
             'blowfishPassword' => null,
             'hMacPassword' => null,
-            'payId' => '123123',
-            'paymentReference' => $this->orderNumber,
+            'payId' => '123123', // we retrieve it from them
+            'paymentReference' => $this->paymentNumber,
+            'orderReference' => $this->orderNumber,
             'amount' => 17,
             'currency' => null,
             'action' => $payg::ACTION_CAPTURE
@@ -99,8 +103,8 @@ final class ComputopTest extends TestCase
             'terminalId' => null,
             'blowfishPassword' => null,
             'hMacPassword' => null,
-            'payId' => '123123',
-            'paymentReference' => $this->orderNumber,
+            'payId' => '123123', // we retrieve it from them
+            'paymentReference' => $this->paymentNumber,
             'amount' => 17,
             'currency' => null,
             'action' => $payg::ACTION_CREDIT
@@ -123,8 +127,9 @@ final class ComputopTest extends TestCase
             'terminalId' => null,
             'blowfishPassword' => null,
             'hMacPassword' => null,
-            'payId' => '123123',
-            'paymentReference' => $this->orderNumber,
+            'payId' => '123123', // we retrieve it from them
+            'paymentReference' => $this->paymentNumber,
+            'orderReference' => $this->orderNumber,
             'amount' => 17,
             'currency' => null,
             'xId' => '',
@@ -132,8 +137,8 @@ final class ComputopTest extends TestCase
         ];
 
         //get response from gateway
-        $pResult = $payg->cancel($params);
-        var_dump($pResult);
+        //$pResult = $payg->cancel($params);
+        //var_dump($pResult);
     }
 }
 

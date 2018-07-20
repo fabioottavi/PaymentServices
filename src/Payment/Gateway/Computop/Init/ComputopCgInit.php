@@ -12,6 +12,7 @@ class ComputopCgInit extends \Payment\Gateway\Computop\BaseComputopCg {
     public $UrlFailure; //$sUrlDirname . "/failure.php";
     public $UrlNotify; //$sUrlDirname . "/notify.php";
 
+    public $refNr;
     public $description; // = "your order description";
     public $userData; // = "your user data";
     public $payGate; // = "PHP - PayGate";
@@ -28,6 +29,7 @@ class ComputopCgInit extends \Payment\Gateway\Computop\BaseComputopCg {
         $this->userData = null;
         $this->payGate = null;
         $this->InpSend = null;
+        $this->refNr = null;
         parent::resetFields();
     }
 
@@ -43,8 +45,9 @@ class ComputopCgInit extends \Payment\Gateway\Computop\BaseComputopCg {
         $pUserData = "UserData=$this->userData";
         $pCapture = "Capture=$this->capture";
         $pResponse = "Response=$this->response";
+        $pRefNr = "RefNr=$this->refNr";
 
-        return array($pTransID, $pAmount, $pCurrency, $pURLSuccess, $pURLFailure, $pURLNotify, $pOrderDesc, $pUserData, $pCapture, $pResponse);
+        return array($pTransID, $pAmount, $pCurrency, $pURLSuccess, $pURLFailure, $pURLNotify, $pOrderDesc, $pUserData, $pCapture, $pResponse, $pRefNr);
     }
     public function execute(){
         $this->checkFields();

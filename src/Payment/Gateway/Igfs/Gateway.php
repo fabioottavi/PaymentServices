@@ -66,7 +66,7 @@ class Gateway implements \Payment\Gateway\GatewayInterface
     public function init(array $params = [])
     {
         $initObj = new Init\IgfsCgInit(); 
-        $unique = IgfsUtils::getValue($params, 'paymentReference');
+        $unique = IgfsUtils::getValue($params, 'orderReference');
         $url= IgfsUtils::getValue($params,'baseURL','');
 
         $initObj->serverURL = $this->serverUrl;
@@ -119,10 +119,10 @@ class Gateway implements \Payment\Gateway\GatewayInterface
         if($this->test){
             $verifyObj->disableCheckSSLCert();
         }
-        $verifyObj->kSig = IgfsUtils::getValue($params,'kSig',$this->dKsig);
+        $verifyObj->kSig = IgfsUtils::getValue($params,'hashMessage',$this->dKsig);
         $verifyObj->tid = IgfsUtils::getValue($params,'terminalId',$this->dTid).'_S';
-        $verifyObj->shopID = IgfsUtils::getValue($params, 'shopID');
-        $verifyObj->langID =IgfsUtils::getValue($params, 'langID', 'IT');
+        $verifyObj->shopID = IgfsUtils::getValue($params, 'orderReference');
+        $verifyObj->langID =IgfsUtils::getValue($params, 'language', 'IT');
         $verifyObj->paymentID =IgfsUtils::getValue($params, 'paymentID', '00179695241108714733');
 
 
@@ -154,9 +154,9 @@ class Gateway implements \Payment\Gateway\GatewayInterface
         }
 
         $confirmObj->tid= IgfsUtils::getValue($params,'terminalId',$this->dTid);
-        $confirmObj->kSig= IgfsUtils::getValue($params,'kSig',$this->dKsig);
-        $confirmObj->shopID= IgfsUtils::getValue($params, 'shopID');
-        $confirmObj->refTranID= IgfsUtils::getValue($params, 'transactionId');
+        $confirmObj->kSig= IgfsUtils::getValue($params,'hashMessage',$this->dKsig);
+        $confirmObj->shopID= IgfsUtils::getValue($params, 'orderReference');
+        $confirmObj->refTranID= IgfsUtils::getValue($params, 'paymentReference');
         $confirmObj->amount= str_replace('.', '', number_format(IgfsUtils::getValue($params, 'amount', '0'), 2, '.', ''));
         
         $confirmObj->execute();
@@ -180,10 +180,10 @@ class Gateway implements \Payment\Gateway\GatewayInterface
 
         $rfdObj->serverURL = $this->serverUrl;
         $rfdObj->tid= IgfsUtils::getValue($params,'terminalId',$this->dTid);
-        $rfdObj->kSig= IgfsUtils::getValue($params,'kSig',$this->dKsig);
-        $rfdObj->shopID= IgfsUtils::getValue($params, 'shopID');
+        $rfdObj->kSig= IgfsUtils::getValue($params,'hashMessage',$this->dKsig);
+        $rfdObj->shopID= IgfsUtils::getValue($params, 'orderReference');
         $rfdObj->amount= str_replace('.', '', number_format(IgfsUtils::getValue($params, 'amount', '0'), 2, '.', ''));
-        $rfdObj->refTranID= IgfsUtils::getValue($params, 'transactionId');
+        $rfdObj->refTranID= IgfsUtils::getValue($params, 'paymentReference');
 
         $rfdObj->execute();
         return $rfdObj;
@@ -201,10 +201,10 @@ class Gateway implements \Payment\Gateway\GatewayInterface
         
         $rfdObj->serverURL = $this->serverUrl;
         $rfdObj->tid= IgfsUtils::getValue($params,'terminalId',$this->dTid);
-        $rfdObj->kSig= IgfsUtils::getValue($params,'kSig',$this->dKsig);
-        $rfdObj->shopID= IgfsUtils::getValue($params, 'shopID');
+        $rfdObj->kSig= IgfsUtils::getValue($params,'hashMessage',$this->dKsig);
+        $rfdObj->shopID= IgfsUtils::getValue($params, 'orderReference');
         $rfdObj->amount= str_replace('.', '', number_format(IgfsUtils::getValue($params, 'amount', '0'), 2, '.', ''));
-        $rfdObj->refTranID= IgfsUtils::getValue($params, 'transactionId');
+        $rfdObj->refTranID= IgfsUtils::getValue($params, 'paymentReference');
         
         $rfdObj->execute();
         return $rfdObj;

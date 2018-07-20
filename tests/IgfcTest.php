@@ -26,7 +26,7 @@ final class IgfcTest extends TestCase
             'callbackUrl' => '/Save',
             'errorUrl' => '/Save',
             'amount' => 13.89,
-            'paymentReference' => $this->orderNumber,
+            'orderReference' => $this->orderNumber,
             'transactionType' => $payg::TRANSACTION_TYPE_AUTH, //TODO: Test with: TRANSACTION_TYPE_VERIFY, TRANSACTION_TYPE_PURCHASE
             'description' => 'this is a test',
             'language' => 'IT',
@@ -61,11 +61,12 @@ final class IgfcTest extends TestCase
         );
 
         $params = [
-            'paymentID'=>'00198222215108845543', // paymentID => retrive from init() call
-            'shopID' => '7251284915b4de217b183b5.95711638',
-            'langID' => 'IT',
+            'orderReference' => '7251284915b4de217b183b5.95711638',
+            'language' => 'IT',
             'terminalId' => null,
             'hashMessage' => null,
+
+            'paymentID'=>'00198222215108845543', // paymentID => retrive from init() call
         ];
         // response for verify method
         //$verifyResponse = $payg->verify($params);
@@ -80,11 +81,12 @@ final class IgfcTest extends TestCase
         );
 
         $params = [
-            'transactionId'=>'3066114830711236', // tranID => retrive the final tid from the notifyUrl/callbackUrl/errorUrl
-            'shopID' => '4104327475b4f19ac562a28.77757816',
+            'orderReference' => '4104327475b4f19ac562a28.77757816',
             'terminalId' => null,
             'hashMessage' => null,
             'amount' => 10,
+            
+            'paymentReference'=>'3066114830711236', // tranID => retrive the final tid from the notifyUrl/callbackUrl/errorUrl
         ];
         
         // response for verify method
@@ -100,8 +102,8 @@ final class IgfcTest extends TestCase
         );
 
         $params = [
-            'transactionId'=>'3066114890873273', // tranID => must contain the Transaction ID of the "SETTLEMENT"/"PURCHASE"
-            'shopID' => '4104327475b4f19ac562a28.77757816',
+            'paymentReference'=>'3066114890873273', // tranID => must contain the Transaction ID of the "SETTLEMENT"/"PURCHASE"
+            'orderReference' => '4104327475b4f19ac562a28.77757816',
             'terminalId' => null,
             'hashMessage' => null,
             'amount' => 10,
@@ -120,8 +122,8 @@ final class IgfcTest extends TestCase
         );
 
         $params = [
-            'transactionId'=>'3066114830711236', // tranID => Must contain the "TRANSACTION ID" of the "Authorization"
-            'shopID' => '4104327475b4f19ac562a28.77757816',
+            'paymentReference'=>'3066114830711236', // tranID => Must contain the "TRANSACTION ID" of the "Authorization"
+            'orderReference' => '4104327475b4f19ac562a28.77757816',
             'terminalId' => null,
             'hashMessage' => null,
             'amount' => 3.89,
