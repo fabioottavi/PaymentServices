@@ -1,9 +1,18 @@
 <?php
 final class PayGateway
 {
-    const IGFC = 'IGFC';
-    const CMPT1 = 'CMPT1';
-    const CMPT2 = 'CMPT2';
+    const IGFC = 'igfs';
+    const CMPT1 = 'computop';
+
+    /**
+     * Return the possible payment types
+     *
+     * @param 
+     * @return array|object
+     */
+    public static function getPaymentTypes(){
+        return array(self::IGFC=> 'IGFS',self::CMPT1  => 'Computop');
+    }
 
     /**
      * Undocumented function
@@ -20,8 +29,6 @@ final class PayGateway
             break;
         case self::CMPT1:
             $return = new \Payment\Gateway\Computop\Gateway($test);
-            break;
-        case self::CMPT2:
             break;
         default:
             break;

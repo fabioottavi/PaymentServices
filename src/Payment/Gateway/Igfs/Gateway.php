@@ -2,7 +2,7 @@
 
 namespace Payment\Gateway\Igfs;
 
-class Gateway implements \Payment\Gateway\GatewayInterface
+class Gateway implements \Payment\GatewayInterface
 {
     private $serverUrl;
     private $test;
@@ -13,23 +13,23 @@ class Gateway implements \Payment\Gateway\GatewayInterface
     private $dInfo3 = '';
     private $dInfo4 = '';
     private $dInfo5 = '';
-
-    const PAYMENT_BY_SELECTION = '_S';
-    const PAYMENT_BY_CC = '';
-    const PAYMENT_BY_MY_BANK = 'M';
-    const PAYMENT_BY_MASTERPASS = 'P';
-    const PAYMENT_BY_FINDOMESTIC = '';
-    const PAYMENT_BY_PAYPAL = 'PP';
     
     const DEFAULT_LANGUAGE = 'EN';
-         
-    const CHECK_OUT_NORMAL = 'CHECK OUT NORMAL'; //checkout BNLP
-    const CHECK_OUT_SYNTHESIS = 'CHECK OUT SYNTHESIS'; // checkout BNLP with web synthesis store
-    const CHECK_OUT_SELECT = 'CHECK OUT SELECT'; //checkout BNLP with selection of payment instrument on the web store
 
-    const TRANSACTION_TYPE_PURCHASE = 'PURCHASE';
-    const TRANSACTION_TYPE_AUTH = 'AUTH';
-    const TRANSACTION_TYPE_VERIFY = 'VERIFY';
+    //const PAYMENT_BY_SELECTION = '_S';
+    //const PAYMENT_BY_CC = '';
+    //const PAYMENT_BY_MY_BANK = 'M';
+    //const PAYMENT_BY_MASTERPASS = 'P';
+    //const PAYMENT_BY_FINDOMESTIC = '';
+    //const PAYMENT_BY_PAYPAL = 'PP';
+
+    //const CHECK_OUT_NORMAL = 'CHECK OUT NORMAL'; //checkout BNLP
+    //const CHECK_OUT_SYNTHESIS = 'CHECK OUT SYNTHESIS'; // checkout BNLP with web synthesis store
+    //const CHECK_OUT_SELECT = 'CHECK OUT SELECT'; //checkout BNLP with selection of payment instrument on the web store
+
+    //const TRANSACTION_TYPE_PURCHASE = 'PURCHASE';
+    //const TRANSACTION_TYPE_AUTH = 'AUTH';
+    //const TRANSACTION_TYPE_VERIFY = 'VERIFY';
 
      /**
      * 
@@ -73,7 +73,7 @@ class Gateway implements \Payment\Gateway\GatewayInterface
         if($this->test){
             $initObj->disableCheckSSLCert();
         }
-        $initObj->tid = IgfsUtils::getValue($params,'terminalId',$this->dTid).IgfsUtils::getValue($params,'paymentMethod');
+        $initObj->tid = IgfsUtils::getValue($params,'terminalId',$this->dTid).$this->getInstrumentCode(IgfsUtils::getValue($params,'paymentMethod'));
         $initObj->shopID = $unique;
         $initObj->amount = str_replace('.', '', number_format(IgfsUtils::getValue($params, 'amount', '0'), 2, '.', ''));
         $initObj->currencyCode =IgfsUtils::getValue($params,'currency','EUR');
@@ -163,6 +163,8 @@ class Gateway implements \Payment\Gateway\GatewayInterface
         return array(
             'id' => $confirmObj->tid,
             'returnCode' => $confirmObj->rc,
+            'refTranID' => $confirmObj->refTranID,
+            'tranID' => $confirmObj->tranID,
             'error' => $confirmObj->errorDesc,
         );
     }
@@ -210,4 +212,76 @@ class Gateway implements \Payment\Gateway\GatewayInterface
         return $rfdObj;
 
     }
+    /**
+     * 
+     * Return all the possible payment instruments
+     * 
+     * @param 
+     * @return array|object
+     */
+    public function getPaymentInstruments(){
+        return array(
+            'cc' => 'Credit Card',
+            'mybank' => 'MyBank',
+            'masterpass'  => 'Masterpass',
+            'findomestic' => 'Findomestic',
+            'paypal'      => 'PayPal'
+          );
+    }
+    /**
+     * 
+     * Return the extra characters that has to be added in the tId during the initialization
+     * 
+     * @param string $inst
+     * @return string
+     */
+    private function getInstrumentCode($inst){
+        $code = '_S';
+        switch ($inst) {
+            case 'cc':
+                $code = '';
+                break;
+            case 'mybank':
+                $code = 'M';
+                break;
+            case 'masterpass':
+                $code = 'P';
+                break;
+            case 'findomestic':
+                $code = ''; //TODO: ????
+                break;
+            case 'paypal':
+                $code = 'PP';
+                break;
+        }
+        return $code;
+    }
+    /**
+     * 
+     * Return all the possible transaction types
+     * 
+     * @param 
+     * @return array|object
+     */
+    public function getTransactionTypes(){
+        return array(
+            'PURCHASE'  => 'Acquisto',
+            'AUTH'      => 'Preautorizzazione',
+            'VERIFY'    => 'Verifica',
+          );
+    }
+    /**
+     * 
+     * Return all the possible cheout types
+     * 
+     * @param 
+     * @return array|object
+     */
+    public function getCheckoutTypes(){
+        return array(
+            '1'  => 'Checkout BNLP',
+            '2'  => 'Checkout BNLP con sintesi in web store',
+            '3'  => 'Checkout BNLP con selezione strumento di pagamento su web store',
+          );
+      }
 }

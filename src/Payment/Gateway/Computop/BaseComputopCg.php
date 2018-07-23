@@ -15,12 +15,13 @@ abstract class BaseComputopCg{
     
     // Default values
     const DEFAULT_CURRENCY = 'EUR';
-    public function __construct($merchantId,$blowfishPassword,$hMacPassword)
+    public function __construct($merchantId,$blowfishPassword,$hMacPassword,$serverUrl = null)
     {
         $this->resetFields();
         $this->merchantId = $merchantId;
         $this->blowfishPassword = $blowfishPassword;
         $this->hMacPassword = $hMacPassword;
+        $this->serverUrl = $serverUrl;
     }
     protected function resetFields()
     {

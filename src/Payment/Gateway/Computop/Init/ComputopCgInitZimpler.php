@@ -14,6 +14,11 @@ class ComputopCgInitZimpler extends ComputopCgInit {
     public $email;
     public $mobileNo;
 
+    public function __construct($merchantId,$blowfishPassword,$hMacPassword,$serverUrl)
+    {
+        parent::__construct($merchantId,$blowfishPassword,$hMacPassword,$serverUrl.'/zimpler.aspx');
+    }
+
     protected function resetFields(){
         $this->addrCountryCode = null;
         $this->sellingPoint = null;

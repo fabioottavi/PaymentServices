@@ -7,8 +7,8 @@ final class ComputopTest extends TestCase
     private $paymentNumber;
 
     public function setUp(){
-        $this->orderNumber = uniqid(rand(), true);
-        $this->paymentNumber = uniqid(rand(), true);
+        $this->orderNumber = uniqid(rand(0,100000), true);
+        $this->paymentNumber = uniqid(rand(0,100000), true);
     }
 
     public function testInit()
@@ -25,13 +25,13 @@ final class ComputopTest extends TestCase
             'notifyUrl' => '/notify.php',
             'callbackUrl' => '/success.php',
             'errorUrl' => '/failure.php',
-            'amount' => 17,
+            'amount' => 1.1,
             'orderReference' => $this->orderNumber,
             'paymentReference' => $this->paymentNumber,
-            'transactionType' => $payg::TRASACTION_AUTO, 
+            'transactionType' => 'AUTO', 
             'description' => 'test',
             'language' => null, 
-            'paymentMethod' => $payg::PAYMENT_BY_GRP,
+            'paymentMethod' => 'cc', // test with: cc,mybank,alipay,cupay,wechat,giropay,sofort,ideal,p24,multibanco,zimpler
             'terminalId' => null,
             'hashMessage' => null,
             'currency' => null,
@@ -70,12 +70,12 @@ final class ComputopTest extends TestCase
         //ComputopUtils::getPaymentResultParam($_GET);
         $params = [
             'blowfishPassword' => null,
-            'UrlParams' => 'Len=279&Data=6256CF18B10A0FBE4D9028746090F3D19E1CA117E75593AC9D4341101841775B6EB6E3EC590665849C60252740A24C35F0FB06C0EAEBF923A4991AE4AF7909D96B2A3393C7E7089C8B008A9FBFAFF108C165F01488E5736023BB57B5D37E7EC8F4BA4C4C01D33797DA233874ABE285BCD9908A4029A16742A1254404ADB3023FC3BF3B4F574A96288FB3F0E7C9A4C6FB78ED6F02FD3C433D13E248AF46B5283D51AE89F295DF5A7E3FD796812764325C2E9755328C4C5573E8420649FBFF208039D048875B9A0CC403143068AF75C3FA02E6B7323963675CB9E1FD042C4710EBE91CCA5B5C1CDA307BFB6AB09FEB4CDD912D9DF25318D0FE13581D4276D2BD5B6BA2319DF2C014D12B99BB2236E51A11301AE35CB8177D8D',
+            'UrlParams' => 'Len=353&Data=6256CF18B10A0FBE4D9028746090F3D1142EA6C0E628E99D7EE5BAF8B0DBBC1E2EE4D8AB32A0B76FE0757EB72A82F22748DD0EB16DF24E2A679E55F777A318569B8D27E780DC9E2C2D5AD56A884AD9688A684B3CF73099B2659ADCB3FA11DFCACAE587FCEA3E22FB58C7E18C5F1F560BF8C4FF62CC7A8A000772AD7255D2AD2F02D49A8353843CCC4DF6F890F90BD012C218E0597317C9D62FF02B9607E13B985E57CD4E1E8BB6537ADF915BC73F1E83B47BD92955874870D19E63CCE2B7F0744B653522F0AE29E3182119C371622208AD8F33D29EA379F647F2D86B4184F344F7D18ABAE062D92D6B2B40016612DB507B417BB6F205886E542955D95BEE29F369D41FF7D6817CEB9AF51ED6803A434CC40409489E74AF1640B76CF96F659AADE07C32794BF47A85E0FECFBBFD190F436234F696C0A846570BF9634EB303BD7CB5F274B6649FF0714655314C6F91F46BF5CDDE29F9A2B9BE86A3325C6F5812141A61FA2A48E77C05',
         ];
 
         //get response from gateway
-        //$pResult = $payg->verify($params);
-        //var_dump($pResult);
+        $pResult = $payg->verify($params);
+        var_dump($pResult);
 
     }
 

@@ -13,6 +13,11 @@ class ComputopCgInitAlipay extends ComputopCgInit {
     public $accOwner;
     public $device; // if device = "Mobile" it show the mobile version
 
+    public function __construct($merchantId,$blowfishPassword,$hMacPassword,$serverUrl)
+    {
+        parent::__construct($merchantId,$blowfishPassword,$hMacPassword,$serverUrl.'/alipay.aspx');
+    }
+
     protected function resetFields(){
         $this->addrCountryCode = null;
         $this->sellingPoint = null;

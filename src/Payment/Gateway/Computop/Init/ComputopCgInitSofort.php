@@ -14,6 +14,11 @@ class ComputopCgInitSofort extends ComputopCgInit {
     public $bic;
     public $iban;
 
+    public function __construct($merchantId,$blowfishPassword,$hMacPassword,$serverUrl)
+    {
+        parent::__construct($merchantId,$blowfishPassword,$hMacPassword,$serverUrl.'/sofort.aspx');
+    }
+
     protected function resetFields(){
         $this->addrCountryCode = null;
         $this->sellingPoint = null;

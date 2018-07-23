@@ -12,6 +12,11 @@ class ComputopCgInitP24 extends ComputopCgInit {
     public $accOwner;
     public $email;
 
+    public function __construct($merchantId,$blowfishPassword,$hMacPassword,$serverUrl)
+    {
+        parent::__construct($merchantId,$blowfishPassword,$hMacPassword,$serverUrl.'/p24.aspx');
+    }
+
     protected function resetFields(){
         $this->sellingPoint = null;
         $this->accOwner = null;

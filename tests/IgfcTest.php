@@ -25,32 +25,32 @@ final class IgfcTest extends TestCase
             'notifyUrl' => '/Save',
             'callbackUrl' => '/Save',
             'errorUrl' => '/Save',
-            'amount' => 13.89,
+            'amount' => 1.89,
             'orderReference' => $this->orderNumber,
-            'transactionType' => $payg::TRANSACTION_TYPE_AUTH, //TODO: Test with: TRANSACTION_TYPE_VERIFY, TRANSACTION_TYPE_PURCHASE
+            'transactionType' => 'AUTH', //TODO: Test with: PURCHASE, AUTH, VERIFY
             'description' => 'this is a test',
             'language' => 'IT',
-            'paymentMethod'=>$payg::PAYMENT_BY_SELECTION, //TODO: Test with: PAYMENT_BY_CC,PAYMENT_BY_MY_BANK,PAYMENT_BY_MASTERPASS,PAYMENT_BY_PAYPAL
-            'terminalId' => null,
+            'paymentMethod'=>'', //TODO: Test with: cc,mybank,masterpass,findomestic,paypal
+            'terminalId' => null, // null => if it's in test mode it will point to the test tId
             'hashMessage' => null,
             'currency' => 'EUR',
 
-
-            'checkoutMode' => $payg::CHECK_OUT_NORMAL, //TODO: Test with: CHECK_OUT_SYNTHESIS, CHECK_OUT_SELECT
+            //not used
+            //'checkoutMode' => $payg::CHECK_OUT_NORMAL, //TODO: Test with: CHECK_OUT_SYNTHESIS, CHECK_OUT_SELECT
             'addInfo1' => '',
             'addInfo2' => '',
             'addInfo3' => '',
             'addInfo4' => '',
             'addInfo5' => '',
             'payInstrToken' => '', // TODO:
-            'shopUserRef' => 'TestRef', // It's the client email
+            'shopUserRef' => 'TestRef@sendabox.it', // It's the client email
             'shopUserName' => 'TestName',
             'regenPayInstrToken' => '',  // TODO: how do i use it?
         ];
 
         //get response from gateway
-        //$initResponse = $payg->init($params);
-        //var_dump($initResponse);
+        $initResponse = $payg->init($params);
+        var_dump($initResponse);
     }
 
     public function testVerify(){

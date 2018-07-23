@@ -1,5 +1,5 @@
 <?php
-namespace Payment\Gateway;
+namespace Payment;
 
 /**
  *
@@ -48,4 +48,28 @@ interface GatewayInterface
      * @return array|object
      */
     public function cancel(array $params);
+    /**
+     * 
+     * Return all the possible payment instruments
+     * 
+     * @param 
+     * @return array|object
+     */
+    public function getPaymentInstruments();
+    /**
+     * 
+     * Return all the possible transaction types
+     * 
+     * @param 
+     * @return array|object
+     */
+    public function getTransactionTypes();
+    /**
+     * 
+     * Return all the possible cheout types
+     * 
+     * @param 
+     * @return array|object
+     */
+    public function getCheckoutTypes();
 }

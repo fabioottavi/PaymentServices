@@ -15,6 +15,11 @@ class ComputopCgInitGiroPay extends ComputopCgInit {
     public $expirationTime; // Format: YYYY-MM-ddTHH:mm:ss
     public $iban;
 
+    public function __construct($merchantId,$blowfishPassword,$hMacPassword,$serverUrl)
+    {
+        parent::__construct($merchantId,$blowfishPassword,$hMacPassword,$serverUrl.'/giropay.aspx');
+    }
+
     protected function resetFields(){
         $this->sellingPoint = null;
         $this->accOwner = null;

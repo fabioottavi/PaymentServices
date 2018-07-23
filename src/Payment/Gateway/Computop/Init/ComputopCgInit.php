@@ -21,7 +21,13 @@ class ComputopCgInit extends \Payment\Gateway\Computop\BaseComputopCg {
 
     public $response = "encrypt";
 
+    public function __construct($merchantId,$blowfishPassword,$hMacPassword,$serverUrl)
+    {
+        parent::__construct($merchantId,$blowfishPassword,$hMacPassword,$serverUrl.'/payssl.aspx');
+    }
+
     protected function resetFields(){
+        parent::resetFields();
         $this->UrlSuccess = null;
         $this->UrlFailure = null;
         $this->UrlNotify = null;
@@ -30,7 +36,13 @@ class ComputopCgInit extends \Payment\Gateway\Computop\BaseComputopCg {
         $this->payGate = null;
         $this->InpSend = null;
         $this->refNr = null;
-        parent::resetFields();
+    }
+
+    protected function checkFields() {
+        parent::checkFields();
+        if (!$this->description) {
+            throw new CmptpMissingParException("Missing description");
+        }
     }
 
     protected function getParams(){

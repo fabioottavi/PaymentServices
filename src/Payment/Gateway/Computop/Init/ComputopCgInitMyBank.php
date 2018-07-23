@@ -12,6 +12,11 @@ class ComputopCgInitMyBank extends ComputopCgInit {
     public $sellingPoint;
     public $accOwner;
 
+    public function __construct($merchantId,$blowfishPassword,$hMacPassword,$serverUrl)
+    {
+        parent::__construct($merchantId,$blowfishPassword,$hMacPassword,$serverUrl.'/myBank.aspx');
+    }
+
     protected function resetFields(){
         $this->addrCountryCode = null;
         $this->sellingPoint = null;

@@ -2,31 +2,26 @@
 
 namespace Payment\Gateway\Computop;
 
-class Gateway implements \Payment\Gateway\GatewayInterface
+class Gateway implements \Payment\GatewayInterface
 {
-    
-
     private $test;
     private $dMerchantId = 'bnlp_test';
     private $dBlowfishPassword = 'X*b89Q=eG!s23rJ[';
     private $dHsMacPassword = '8d)N?7Zg2Jz=(4Gs3y!T_Wx59k[R*6Cn';
-    private $sUrl = 'https://ecpay.bnlpositivity.it/paymentpage';
+    //private $sUrl = 'https://ecpay.bnlpositivity.it/paymentpage';
+    private $sUrl ='https://www.computop-paygate.com';
     
-    const PAYMENT_BY_MBK = '/myBank.aspx';
-    const PAYMENT_BY_ALP = '/alipay.aspx';
-    const PAYMENT_BY_CUP = '/Chinaunionpay.aspx';
-    const PAYMENT_BY_WCH = '/wechat.aspx';
-    const PAYMENT_BY_GRP = '/giropay.aspx';
-    const PAYMENT_BY_SFT = '/sofort.aspx';
-    const PAYMENT_BY_IDL = '/ideal.aspx';
-    const PAYMENT_BY_P24 = '/p24.aspx';
-    const PAYMENT_BY_MTB = '/multibanco.aspx';
-    const PAYMENT_BY_ZMP = '/zimpler.aspx';
-
-    // TODO: Are these methods available? 
-    const PAYMENT_BY_SSL = '/payssl.aspx';
-    const PAYMENT_BY_ELV = '/payelv.aspx';
-    const PAYMENT_BY_PPL = '/paypal.aspx';
+    //const PAYMENT_BY_MBK = '/myBank.aspx'; // need addrCountryCode,accOwner
+    //const PAYMENT_BY_ALP = '/alipay.aspx'; // need accOwner
+    //const PAYMENT_BY_CUP = '/Chinaunionpay.aspx'; // need accOwner
+    //const PAYMENT_BY_WCH = '/wechat.aspx'; // need addrCountryCode,accOwner
+    //const PAYMENT_BY_GRP = '/giropay.aspx'; // PayID=00000000000000000000000000000000&TransID=na&Status=FAILED&Description=UnexpectedError
+    //const PAYMENT_BY_SFT = '/sofort.aspx'; // need addrCountryCode,accOwner
+    //const PAYMENT_BY_IDL = '/ideal.aspx'; // PAYMETHOD INVALID
+    //const PAYMENT_BY_P24 = '/p24.aspx'; // need accOwner
+    //const PAYMENT_BY_MTB = '/multibanco.aspx'; // need accOwner
+    //const PAYMENT_BY_ZMP = '/zimpler.aspx'; // need addrCountryCode,accOwner
+    //const PAYMENT_BY_SSL = '/payssl.aspx'; // always fail
     
     // Action methods 
     const ACTION_CAPTURE = '/capture.aspx';
@@ -71,49 +66,12 @@ class Gateway implements \Payment\Gateway\GatewayInterface
         $bPs = ComputopUtils::getValue($params,'blowfishPassword',$this->dBlowfishPassword);
         $hMcPd = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword);
         $url= ComputopUtils::getValue($params,'baseURL','');
-        $paymentMethod = ComputopUtils::getValue($params,'paymentMethod');
 
-        $initObj;
-        if($paymentMethod===self::PAYMENT_BY_MBK){
-            $initObj = new Init\ComputopCgInitMyBank($mId,$bPs,$hMcPd); 
-        }
-        else if($paymentMethod===self::PAYMENT_BY_ALP){
-            $initObj = new Init\ComputopCgInitAlipay($mId,$bPs,$hMcPd); 
-        }
-        else if($paymentMethod===self::PAYMENT_BY_CUP){
-            $initObj = new Init\ComputopCgInitCup($mId,$bPs,$hMcPd); 
-        }
-        else if($paymentMethod===self::PAYMENT_BY_WCH){
-            $initObj = new Init\ComputopCgInitWeChat($mId,$bPs,$hMcPd); 
-        }
-        else if($paymentMethod===self::PAYMENT_BY_GRP){
-            $initObj = new Init\ComputopCgInitGiroPay($mId,$bPs,$hMcPd); 
-        }
-        else if($paymentMethod===self::PAYMENT_BY_SFT){
-            $initObj = new Init\ComputopCgInitSofort($mId,$bPs,$hMcPd); 
-        }
-        else if($paymentMethod===self::PAYMENT_BY_IDL){
-            $initObj = new Init\ComputopCgInitIdeal($mId,$bPs,$hMcPd); 
-        }
-        else if($paymentMethod===self::PAYMENT_BY_P24){
-            $initObj = new Init\ComputopCgInitP24($mId,$bPs,$hMcPd); 
-        }
-        else if($paymentMethod===self::PAYMENT_BY_MTB){
-            $initObj = new Init\ComputopCgInitMultibanco($mId,$bPs,$hMcPd); 
-        }
-        else if($paymentMethod===self::PAYMENT_BY_ZMP){
-            $initObj = new Init\ComputopCgInitZimpler($mId,$bPs,$hMcPd); 
-        }
-        else{
-            $initObj = new Init\ComputopCgInit($mId,$bPs,$hMcPd); 
-        }
-        
-        $initObj->serverUrl = $this->sUrl.$paymentMethod;
+        $initObj = $this->getInstrumentEndpoint($mId,$bPs,$hMcPd,ComputopUtils::getValue($params,'paymentMethod'));
         $initObj->capture = ComputopUtils::getValue($params,'transactionType',self::TRASACTION_AUTO);
-
         $initObj->transId = ComputopUtils::getValue($params, 'paymentReference');
         $initObj->refNr = ComputopUtils::getValue($params, 'orderReference');
-        $initObj->amount = ComputopUtils::getValue($params, 'amount', '0');
+        $initObj->amount = str_replace('.', '', number_format(ComputopUtils::getValue($params, 'amount', '0'), 2, '.', ''));
         $initObj->currency = ComputopUtils::getValue($params,'currency',BaseComputopCg::DEFAULT_CURRENCY);
         $initObj->description = ComputopUtils::getValue($params,'description');
         $initObj->langID =ComputopUtils::getValue($params, 'language', self::DEFAULT_LANGUAGE);
@@ -220,7 +178,6 @@ class Gateway implements \Payment\Gateway\GatewayInterface
             'MAC' => $obj->mac,
         ); 
     }
-
     /**
      * 
      * Cancel pending transaction. Return a specific amount back to buyer.
@@ -256,6 +213,98 @@ class Gateway implements \Payment\Gateway\GatewayInterface
             'MAC' => $obj->mac,
             'RefNr' => $obj->refNr,
         ); 
-
     }
+    /**
+     * 
+     * Return all the possible payment instruments
+     * 
+     * @param 
+     * @return array|object
+     */
+    public function getPaymentInstruments(){
+        return array(
+            'cc' => 'Credit Card',
+            'mybank' => 'MyBank',
+            'alipay' => 'Alipay',
+            'cupay' => 'Chinaunionpay',
+            'wechat' => 'WeChat',
+            'giropay' => 'Giropay',
+            'sofort' => 'Sofort',
+            'ideal' => 'Ideal',
+            'p24' => 'P24',
+            'multibanco' => 'Multibanco',
+            'zimpler' => 'Zimpler'
+          );
+    }
+    /**
+     * 
+     * Return the endpoint action
+     * 
+     * @param string $inst
+     * @return string
+     */
+    private function getInstrumentEndpoint($mId,$bPs,$hMcPd,$inst){
+        $obj;
+        switch ($inst) {
+            case 'cc':
+                $obj = new Init\ComputopCgInit($mId,$bPs,$hMcPd,$this->sUrl); 
+                break;
+            case 'mybank':
+                $obj = new Init\ComputopCgInitMyBank($mId,$bPs,$hMcPd,$this->sUrl); 
+                break;
+            case 'alipay' : 
+                $obj = new Init\ComputopCgInitAlipay($mId,$bPs,$hMcPd,$this->sUrl);
+                break;
+            case 'cupay' : 
+                $obj = new Init\ComputopCgInitCup($mId,$bPs,$hMcPd,$this->sUrl);
+                break;
+            case 'wechat' : 
+                $obj = new Init\ComputopCgInitWeChat($mId,$bPs,$hMcPd,$this->sUrl);
+                break;
+            case 'giropay' : 
+                $obj = new Init\ComputopCgInitGiroPay($mId,$bPs,$hMcPd,$this->sUrl);
+                break;
+            case 'sofort' : 
+                $obj = new Init\ComputopCgInitSofort($mId,$bPs,$hMcPd,$this->sUrl);
+                break;
+            case 'ideal' : 
+                $obj = new Init\ComputopCgInitIdeal($mId,$bPs,$hMcPd,$this->sUrl);
+                break;
+            case 'p24' : 
+                $obj = new Init\ComputopCgInitP24($mId,$bPs,$hMcPd,$this->sUrl);
+                break;
+            case 'multibanco' : 
+                $obj = new Init\ComputopCgInitMultibanco($mId,$bPs,$hMcPd,$this->sUrl);
+                break;
+            case 'zimpler' : 
+                $obj = new Init\ComputopCgInitZimpler($mId,$bPs,$hMcPd,$this->sUrl);
+                break; 
+        }
+        return $obj;
+    }
+    /**
+     * 
+     * Return all the possible transaction types
+     * 
+     * @param 
+     * @return array|object
+     */
+    public function getTransactionTypes(){
+        return array(
+            'AUTO' => 'Acquisto',
+            'MANUAL' => 'Preautorizzazione',
+          );
+    }
+    /**
+     * 
+     * Return all the possible cheout types
+     * 
+     * @param 
+     * @return array|object
+     */
+    public function getCheckoutTypes(){
+        return array(
+          '1'  => 'Checkout BNLP con selezione strumento di pagamento su web store',
+        );
+      }
 }

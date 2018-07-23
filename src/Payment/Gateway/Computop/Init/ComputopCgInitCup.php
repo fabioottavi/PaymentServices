@@ -13,6 +13,11 @@ class ComputopCgInitCup extends ComputopCgInit {
     public $email;
     public $phone;
 
+    public function __construct($merchantId,$blowfishPassword,$hMacPassword,$serverUrl)
+    {
+        parent::__construct($merchantId,$blowfishPassword,$hMacPassword,$serverUrl.'/Chinaunionpay.aspx');
+    }
+
     protected function resetFields(){
         $this->sellingPoint = null;
         $this->accOwner = null;
