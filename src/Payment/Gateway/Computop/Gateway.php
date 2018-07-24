@@ -301,7 +301,7 @@ class Gateway implements \Payment\GatewayInterface
      */
     public function getCheckoutTypes(){
         return array(
-          '1'  => 'Checkout BNLP con selezione strumento di pagamento su web store',
+          '3'  => 'Checkout BNLP con selezione strumento di pagamento su web store',
         );
       }
 }
