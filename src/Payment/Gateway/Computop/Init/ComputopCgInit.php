@@ -44,6 +44,13 @@ class ComputopCgInit extends \Payment\Gateway\Computop\BaseComputopCg {
             throw new CmptpMissingParException("Missing description");
         }
     }
+    
+    /**
+     * Return an array of objects containing all the extra parameters that have to be passed in the request 
+     *
+     * @return array|array|string
+     */
+    public function getExtraParams(){}
 
     protected function getParams(){
         // format data which is to be transmitted - required

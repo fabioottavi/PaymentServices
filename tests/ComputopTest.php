@@ -96,7 +96,6 @@ final class ComputopTest extends TestCase
             'orderReference' => $this->orderNumber,
             'amount' => 17,
             'currency' => null,
-            'action' => $payg::ACTION_CAPTURE
         ];
 
         //get response from gateway
@@ -120,7 +119,6 @@ final class ComputopTest extends TestCase
             'paymentReference' => $this->paymentNumber,
             'amount' => 17,
             'currency' => null,
-            'action' => $payg::ACTION_CREDIT
         ];
 
         //get response from gateway
@@ -146,7 +144,6 @@ final class ComputopTest extends TestCase
             'amount' => 17,
             'currency' => null,
             'xId' => '',
-            'action' => $payg::ACTION_REVERSE
         ];
 
         //get response from gateway

@@ -85,7 +85,7 @@ class Gateway implements \Payment\GatewayInterface
         $initObj->addrCountryCode = ComputopUtils::getValue($params,'addrCountryCode','');     
         $initObj->sellingPoint = ComputopUtils::getValue($params,'sellingPoint','');     
         $initObj->accOwner = ComputopUtils::getValue($params,'accOwner','');     
-        $initObj->device = ComputopUtils::getValue($params,'device','');     
+        $initObj->device = ComputopUtils::getValue($params,'device','');  // if device = "Mobile" it show the mobile version    
         $initObj->email = ComputopUtils::getValue($params,'email','');    
         $initObj->phone = ComputopUtils::getValue($params,'phone','');     
         $initObj->scheme = ComputopUtils::getValue($params,'scheme','');     
@@ -123,7 +123,7 @@ class Gateway implements \Payment\GatewayInterface
         $hMcPd = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword);
 
         $obj = new S2S\ComputopCgCapture($mId,$bPs,$hMcPd); 
-        $obj->serverUrl = $this->sUrl.ComputopUtils::getValue($params,'action');
+        $obj->serverUrl = $this->sUrl.self::ACTION_CAPTURE;
         
         $obj->payId = ComputopUtils::getValue($params,'payId','');     
         $obj->transId = ComputopUtils::getValue($params, 'paymentReference');
@@ -159,7 +159,7 @@ class Gateway implements \Payment\GatewayInterface
         $hMcPd = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword);
 
         $obj = new S2S\ComputopCgCredit($mId,$bPs,$hMcPd); 
-        $obj->serverUrl = $this->sUrl.ComputopUtils::getValue($params,'action');
+        $obj->serverUrl = $this->sUrl.self::ACTION_CREDIT;
         
         $obj->payId = ComputopUtils::getValue($params,'payId','');     
         $obj->transId = ComputopUtils::getValue($params, 'paymentReference');
@@ -192,7 +192,7 @@ class Gateway implements \Payment\GatewayInterface
         $hMcPd = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword);
 
         $obj = new S2S\ComputopCgCapture($mId,$bPs,$hMcPd); 
-        $obj->serverUrl = $this->sUrl.ComputopUtils::getValue($params,'action');
+        $obj->serverUrl = $this->sUrl.self::ACTION_REVERSE;
         
         $obj->payId = ComputopUtils::getValue($params,'payId','');   
         $obj->xId = ComputopUtils::getValue($params,'xId','');
@@ -218,7 +218,6 @@ class Gateway implements \Payment\GatewayInterface
      * 
      * Return all the possible payment instruments
      * 
-     * @param 
      * @return array|object
      */
     public function getPaymentInstruments(){
@@ -286,7 +285,6 @@ class Gateway implements \Payment\GatewayInterface
      * 
      * Return all the possible transaction types
      * 
-     * @param 
      * @return array|object
      */
     public function getTransactionTypes(){
@@ -299,7 +297,6 @@ class Gateway implements \Payment\GatewayInterface
      * 
      * Return all the possible cheout types
      * 
-     * @param 
      * @return array|object
      */
     public function getCheckoutTypes(){

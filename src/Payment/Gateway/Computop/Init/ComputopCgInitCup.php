@@ -26,6 +26,21 @@ class ComputopCgInitCup extends ComputopCgInit {
         parent::resetFields();
     }
 
+    /**
+     * Return an array of objects containing all the extra parameters that have to be passed in the request 
+     *
+     * @return array|array|string
+     */
+    public function getExtraParams(){
+        return array
+        (
+            array("sellingPoint",'optional','text',''),
+            array("accOwner",'mandatory','text',''),
+            array("email",'mandatory','text',''),
+            array("phone",'mandatory','text',''),
+        );
+    }
+
     protected function checkFields() {
 
         if (!$this->accOwner) {

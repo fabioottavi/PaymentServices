@@ -26,6 +26,21 @@ class ComputopCgInitAlipay extends ComputopCgInit {
         parent::resetFields();
     }
 
+    /**
+     * Return an array of objects containing all the extra parameters that have to be passed in the request 
+     *
+     * @return array|array|string
+     */
+    public function getExtraParams(){
+        return array
+        (
+            array("addrCountryCode",'optional','dropdown','CountryCode'),
+            array("sellingPoint",'optional','text',''),
+            array("accOwner",'mandatory','text',''),
+            array("device",'optional','checkbox',''),
+        );
+    }
+
     protected function checkFields() {
 
         if (!$this->accOwner) {
