@@ -304,4 +304,19 @@ class Gateway implements \Payment\GatewayInterface
           '3'  => 'Checkout BNLP con selezione strumento di pagamento su web store',
         );
       }
+    
+    /**
+     * Get Currencies Allowed
+     *
+     * @return array
+     */
+    public function getCurrenciesAllowed(){
+        return array(
+            array(
+                'title' => __('Euro', 'bnppay'),
+                'code' => 'EUR',
+                'symbol' => '&euro;',
+            )
+        );
+    }
 }
