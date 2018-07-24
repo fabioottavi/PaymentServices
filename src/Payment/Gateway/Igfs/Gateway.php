@@ -188,7 +188,13 @@ class Gateway implements \Payment\GatewayInterface
         $rfdObj->refTranID= IgfsUtils::getValue($params, 'paymentReference');
 
         $rfdObj->execute();
-        return $rfdObj;
+        return array(
+            'id' => $rfdObj->tid,
+            'returnCode' => $rfdObj->rc,
+            'error' => $rfdObj->errorDesc,
+            'shopID' => $rfdObj->shopID,
+            'tranID' => $rfdObj->tranID,
+        );
     }
 
     /**
@@ -209,8 +215,14 @@ class Gateway implements \Payment\GatewayInterface
         $rfdObj->refTranID= IgfsUtils::getValue($params, 'paymentReference');
         
         $rfdObj->execute();
-        return $rfdObj;
-
+        return array(
+            'id' => $rfdObj->tid,
+            'shopID' => $rfdObj->shopID,
+            'tranID' => $rfdObj->tranID,
+            'refTranID' => $rfdObj->refTranID,
+            'returnCode' => $rfdObj->rc,
+            'error' => $rfdObj->errorDesc,
+        );
     }
     /**
      * 
