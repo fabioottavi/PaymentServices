@@ -73,10 +73,15 @@ interface GatewayInterface
      */
     public function getCheckoutTypes();
     /**
-     * Get Currencies Allowed
+     * Get Allowed Currencies
      *
-     * @param string $method Method (igfs, computop).
-     * @return array
+     * @return array|object
      */
     public function getCurrenciesAllowed();
+    /**
+     * Get Allowed Languages
+     *
+     * @return array|object
+     */
+    public function getLanguagesAllowed();
 }

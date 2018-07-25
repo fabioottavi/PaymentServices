@@ -283,9 +283,9 @@ class Gateway implements \Payment\GatewayInterface
           );
       }
     /**
-     * Get Currencies Allowed
+     * Get Allowed Currencies
      *
-     * @return array
+     * @return array|object
      */
     public function getCurrenciesAllowed(){
         return array(
@@ -304,6 +304,27 @@ class Gateway implements \Payment\GatewayInterface
                 'code' => 'GBP',
                 'symbol' => '&pound;',
             )
+        );
+    }
+    /**
+     * Get Allowed Languages
+     *
+     * @return array|object
+     */
+    public function getLanguagesAllowed(){
+        return array(
+            array(
+                'code' => 'IT',
+                'name' => 'Italiano',
+            ),
+            array(
+                'code' => 'EN',
+                'name' => 'Inglese',
+            ),
+            array(
+                'code' => 'FR',
+                'name' => 'Francese',
+            ),
         );
     }
 }

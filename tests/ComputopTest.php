@@ -57,6 +57,18 @@ final class ComputopTest extends TestCase
             'expirationTime' => null,
             'iban' => null,
             'mobileNo' => null,
+
+            // Configuration values
+            'template' => null,
+            'background' => null,
+            'bgColor' => null,
+            'bgImage' => null,
+            'fColor' => null,
+            'fFace' => null,
+            'fSize' => null,
+            'centro' => null,
+            'tWidth' => null,
+            'tHeight' => null,
         ];
 
         //get response from gateway

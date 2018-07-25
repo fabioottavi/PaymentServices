@@ -66,9 +66,9 @@ class Gateway implements \Payment\GatewayInterface
         $initObj->transId = ComputopUtils::getValue($params, 'paymentReference');
         $initObj->refNr = ComputopUtils::getValue($params, 'orderReference');
         $initObj->amount = str_replace('.', '', number_format(ComputopUtils::getValue($params, 'amount', '0'), 2, '.', ''));
-        $initObj->currency = ComputopUtils::getValue($params,'currency',BaseComputopCg::DEFAULT_CURRENCY);
+        //$initObj->currency = ComputopUtils::getValue($params,'currency'); // There is only one the default = EN
         $initObj->description = ComputopUtils::getValue($params,'description');
-        $initObj->language =ComputopUtils::getValue($params, 'language', self::DEFAULT_LANGUAGE); // TODO: Don't exist yet and there isn't in the documentation
+        $initObj->language =ComputopUtils::getValue($params, 'language'); // TODO: Don't exist yet and there isn't in the documentation
         $initObj->UrlSuccess = $url.ComputopUtils::getValue($params,'callbackUrl','');
         $initObj->UrlFailure = $url.ComputopUtils::getValue($params,'errorUrl','');
         $initObj->UrlNotify = $url.ComputopUtils::getValue($params,'notifyUrl','');
@@ -91,7 +91,19 @@ class Gateway implements \Payment\GatewayInterface
         $initObj->bic = ComputopUtils::getValue($params,'bic','');     
         $initObj->expirationTime = ComputopUtils::getValue($params,'expirationTime','');     
         $initObj->iban = ComputopUtils::getValue($params,'iban','');   
-        $initObj->mobileNo = ComputopUtils::getValue($params,'mobileNo','');     
+        $initObj->mobileNo = ComputopUtils::getValue($params,'mobileNo','');
+
+        // Graphic customization
+        $initObj->template = ComputopUtils::getValue($params,'Template');
+        $initObj->background = ComputopUtils::getValue($params,'Background');
+        $initObj->bgColor = ComputopUtils::getValue($params,'BGColor');
+        $initObj->bgImage = ComputopUtils::getValue($params,'BGImage');
+        $initObj->fColor = ComputopUtils::getValue($params,'FColor');
+        $initObj->fFace = ComputopUtils::getValue($params,'FFace');
+        $initObj->fSize = ComputopUtils::getValue($params,'FSize');
+        $initObj->centro = ComputopUtils::getValue($params,'Centro');
+        $initObj->tWidth = ComputopUtils::getValue($params,'tWidth');
+        $initObj->tHeight = ComputopUtils::getValue($params,'tHeight');
 
         $resp = $initObj->execute();
         return array(
@@ -335,9 +347,9 @@ class Gateway implements \Payment\GatewayInterface
       }
     
     /**
-     * Get Currencies Allowed
+     * Get Allowed Currencies
      *
-     * @return array
+     * @return array|object
      */
     public function getCurrenciesAllowed(){
         return array(
@@ -346,6 +358,27 @@ class Gateway implements \Payment\GatewayInterface
                 'code' => 'EUR',
                 'symbol' => '&euro;',
             )
+        );
+    }
+    /**
+     * Get Allowed Languages
+     *
+     * @return array|object
+     */
+    public function getLanguagesAllowed(){
+        return array(
+            array(
+                'code' => 'IT',
+                'name' => 'Italiano',
+            ),
+            array(
+                'code' => 'EN',
+                'name' => 'Inglese',
+            ),
+            array(
+                'code' => 'FR',
+                'name' => 'Francese',
+            ),
         );
     }
 }

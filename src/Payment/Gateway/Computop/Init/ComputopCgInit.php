@@ -24,6 +24,17 @@ class ComputopCgInit extends \Payment\Gateway\Computop\BaseComputopCg {
     public $addInfo4;
     public $addInfo5;
 
+    public $template;
+    public $background;
+    public $bgColor;
+    public $bgImage;
+    public $fColor;
+    public $fFace;
+    public $fSize;
+    public $centro;
+    public $tWidth;
+    public $tHeight;
+
     public $response = "encrypt";
 
     public function __construct($merchantId,$blowfishPassword,$hMacPassword,$serverUrl)
@@ -46,6 +57,16 @@ class ComputopCgInit extends \Payment\Gateway\Computop\BaseComputopCg {
         $this->addInfo3 = null;
         $this->addInfo4 = null;
         $this->addInfo5 = null;
+        $this->template = null;
+        $this->background = null;
+        $this->bgColor = null;
+        $this->bgImage = null;
+        $this->fColor = null;
+        $this->fFace = null;
+        $this->fSize = null;
+        $this->centro = null;
+        $this->tWidth = null;
+        $this->tHeight = null;
     }
 
     protected function checkFields() {
@@ -82,6 +103,38 @@ class ComputopCgInit extends \Payment\Gateway\Computop\BaseComputopCg {
         $pCustom = "Custom=$custom";
 
         array_push($arr,$pTransId, $pRefNr, $pAmount, $pCurrency, $pURLSuccess, $pURLFailure, $pResponse, $pURLNotify, $pUserData, $pCapture, $pOrderDesc, $pReqId, $pCustom);
+        
+        if($this->template){
+            array_push($arr, "Template=$this->template");
+        }
+        if($this->background){
+            array_push($arr, "Background=$this->background");
+        }
+        if($this->bgColor){
+            array_push($arr, "BGColor=$this->bgColor");
+        }
+        if($this->bgImage){
+            array_push($arr, "BGImage=$this->bgImage");
+        }
+        if($this->fColor){
+            array_push($arr, "FColor=$this->fColor");
+        }
+        if($this->fFace){
+            array_push($arr, "FFace=$this->fFace");
+        }
+        if($this->fSize){
+            array_push($arr, "FSize=$this->fSize");
+        }
+        if($this->centro){
+            array_push($arr, "Centro=$this->centro");
+        }
+        if($this->tWidth){
+            array_push($arr, "tWidth=$this->tWidth");
+        }
+        if($this->tHeight){
+            array_push($arr, "tHeight=$this->tHeight");
+        }
+        
         return $arr;
     }
     public function execute(){
