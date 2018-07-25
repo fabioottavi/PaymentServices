@@ -105,8 +105,19 @@ class Gateway implements \Payment\GatewayInterface
      */
     public function verify(array $params = [])
     {
-        $rsltObj = new Init\ComputopCgVerify(ComputopUtils::getValue($params,'blowfishPassword',$this->dBlowfishPassword),ComputopUtils::getValue($params, 'UrlParams')); 
-        return $rsltObj->execute();
+        $obj = new Init\ComputopCgVerify(ComputopUtils::getValue($params,'blowfishPassword',$this->dBlowfishPassword),ComputopUtils::getValue($params, 'UrlParams')); 
+        $verifyObj = $obj->execute();
+        return array(
+            'paymentID' => ComputopUtils::getValue($verifyObj,'PayID',''),
+            'XID' => ComputopUtils::getValue($verifyObj,'XID',''),
+            'tranID' => ComputopUtils::getValue($verifyObj,'TransID',''),
+            'PCNr' => ComputopUtils::getValue($verifyObj,'PCNr',''),
+            'shopID' => ComputopUtils::getValue($verifyObj,'refnr',''),
+
+            'error' => ComputopUtils::getValue($verifyObj,'Description','') !== 'success',
+            'returnCode' => ComputopUtils::getValue($verifyObj,'Code',''),
+            'message' => ComputopUtils::getValue($verifyObj,'Description',''),
+        );
     }
 
     /**

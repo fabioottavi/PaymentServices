@@ -130,7 +130,8 @@ class Gateway implements \Payment\GatewayInterface
         return array(
             'tid' => $verifyObj->tid,
             'returnCode' => $verifyObj->rc,
-            'error' => $verifyObj->errorDesc,
+            'message' => $verifyObj->errorDesc,
+            'error' => $verifyObj->rc !== 'IGFS_000',
             'shopID' => $verifyObj->shopID,
             'paymentID' => $verifyObj->paymentID,
             'tranID' => $verifyObj->tranID,

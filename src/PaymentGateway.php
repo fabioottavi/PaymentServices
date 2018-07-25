@@ -17,8 +17,8 @@ final class PayGateway
     /**
      * Undocumented function
      *
-     * @param Payment\Gateway\GatewayInterface $paymenttype
-     * @return void
+     * @param string $paymenttype
+     * @return \Payment\Gateway\Igfs\Gateway|\Payment\Gateway\Computop\Gateway|boolean
      */
     public static function getIstance($paymenttype, $test)
     {
