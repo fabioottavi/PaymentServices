@@ -91,8 +91,8 @@ final class ComputopTest extends TestCase
         ];
 
         //get response from gateway
-        //$pResult = $payg->verify($params);
-        //var_dump($pResult);
+        $pResult = $payg->verify($params);
+        var_dump($pResult);
 
     }
 
@@ -116,8 +116,8 @@ final class ComputopTest extends TestCase
         ];
 
         //get response from gateway
-        $pResult = $payg->confirm($params);
-        var_dump($pResult);
+        //$pResult = $payg->confirm($params);
+        //var_dump($pResult);
     }
 
     public function testRefund()

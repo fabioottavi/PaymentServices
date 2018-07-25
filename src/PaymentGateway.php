@@ -3,7 +3,7 @@ final class PayGateway
 {
     const IGFC = 'igfs';
     const CMPT1 = 'computop';
-
+    
     /**
      * Return the possible payment types
      *

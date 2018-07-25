@@ -8,8 +8,12 @@ class Gateway implements \Payment\GatewayInterface
     private $dMerchantId = 'bnlp_test';
     private $dBlowfishPassword = 'X*b89Q=eG!s23rJ[';
     private $dHsMacPassword = '8d)N?7Zg2Jz=(4Gs3y!T_Wx59k[R*6Cn';
-    //private $sUrl = 'https://ecpay.bnlpositivity.it/paymentpage';
-    private $sUrl ='https://www.computop-paygate.com';
+    private $sUrl;
+
+    //const URL_POSITIVI = 'https://ecpay.bnlpositivity.it/paymentpage';
+    //const URL_PARIBAS = 'https://ecpay.bnlpositivity.it/paymentpage';
+    const URL_POSITIVI ='https://www.computop-paygate.com';
+    const URL_PARIBAS ='https://www.computop-paygate.com';
     
     // Action methods 
     const ACTION_CAPTURE = '/capture.aspx';
@@ -28,6 +32,10 @@ class Gateway implements \Payment\GatewayInterface
     // Transaction types
     const TRASACTION_AUTO = 'AUTO';
     const TRASACTION_MANUAL = 'MANUAL';
+    
+    // Acquirer types
+    const ACQUIRER_POSITIVI = 'bnlpositivity';
+    const ACQUIRER_PARIBAS = 'bnlparibas';
 
     /**
      * 
@@ -56,12 +64,15 @@ class Gateway implements \Payment\GatewayInterface
      */
     public function init(array $params = [])
     {
+        
+
         $mId = ComputopUtils::getValue($params,'terminalId',$this->dMerchantId);    
         $bPs = ComputopUtils::getValue($params,'blowfishPassword',$this->dBlowfishPassword);
         $hMcPd = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword);
         $url= ComputopUtils::getValue($params,'baseURL','');
+        $acq= ComputopUtils::getValue($params,'acquirer');
 
-        $initObj = $this->getInstrumentEndpoint($mId,$bPs,$hMcPd,ComputopUtils::getValue($params,'paymentMethod'));
+        $initObj = $this->getInstrumentEndpoint($mId,$bPs,$hMcPd,ComputopUtils::getValue($params,'paymentMethod'),$acq);
         $initObj->capture = ComputopUtils::getValue($params,'transactionType',self::TRASACTION_AUTO);
         $initObj->transId = ComputopUtils::getValue($params, 'paymentReference');
         $initObj->refNr = ComputopUtils::getValue($params, 'orderReference');
@@ -283,8 +294,15 @@ class Gateway implements \Payment\GatewayInterface
      * @param string $inst
      * @return object
      */
-    public function getInstrumentEndpoint($mId,$bPs,$hMcPd,$inst){
+    public function getInstrumentEndpoint($mId,$bPs,$hMcPd,$inst,$acq){
         $obj;
+
+        if(self::ACQUIRER_POSITIVI == $acq){
+            $this->sUrl = self::URL_POSITIVI;
+        }else if(self::ACQUIRER_PARIBAS == $acq){
+            $this->sUrl = self::URL_PARIBAS;
+        }
+
         switch ($inst) {
             case 'cc':
                 $obj = new Init\ComputopCgInit($mId,$bPs,$hMcPd,$this->sUrl); 
@@ -380,5 +398,15 @@ class Gateway implements \Payment\GatewayInterface
                 'name' => 'Francese',
             ),
         );
+    }
+    
+    /**
+     * Return the possible acquirers
+     *
+     * @param 
+     * @return array|object
+     */
+    public static function getAcquirer(){
+        return array(self::ACQUIRER_POSITIVI=> 'BNLPositivity',self::ACQUIRER_PARIBAS  => 'BNLParibas');
     }
 }
