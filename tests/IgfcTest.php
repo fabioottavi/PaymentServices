@@ -49,8 +49,8 @@ final class IgfcTest extends TestCase
         ];
 
         //get response from gateway
-        $initResponse = $payg->init($params);
-        var_dump($initResponse);
+        //$initResponse = $payg->init($params);
+        //var_dump($initResponse);
     }
 
     public function testVerify(){
@@ -69,8 +69,8 @@ final class IgfcTest extends TestCase
             'paymentID'=>'00198222215108845543', // paymentID => retrive from init() call
         ];
         // response for verify method
-        //$verifyResponse = $payg->verify($params);
-        //var_dump($verifyResponse);
+        $verifyResponse = $payg->verify($params);
+        var_dump($verifyResponse);
     }
 
     public function testConfirm(){
