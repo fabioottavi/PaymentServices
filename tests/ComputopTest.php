@@ -35,6 +35,11 @@ final class ComputopTest extends TestCase
             'terminalId' => null,
             'hashMessage' => null,
             'currency' => null,
+            'addInfo1' => '',
+            'addInfo2' => '',
+            'addInfo3' => '',
+            'addInfo4' => '',
+            'addInfo5' => '',
 
             'userData' => 'test',
             'blowfishPassword' => null,
@@ -74,8 +79,8 @@ final class ComputopTest extends TestCase
         ];
 
         //get response from gateway
-        $pResult = $payg->verify($params);
-        var_dump($pResult);
+        //$pResult = $payg->verify($params);
+        //var_dump($pResult);
 
     }
 
@@ -99,8 +104,8 @@ final class ComputopTest extends TestCase
         ];
 
         //get response from gateway
-        //$pResult = $payg->confirm($params);
-        //var_dump($pResult);
+        $pResult = $payg->confirm($params);
+        var_dump($pResult);
     }
 
     public function testRefund()

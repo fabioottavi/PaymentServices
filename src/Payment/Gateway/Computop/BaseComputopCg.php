@@ -8,6 +8,7 @@ abstract class BaseComputopCg{
     public $hMacPassword;           // via phone from computop support
     public $serverUrl;
 	public $mac;
+	public $language;
     public $payId;
     public $transId; // = "TransID";
     public $amount; // = 11;
@@ -34,9 +35,18 @@ abstract class BaseComputopCg{
         $this->transId = null;
         $this->currency = null;
         $this->amount = null;
+        $this->language = null;
     }
 
-    protected function getParams(){}
+    protected function getParams(){
+        $arr = array();
+
+        if($this->language){
+            array_push($arr, "language=$this->language");
+        }
+        
+        return $arr;
+    }
 
     protected function encryptRequestParams(){
         $params = $this->getParams();

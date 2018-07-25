@@ -8,28 +8,14 @@ class Gateway implements \Payment\GatewayInterface
     private $test;
     private $dTid = '';
     private $dKsig = '';
-    private $dInfo1 = '';
-    private $dInfo2 = '';
-    private $dInfo3 = '';
-    private $dInfo4 = '';
-    private $dInfo5 = '';
+
+    const DEFAULT_INFO1 = '';
+    const DEFAULT_INFO2 = '';
+    const DEFAULT_INFO3 = '';
+    const DEFAULT_INFO4 = '';
+    const DEFAULT_INFO5 = '';
     
     const DEFAULT_LANGUAGE = 'EN';
-
-    //const PAYMENT_BY_SELECTION = '_S';
-    //const PAYMENT_BY_CC = '';
-    //const PAYMENT_BY_MY_BANK = 'M';
-    //const PAYMENT_BY_MASTERPASS = 'P';
-    //const PAYMENT_BY_FINDOMESTIC = '';
-    //const PAYMENT_BY_PAYPAL = 'PP';
-
-    //const CHECK_OUT_NORMAL = 'CHECK OUT NORMAL'; //checkout BNLP
-    //const CHECK_OUT_SYNTHESIS = 'CHECK OUT SYNTHESIS'; // checkout BNLP with web synthesis store
-    //const CHECK_OUT_SELECT = 'CHECK OUT SELECT'; //checkout BNLP with selection of payment instrument on the web store
-
-    //const TRANSACTION_TYPE_PURCHASE = 'PURCHASE';
-    //const TRANSACTION_TYPE_AUTH = 'AUTH';
-    //const TRANSACTION_TYPE_VERIFY = 'VERIFY';
 
      /**
      * 
@@ -43,11 +29,6 @@ class Gateway implements \Payment\GatewayInterface
             $this->serverUrl ='https://merchant.s2stest.bnlpositivity.it/BNL_CG_SERVICES/services/';
             $this->dTid = '06231955';
             $this->dKsig = 'xHosiSb08fs8BQmt9Yhq3Ub99E8=';
-            $this->dInfo1 = '';
-            $this->dInfo2 = '';
-            $this->dInfo3 = '';
-            $this->dInfo4 = '';
-            $this->dInfo5 = '';
         }
         else{
             $this->serverUrl = 'https://merchant.s2stest.bnlpositivity.it/BNL_CG_SERVICES/services/';
@@ -81,11 +62,11 @@ class Gateway implements \Payment\GatewayInterface
         $initObj->notifyURL = IgfsUtils::appendParameter($url.IgfsUtils::getValue($params,'notifyUrl',''), 'token='.urlencode($unique));
         $initObj->errorURL = IgfsUtils::appendParameter($url.IgfsUtils::getValue($params,'errorUrl',''), 'token='.urlencode($unique));
         $initObj->callbackURL = IgfsUtils::appendParameter($url.IgfsUtils::getValue($params,'callbackUrl',''), 'token='.urlencode($unique));
-        $initObj->addInfo1 =IgfsUtils::getValue($params,'addInfo1',$this->dInfo1);
-        $initObj->addInfo2 =IgfsUtils::getValue($params,'addInfo2',$this->dInfo2);
-        $initObj->addInfo3 =IgfsUtils::getValue($params,'addInfo3',$this->dInfo3);
-        $initObj->addInfo4 =IgfsUtils::getValue($params,'addInfo4',$this->dInfo4);
-        $initObj->addInfo5 =IgfsUtils::getValue($params,'addInfo5',$this->dInfo5);
+        $initObj->addInfo1 = substr(IgfsUtils::getValue($params,'addInfo1',self::DEFAULT_INFO1),0,256);
+        $initObj->addInfo2 = substr(IgfsUtils::getValue($params,'addInfo2',self::DEFAULT_INFO2),0,256);
+        $initObj->addInfo3 = substr(IgfsUtils::getValue($params,'addInfo3',self::DEFAULT_INFO3),0,256);
+        $initObj->addInfo4 = substr(IgfsUtils::getValue($params,'addInfo4',self::DEFAULT_INFO4),0,256);
+        $initObj->addInfo5 = substr(IgfsUtils::getValue($params,'addInfo5',self::DEFAULT_INFO5),0,256);
         $initObj->trType =IgfsUtils::getValue($params, 'transactionType', 'AUTH');
         $initObj->description =IgfsUtils::getValue($params, 'description');
         $initObj->shopUserRef =IgfsUtils::getValue($params, 'shopUserRef');

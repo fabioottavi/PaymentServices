@@ -34,14 +34,14 @@ final class IgfcTest extends TestCase
             'terminalId' => null, // null => if it's in test mode it will point to the test tId
             'hashMessage' => null,
             'currency' => 'EUR',
-
-            //not used
-            //'checkoutMode' => $payg::CHECK_OUT_NORMAL, //TODO: Test with: CHECK_OUT_SYNTHESIS, CHECK_OUT_SELECT
             'addInfo1' => '',
             'addInfo2' => '',
             'addInfo3' => '',
             'addInfo4' => '',
             'addInfo5' => '',
+
+            //not used
+            //'checkoutMode' => $payg::CHECK_OUT_NORMAL, //TODO: Test with: CHECK_OUT_SYNTHESIS, CHECK_OUT_SELECT
             'payInstrToken' => '', // TODO:
             'shopUserRef' => 'TestRef@sendabox.it', // It's the client email
             'shopUserName' => 'TestName',
@@ -49,8 +49,8 @@ final class IgfcTest extends TestCase
         ];
 
         //get response from gateway
-        //$initResponse = $payg->init($params);
-        //var_dump($initResponse);
+        $initResponse = $payg->init($params);
+        var_dump($initResponse);
     }
 
     public function testVerify(){

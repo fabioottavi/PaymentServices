@@ -18,6 +18,11 @@ class ComputopCgInit extends \Payment\Gateway\Computop\BaseComputopCg {
     public $payGate; // = "PHP - PayGate";
     public $InpSend; // = "Select Payment";
     public $capture; // = "AUTO";
+    public $addInfo1;
+    public $addInfo2;
+    public $addInfo3;
+    public $addInfo4;
+    public $addInfo5;
 
     public $response = "encrypt";
 
@@ -36,6 +41,11 @@ class ComputopCgInit extends \Payment\Gateway\Computop\BaseComputopCg {
         $this->payGate = null;
         $this->InpSend = null;
         $this->refNr = null;
+        $this->addInfo1 = null;
+        $this->addInfo2 = null;
+        $this->addInfo3 = null;
+        $this->addInfo4 = null;
+        $this->addInfo5 = null;
     }
 
     protected function checkFields() {
@@ -53,7 +63,10 @@ class ComputopCgInit extends \Payment\Gateway\Computop\BaseComputopCg {
     public function getExtraParams(){}
 
     protected function getParams(){
+        $custom = join("|", array($this->addInfo1,$this->addInfo2,$this->addInfo3,$this->addInfo4,$this->addInfo5));
         // format data which is to be transmitted - required
+        $arr = parent::getParams();
+
         $pTransId = "TransID=$this->transId";
         $pRefNr = "RefNr=$this->refNr";
         $pAmount = "Amount=$this->amount";
@@ -66,8 +79,10 @@ class ComputopCgInit extends \Payment\Gateway\Computop\BaseComputopCg {
         $pCapture = "Capture=$this->capture";
         $pOrderDesc = "OrderDesc=$this->description";
         $pReqId = "ReqID=$this->refNr";
+        $pCustom = "Custom=$custom";
 
-        return array($pTransId, $pRefNr, $pAmount, $pCurrency, $pURLSuccess, $pURLFailure, $pResponse, $pURLNotify, $pUserData, $pCapture, $pOrderDesc, $pReqId);
+        array_push($arr,$pTransId, $pRefNr, $pAmount, $pCurrency, $pURLSuccess, $pURLFailure, $pResponse, $pURLNotify, $pUserData, $pCapture, $pOrderDesc, $pReqId, $pCustom);
+        return $arr;
     }
     public function execute(){
         $this->checkFields();

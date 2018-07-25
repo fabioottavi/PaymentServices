@@ -11,22 +11,16 @@ class Gateway implements \Payment\GatewayInterface
     //private $sUrl = 'https://ecpay.bnlpositivity.it/paymentpage';
     private $sUrl ='https://www.computop-paygate.com';
     
-    //const PAYMENT_BY_MBK = '/myBank.aspx'; // need addrCountryCode,accOwner
-    //const PAYMENT_BY_ALP = '/alipay.aspx'; // need accOwner
-    //const PAYMENT_BY_CUP = '/Chinaunionpay.aspx'; // need accOwner
-    //const PAYMENT_BY_WCH = '/wechat.aspx'; // need addrCountryCode,accOwner
-    //const PAYMENT_BY_GRP = '/giropay.aspx'; // PayID=00000000000000000000000000000000&TransID=na&Status=FAILED&Description=UnexpectedError
-    //const PAYMENT_BY_SFT = '/sofort.aspx'; // need addrCountryCode,accOwner
-    //const PAYMENT_BY_IDL = '/ideal.aspx'; // PAYMETHOD INVALID
-    //const PAYMENT_BY_P24 = '/p24.aspx'; // need accOwner
-    //const PAYMENT_BY_MTB = '/multibanco.aspx'; // need accOwner
-    //const PAYMENT_BY_ZMP = '/zimpler.aspx'; // need addrCountryCode,accOwner
-    //const PAYMENT_BY_SSL = '/payssl.aspx'; // always fail
-    
     // Action methods 
     const ACTION_CAPTURE = '/capture.aspx';
     const ACTION_CREDIT = '/credit.aspx';
     const ACTION_REVERSE = '/reverse.aspx';
+
+    const DEFAULT_INFO1 = '';
+    const DEFAULT_INFO2 = '';
+    const DEFAULT_INFO3 = '';
+    const DEFAULT_INFO4 = '';
+    const DEFAULT_INFO5 = '';
 
     // Languages
     const DEFAULT_LANGUAGE = 'EN';
@@ -74,12 +68,17 @@ class Gateway implements \Payment\GatewayInterface
         $initObj->amount = str_replace('.', '', number_format(ComputopUtils::getValue($params, 'amount', '0'), 2, '.', ''));
         $initObj->currency = ComputopUtils::getValue($params,'currency',BaseComputopCg::DEFAULT_CURRENCY);
         $initObj->description = ComputopUtils::getValue($params,'description');
-        $initObj->langID =ComputopUtils::getValue($params, 'language', self::DEFAULT_LANGUAGE);
+        $initObj->language =ComputopUtils::getValue($params, 'language', self::DEFAULT_LANGUAGE); // TODO: Don't exist yet and there isn't in the documentation
         $initObj->UrlSuccess = $url.ComputopUtils::getValue($params,'callbackUrl','');
         $initObj->UrlFailure = $url.ComputopUtils::getValue($params,'errorUrl','');
         $initObj->UrlNotify = $url.ComputopUtils::getValue($params,'notifyUrl','');
-        $initObj->userData = ComputopUtils::getValue($params,'userData');
+        $initObj->userData = ComputopUtils::getValue($params,'userData'); // Empty
         $initObj->payId = ComputopUtils::getValue($params,'payId','');     
+        $initObj->addInfo1 = substr(ComputopUtils::getValue($params,'addInfo1',self::DEFAULT_INFO1),0,204);
+        $initObj->addInfo2 = substr(ComputopUtils::getValue($params,'addInfo2',self::DEFAULT_INFO2),0,204);
+        $initObj->addInfo3 = substr(ComputopUtils::getValue($params,'addInfo3',self::DEFAULT_INFO3),0,204);
+        $initObj->addInfo4 = substr(ComputopUtils::getValue($params,'addInfo4',self::DEFAULT_INFO4),0,204);
+        $initObj->addInfo5 = substr(ComputopUtils::getValue($params,'addInfo5',self::DEFAULT_INFO5),0,204);
 
         // Extra values
         $initObj->addrCountryCode = ComputopUtils::getValue($params,'addrCountryCode','');     
@@ -270,9 +269,9 @@ class Gateway implements \Payment\GatewayInterface
      * Return the endpoint action
      * 
      * @param string $inst
-     * @return string
+     * @return object
      */
-    private function getInstrumentEndpoint($mId,$bPs,$hMcPd,$inst){
+    public function getInstrumentEndpoint($mId,$bPs,$hMcPd,$inst){
         $obj;
         switch ($inst) {
             case 'cc':
