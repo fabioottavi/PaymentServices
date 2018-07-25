@@ -97,9 +97,10 @@ class Gateway implements \Payment\GatewayInterface
         $initObj->execute();
         return array(
             'returnCode' => $initObj->rc,
-            'error' => $initObj->errorDesc,
+            'message' => $initObj->errorDesc,
+            'error' => $initObj->rc !== 'IGFS_000',
             'paymentID' => $initObj->paymentID,
-            'shopID' => $initObj->shopID,
+            'orderReference' => $initObj->shopID,
             'notifyURL' => $initObj->notifyURL,
             'redirectURL' => $initObj->redirectURL,
         );
@@ -128,11 +129,11 @@ class Gateway implements \Payment\GatewayInterface
 
         $verifyObj->execute();
         return array(
-            'tid' => $verifyObj->tid,
+            'terminalId' => $verifyObj->tid,
             'returnCode' => $verifyObj->rc,
             'message' => $verifyObj->errorDesc,
             'error' => $verifyObj->rc !== 'IGFS_000',
-            'shopID' => $verifyObj->shopID,
+            'orderReference' => $verifyObj->shopID,
             'paymentID' => $verifyObj->paymentID,
             'tranID' => $verifyObj->tranID,
         );
@@ -162,11 +163,12 @@ class Gateway implements \Payment\GatewayInterface
         
         $confirmObj->execute();
         return array(
-            'id' => $confirmObj->tid,
+            'terminalId' => $confirmObj->tid,
             'returnCode' => $confirmObj->rc,
+            'message' => $confirmObj->errorDesc,
+            'error' => $confirmObj->rc !== 'IGFS_000',
             'refTranID' => $confirmObj->refTranID,
             'tranID' => $confirmObj->tranID,
-            'error' => $confirmObj->errorDesc,
         );
     }
 
@@ -190,10 +192,11 @@ class Gateway implements \Payment\GatewayInterface
 
         $rfdObj->execute();
         return array(
-            'id' => $rfdObj->tid,
+            'terminalId' => $rfdObj->tid,
             'returnCode' => $rfdObj->rc,
-            'error' => $rfdObj->errorDesc,
-            'shopID' => $rfdObj->shopID,
+            'message' => $rfdObj->errorDesc,
+            'error' => $rfdObj->rc !== 'IGFS_000',
+            'orderReference' => $rfdObj->shopID,
             'tranID' => $rfdObj->tranID,
         );
     }
@@ -217,12 +220,13 @@ class Gateway implements \Payment\GatewayInterface
         
         $rfdObj->execute();
         return array(
-            'id' => $rfdObj->tid,
-            'shopID' => $rfdObj->shopID,
+            'terminalId' => $rfdObj->tid,
+            'orderReference' => $rfdObj->shopID,
             'tranID' => $rfdObj->tranID,
             'refTranID' => $rfdObj->refTranID,
             'returnCode' => $rfdObj->rc,
-            'error' => $rfdObj->errorDesc,
+            'message' => $rfdObj->errorDesc,
+            'error' => $rfdObj->rc !== 'IGFS_000',
         );
     }
     /**

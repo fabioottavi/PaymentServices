@@ -94,7 +94,16 @@ class Gateway implements \Payment\GatewayInterface
         $initObj->iban = ComputopUtils::getValue($params,'iban','');   
         $initObj->mobileNo = ComputopUtils::getValue($params,'mobileNo','');     
 
-        return $initObj->execute();
+        $resp = $initObj->execute();
+        return array(
+            'returnCode' => ComputopUtils::getValue($resp,'returnCode'),
+            'message' => ComputopUtils::getValue($resp,'error'),
+            'error' => ComputopUtils::getValue($resp,'error') !== '',
+            'paymentID' => ComputopUtils::getValue($resp,'paymentID'),
+            'orderReference' => ComputopUtils::getValue($resp,'orderReference'),
+            'notifyURL' => ComputopUtils::getValue($resp,'notifyURL'),
+            'redirectURL' => ComputopUtils::getValue($resp,'redirectURL'),
+        );
     }
     /**
      * 
@@ -108,15 +117,16 @@ class Gateway implements \Payment\GatewayInterface
         $obj = new Init\ComputopCgVerify(ComputopUtils::getValue($params,'blowfishPassword',$this->dBlowfishPassword),ComputopUtils::getValue($params, 'UrlParams')); 
         $verifyObj = $obj->execute();
         return array(
-            'paymentID' => ComputopUtils::getValue($verifyObj,'PayID',''),
-            'XID' => ComputopUtils::getValue($verifyObj,'XID',''),
-            'tranID' => ComputopUtils::getValue($verifyObj,'TransID',''),
-            'PCNr' => ComputopUtils::getValue($verifyObj,'PCNr',''),
-            'shopID' => ComputopUtils::getValue($verifyObj,'refnr',''),
-
-            'error' => ComputopUtils::getValue($verifyObj,'Description','') !== 'success',
+            'terminalId' =>ComputopUtils::getValue($verifyObj,'mid',''),
             'returnCode' => ComputopUtils::getValue($verifyObj,'Code',''),
             'message' => ComputopUtils::getValue($verifyObj,'Description',''),
+            'error' => ComputopUtils::getValue($verifyObj,'Description','') !== 'success',
+            'orderReference' => ComputopUtils::getValue($verifyObj,'refnr',''),
+            'paymentID' => ComputopUtils::getValue($verifyObj,'PayID',''),
+            'tranID' => ComputopUtils::getValue($verifyObj,'TransID',''),
+            'XID' => ComputopUtils::getValue($verifyObj,'XID',''), // check if we need it or not
+            'PCNr' => ComputopUtils::getValue($verifyObj,'PCNr',''), // check if we need it or not
+
         );
     }
 
@@ -144,15 +154,18 @@ class Gateway implements \Payment\GatewayInterface
 
         $obj->execute();
         return array(
-            'MID' => $obj->mId,
-            'PayID' => $obj->payId,
-            'XID' => $obj->xId,
-            'TransID' => $obj->transId,
-            'Status' => $obj->status,
-            'Description' => $obj->description,
-            'Code' => $obj->code,
-            'MAC' => $obj->mac,
-            'RefNr' => $obj->refNr,
+            'terminalId' => $obj->mId,
+            'returnCode' => $obj->code,
+            'message' => $obj->description,
+            'error' => $obj->description !== 'success',
+            'refTranID' => '',
+            'tranID' => $obj->transId,
+
+            'paymentID' => $obj->payId, // check if we need it or not
+            'XID' => $obj->xId, // check if we need it or not
+            'Status' => $obj->status, // check if we need it or not
+            'MAC' => $obj->mac, // check if we need it or not
+            'orderReference' => $obj->refNr, // check if we need it or not
         ); 
     }
 
@@ -179,14 +192,17 @@ class Gateway implements \Payment\GatewayInterface
 
         $obj->execute();
         return array(
-            'MID' => $obj->mId,
-            'PayID' => $obj->payId,
-            'XID' => $obj->xId,
-            'TransID' => $obj->transId,
-            'Status' => $obj->status,
-            'Description' => $obj->description,
-            'Code' => $obj->code,
-            'MAC' => $obj->mac,
+            'terminalId' => $obj->mId,
+            'returnCode' => $obj->code,
+            'message' => $obj->description,
+            'error' => $obj->description !== 'success',
+            'orderReference' => '',
+            'tranID' => $obj->transId,
+
+            'paymentID' => $obj->payId, // check if we need it or not
+            'XID' => $obj->xId, // check if we need it or not
+            'Status' => $obj->status, // check if we need it or not
+            'MAC' => $obj->mac, // check if we need it or not
         ); 
     }
     /**
@@ -214,15 +230,18 @@ class Gateway implements \Payment\GatewayInterface
 
         $obj->execute();
         return array(
-            'MID' => $obj->mId,
-            'PayID' => $obj->payId,
-            'XID' => $obj->xId,
-            'TransID' => $obj->transId,
-            'Status' => $obj->status,
-            'Description' => $obj->description,
-            'Code' => $obj->code,
-            'MAC' => $obj->mac,
-            'RefNr' => $obj->refNr,
+            'terminalId' => $obj->mId,
+            'orderReference' => $obj->refNr,
+            'tranID' => $obj->transId,
+            'refTranID' => '',
+            'returnCode' => $obj->code,
+            'message' => $obj->description,
+            'error' => $obj->description !== 'success',
+
+            'paymentID' => $obj->payId, // check if we need it or not
+            'XID' => $obj->xId, // check if we need it or not
+            'Status' => $obj->status, // check if we need it or not
+            'MAC' => $obj->mac, // check if we need it or not
         ); 
     }
     /**
