@@ -407,7 +407,6 @@ class Gateway implements \Payment\GatewayInterface
     /**
      * Return the possible acquirers
      *
-     * @param 
      * @return array|object
      */
     public static function getAcquirer(){

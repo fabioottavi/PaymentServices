@@ -338,6 +338,15 @@ class Gateway implements \Payment\GatewayInterface
     }
     
     /**
+     * Return the possible acquirers
+     *
+     * @return array|object
+     */
+    public static function getAcquirer(){
+        return array();
+    }
+    
+    /**
      * Get Default Terminal Id
      *
      * @return string
