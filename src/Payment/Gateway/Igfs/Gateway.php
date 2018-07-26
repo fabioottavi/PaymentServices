@@ -20,6 +20,10 @@ class Gateway implements \Payment\GatewayInterface
     const DEFAULT_TID = '06231955';
     const DEFAULT_KSIG = 'xHosiSb08fs8BQmt9Yhq3Ub99E8=';
     
+    // Acquirer types
+    const ACQUIRER_POSITIVI = 'bnlpositivity';
+    const ACQUIRER_PARIBAS = 'bnlparibas';
+    
     // Endpoints
     const URL = 'https://merchant.s2stest.bnlpositivity.it/BNL_CG_SERVICES/services/';
     const URL_TEST = 'https://merchant.s2stest.bnlpositivity.it/BNL_CG_SERVICES/services/';
