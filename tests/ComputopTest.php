@@ -42,7 +42,6 @@ final class ComputopTest extends TestCase
             'addInfo5' => '',
 
             'userData' => 'test',
-            'blowfishPassword' => null,
             'hMacPassword' => null,
             
             // Extra values

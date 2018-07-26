@@ -9,12 +9,21 @@ class Gateway implements \Payment\GatewayInterface
     private $dTid = '';
     private $dKsig = '';
 
+    // Extra informations
     const DEFAULT_INFO1 = '';
     const DEFAULT_INFO2 = '';
     const DEFAULT_INFO3 = '';
     const DEFAULT_INFO4 = '';
     const DEFAULT_INFO5 = '';
     
+    // Default credentials 
+    const DEFAULT_TID = '06231955';
+    const DEFAULT_KSIG = 'xHosiSb08fs8BQmt9Yhq3Ub99E8=';
+    
+    // Endpoints
+    const URL = 'https://merchant.s2stest.bnlpositivity.it/BNL_CG_SERVICES/services/';
+    const URL_TEST = 'https://merchant.s2stest.bnlpositivity.it/BNL_CG_SERVICES/services/';
+
     const DEFAULT_LANGUAGE = 'EN';
 
      /**
@@ -26,12 +35,12 @@ class Gateway implements \Payment\GatewayInterface
      public function __construct ($test){
         $this->test = $test;
         if($test){
-            $this->serverUrl ='https://merchant.s2stest.bnlpositivity.it/BNL_CG_SERVICES/services/';
-            $this->dTid = '06231955';
-            $this->dKsig = 'xHosiSb08fs8BQmt9Yhq3Ub99E8=';
+            $this->serverUrl =self::URL_TEST;
+            $this->dTid = self::DEFAULT_TID;
+            $this->dKsig = self::DEFAULT_KSIG;
         }
         else{
-            $this->serverUrl = 'https://merchant.s2stest.bnlpositivity.it/BNL_CG_SERVICES/services/';
+            $this->serverUrl = self::URL;
         }
      }
 
@@ -326,5 +335,30 @@ class Gateway implements \Payment\GatewayInterface
                 'name' => 'Francese',
             ),
         );
+    }
+    
+    /**
+     * Get Default Terminal Id
+     *
+     * @return string
+     */
+    public function getTestTerminalId(){
+        return self::DEFAULT_TID;
+    }
+    /**
+     * Get Default Hased Password
+     *
+     * @return string
+     */
+    public function getTestHashMessage(){
+        return self::DEFAULT_KSIG;
+    }
+    /**
+     * Get Default Extra Hased Password
+     *
+     * @return string
+     */
+    public function getTesthMacPassword(){
+        return null;
     }
 }

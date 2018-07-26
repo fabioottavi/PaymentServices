@@ -84,4 +84,23 @@ interface GatewayInterface
      * @return array|object
      */
     public function getLanguagesAllowed();
+    /**
+     * Get Default Terminal Id
+     *
+     * @return string
+     */
+    public function getTestTerminalId();
+    /**
+     * Get Default Hased Password
+     *
+     * @return string
+     */
+    public function getTestHashMessage();
+    /**
+     * Get Default Extra Hased Password
+     *
+     * @return string
+     */
+    public function getTesthMacPassword();
+    
 }

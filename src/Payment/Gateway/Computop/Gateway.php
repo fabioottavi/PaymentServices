@@ -5,9 +5,9 @@ namespace Payment\Gateway\Computop;
 class Gateway implements \Payment\GatewayInterface
 {
     private $test;
-    private $dMerchantId = 'bnlp_test';
-    private $dBlowfishPassword = 'X*b89Q=eG!s23rJ[';
-    private $dHsMacPassword = '8d)N?7Zg2Jz=(4Gs3y!T_Wx59k[R*6Cn';
+    private $dMerchantId = '';
+    private $dBlowfishPassword = '';
+    private $dHsMacPassword = '';
     private $sUrl;
 
     //const URL_POSITIVI = 'https://ecpay.bnlpositivity.it/paymentpage';
@@ -15,11 +15,17 @@ class Gateway implements \Payment\GatewayInterface
     const URL_POSITIVI ='https://www.computop-paygate.com';
     const URL_PARIBAS ='https://www.computop-paygate.com';
     
+    // Default credentials 
+    const DEFAULT_MERCHANT_ID = 'bnlp_test';
+    const DEFAULT_BLOWFISH_PASSWORD = 'X*b89Q=eG!s23rJ[';
+    const DEFAULT_HS_MAC_PASSWORD = '8d)N?7Zg2Jz=(4Gs3y!T_Wx59k[R*6Cn';
+    
     // Action methods 
     const ACTION_CAPTURE = '/capture.aspx';
     const ACTION_CREDIT = '/credit.aspx';
     const ACTION_REVERSE = '/reverse.aspx';
 
+    // Extra informations
     const DEFAULT_INFO1 = '';
     const DEFAULT_INFO2 = '';
     const DEFAULT_INFO3 = '';
@@ -47,9 +53,9 @@ class Gateway implements \Payment\GatewayInterface
        $this->test = $test;
 
        if($test){
-            $this->dMerchantId = 'bnlp_test';
-            $this->dBlowfishPassword = 'X*b89Q=eG!s23rJ[';
-            $this->dHsMacPassword = '8d)N?7Zg2Jz=(4Gs3y!T_Wx59k[R*6Cn';
+            $this->dMerchantId = self::DEFAULT_MERCHANT_ID;
+            $this->dBlowfishPassword = self::DEFAULT_BLOWFISH_PASSWORD;
+            $this->dHsMacPassword = self::DEFAULT_HS_MAC_PASSWORD;
        }
     }
     
@@ -64,8 +70,6 @@ class Gateway implements \Payment\GatewayInterface
      */
     public function init(array $params = [])
     {
-        
-
         $mId = ComputopUtils::getValue($params,'terminalId',$this->dMerchantId);    
         $bPs = ComputopUtils::getValue($params,'blowfishPassword',$this->dBlowfishPassword);
         $hMcPd = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword);
@@ -162,7 +166,7 @@ class Gateway implements \Payment\GatewayInterface
      */
     public function confirm(array $params = []){
         $mId = ComputopUtils::getValue($params,'terminalId',$this->dMerchantId);    
-        $bPs = ComputopUtils::getValue($params,'blowfishPassword',$this->dBlowfishPassword);
+        $bPs = ComputopUtils::getValue($params,'hashMessage',$this->dBlowfishPassword);
         $hMcPd = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword);
 
         $obj = new S2S\ComputopCgCapture($mId,$bPs,$hMcPd); 
@@ -408,5 +412,30 @@ class Gateway implements \Payment\GatewayInterface
      */
     public static function getAcquirer(){
         return array(self::ACQUIRER_POSITIVI=> 'BNLPositivity',self::ACQUIRER_PARIBAS  => 'BNLParibas');
+    }
+    
+    /**
+     * Get Default Terminal Id
+     *
+     * @return string
+     */
+    public function getTestTerminalId(){
+        return self::DEFAULT_MERCHANT_ID;
+    }
+    /**
+     * Get Default Hased Password
+     *
+     * @return string
+     */
+    public function getTestHashMessage(){
+        return self::DEFAULT_BLOWFISH_PASSWORD;
+    }
+    /**
+     * Get Default Extra Hased Password
+     *
+     * @return string
+     */
+    public function getTesthMacPassword(){
+        return self::DEFAULT_HS_MAC_PASSWORD;
     }
 }
