@@ -88,4 +88,8 @@ class IgfsUtils
     public static function appendParameter($url, $param){
         return strpos($url, '?') ? $url.'&'.$param : $url.'?'.$param;
     }
+
+    public function normalizeLanguage($language){
+        return strtoupper(substr($language,0,2));
+    }
 }

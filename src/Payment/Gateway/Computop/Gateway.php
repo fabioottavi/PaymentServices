@@ -83,7 +83,7 @@ class Gateway implements \Payment\GatewayInterface
         $initObj->amount = str_replace('.', '', number_format(ComputopUtils::getValue($params, 'amount', '0'), 2, '.', ''));
         //$initObj->currency = ComputopUtils::getValue($params,'currency'); // There is only one the default = EN
         $initObj->description = ComputopUtils::getValue($params,'description');
-        $initObj->language =ComputopUtils::getValue($params, 'language'); // TODO: Don't exist yet and there isn't in the documentation
+        $initObj->language =ComputopUtils::normalizeLanguage(ComputopUtils::getValue($params, 'language')); // TODO: Don't exist yet and there isn't in the documentation
         $initObj->UrlSuccess = $url.ComputopUtils::getValue($params,'callbackUrl','');
         $initObj->UrlFailure = $url.ComputopUtils::getValue($params,'errorUrl','');
         $initObj->UrlNotify = $url.ComputopUtils::getValue($params,'notifyUrl','');

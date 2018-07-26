@@ -80,7 +80,7 @@ class Gateway implements \Payment\GatewayInterface
         $initObj->description =IgfsUtils::getValue($params, 'description');
         $initObj->shopUserRef =IgfsUtils::getValue($params, 'shopUserRef');
         $initObj->shopUserName =IgfsUtils::getValue($params, 'shopUserName');
-        $initObj->langID =IgfsUtils::getValue($params, 'language', self::DEFAULT_LANGUAGE);
+        $initObj->langID =  IgfsUtils::normalizeLanguage(IgfsUtils::getValue($params, 'language', self::DEFAULT_LANGUAGE));
         $initObj->payInstrToken = IgfsUtils::getValue($params, 'payInstrToken');
         $initObj->regenPayInstrToken = IgfsUtils::getValue($params, 'regenPayInstrToken');
 
@@ -113,7 +113,7 @@ class Gateway implements \Payment\GatewayInterface
         $verifyObj->kSig = IgfsUtils::getValue($params,'hashMessage',$this->dKsig);
         $verifyObj->tid = IgfsUtils::getValue($params,'terminalId',$this->dTid).'_S';
         $verifyObj->shopID = IgfsUtils::getValue($params, 'orderReference');
-        $verifyObj->langID =IgfsUtils::getValue($params, 'language', 'IT');
+        $verifyObj->langID = IgfsUtils::normalizeLanguage(IgfsUtils::getValue($params, 'language', self::DEFAULT_LANGUAGE));
         $verifyObj->paymentID =IgfsUtils::getValue($params, 'paymentID', '00179695241108714733');
 
 

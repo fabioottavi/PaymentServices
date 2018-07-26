@@ -29,7 +29,7 @@ final class IgfcTest extends TestCase
             'orderReference' => $this->orderNumber,
             'transactionType' => 'AUTH', //TODO: Test with: PURCHASE, AUTH, VERIFY
             'description' => 'this is a test',
-            'language' => 'IT',
+            'language' => 'it_IT',
             'paymentMethod'=>'', //TODO: Test with: cc,mybank,masterpass,findomestic,paypal
             'terminalId' => null, // null => if it's in test mode it will point to the test tId
             'hashMessage' => null,
