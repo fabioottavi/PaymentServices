@@ -71,7 +71,7 @@ class Gateway implements \Payment\GatewayInterface
     public function init(array $params = [])
     {
         $mId = ComputopUtils::getValue($params,'terminalId',$this->dMerchantId);    
-        $bPs = ComputopUtils::getValue($params,'blowfishPassword',$this->dBlowfishPassword);
+        $bPs = ComputopUtils::getValue($params,'hashMessage',$this->dBlowfishPassword);
         $hMcPd = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword);
         $url= ComputopUtils::getValue($params,'baseURL','');
         $acq= ComputopUtils::getValue($params,'acquirer');
@@ -140,7 +140,7 @@ class Gateway implements \Payment\GatewayInterface
      */
     public function verify(array $params = [])
     {
-        $obj = new Init\ComputopCgVerify(ComputopUtils::getValue($params,'blowfishPassword',$this->dBlowfishPassword),ComputopUtils::getValue($params, 'UrlParams')); 
+        $obj = new Init\ComputopCgVerify(ComputopUtils::getValue($params,'hashMessage',$this->dBlowfishPassword),ComputopUtils::getValue($params, 'UrlParams')); 
         $verifyObj = $obj->execute();
         return array(
             'terminalId' =>ComputopUtils::getValue($verifyObj,'mid',''),
@@ -205,7 +205,7 @@ class Gateway implements \Payment\GatewayInterface
     public function refund(array $params = []){
 
         $mId = ComputopUtils::getValue($params,'terminalId',$this->dMerchantId);    
-        $bPs = ComputopUtils::getValue($params,'blowfishPassword',$this->dBlowfishPassword);
+        $bPs = ComputopUtils::getValue($params,'hashMessage',$this->dBlowfishPassword);
         $hMcPd = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword);
 
         $obj = new S2S\ComputopCgCredit($mId,$bPs,$hMcPd); 
@@ -241,7 +241,7 @@ class Gateway implements \Payment\GatewayInterface
     public function cancel(array $params){
         
         $mId = ComputopUtils::getValue($params,'terminalId',$this->dMerchantId);    
-        $bPs = ComputopUtils::getValue($params,'blowfishPassword',$this->dBlowfishPassword);
+        $bPs = ComputopUtils::getValue($params,'hashMessage',$this->dBlowfishPassword);
         $hMcPd = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword);
 
         $obj = new S2S\ComputopCgCapture($mId,$bPs,$hMcPd); 
