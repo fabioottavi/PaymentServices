@@ -342,7 +342,7 @@ class Gateway implements \Payment\GatewayInterface
      *
      * @return array|object
      */
-    public static function getAcquirer(){
+    public function getAcquirer(){
         return array();
     }
     

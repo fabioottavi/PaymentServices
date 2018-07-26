@@ -409,7 +409,7 @@ class Gateway implements \Payment\GatewayInterface
      *
      * @return array|object
      */
-    public static function getAcquirer(){
+    public function getAcquirer(){
         return array(self::ACQUIRER_POSITIVI=> 'BNLPositivity',self::ACQUIRER_PARIBAS  => 'BNLParibas');
     }
     

@@ -102,4 +102,11 @@ interface GatewayInterface
      * @return string
      */
     public function getTesthMacPassword();
+    /**
+     * Return the possible acquirers
+     *
+     * @return array|object
+     */
+    public function getAcquirer();
+    
 }
