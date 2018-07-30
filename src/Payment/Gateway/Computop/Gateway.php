@@ -75,8 +75,9 @@ class Gateway implements \Payment\GatewayInterface
         $hMcPd = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword);
         $url= ComputopUtils::getValue($params,'baseURL','');
         $acq= ComputopUtils::getValue($params,'acquirer');
+        $pm = ComputopUtils::getValue($params,'paymentMethod');
 
-        $initObj = $this->getInstrumentEndpoint($mId,$bPs,$hMcPd,ComputopUtils::getValue($params,'paymentMethod'),$acq);
+        $initObj = $this->getInstrumentEndpoint($mId,$bPs,$hMcPd,$pm,$acq);
         $initObj->capture = ComputopUtils::getValue($params,'transactionType',self::TRASACTION_AUTO);
         $initObj->transId = ComputopUtils::getValue($params, 'paymentReference');
         $initObj->refNr = ComputopUtils::getValue($params, 'orderReference');
@@ -278,7 +279,12 @@ class Gateway implements \Payment\GatewayInterface
      */
     public function getPaymentInstruments(){
         return array(
-            'cc' => 'Credit Card',
+            'visa' => 'Visa',
+            'mastercard' => 'Mastercard',
+            'maestro' => 'Maestro',
+            'americanexpress' => 'American Express',
+            'diners' => 'Diners',
+            'findomestic' => 'Findomestic',
             'mybank' => 'MyBank',
             'alipay' => 'Alipay',
             'cupay' => 'Chinaunionpay',
@@ -301,6 +307,10 @@ class Gateway implements \Payment\GatewayInterface
     public function getInstrumentEndpoint($mId,$bPs,$hMcPd,$inst,$acq){
         $obj;
 
+        if (!$inst) {
+            throw new CmptpMissingParException("Missing Payment Method");
+        }
+
         if(self::ACQUIRER_POSITIVI == $acq){
             $this->sUrl = self::URL_POSITIVI;
         }else if(self::ACQUIRER_PARIBAS == $acq){
@@ -308,7 +318,12 @@ class Gateway implements \Payment\GatewayInterface
         }
 
         switch ($inst) {
-            case 'cc':
+            case 'visa':
+            case 'mastercard':
+            case 'maestro':
+            case 'americanexpress':
+            case 'diners':
+            case 'findomestic': // To be verified
                 $obj = new Init\ComputopCgInit($mId,$bPs,$hMcPd,$this->sUrl); 
                 break;
             case 'mybank':
@@ -364,8 +379,10 @@ class Gateway implements \Payment\GatewayInterface
      */
     public function getCheckoutTypes(){
         return array(
-          '3'  => 'Checkout BNLP con selezione strumento di pagamento su web store',
-        );
+            '1'  => 'Checkout BNLP',
+            '2'  => 'Checkout BNLP con sintesi in web store',
+            '3'  => 'Checkout BNLP con selezione strumento di pagamento su web store',
+          );
       }
     
     /**
@@ -436,5 +453,23 @@ class Gateway implements \Payment\GatewayInterface
      */
     public function getTesthMacPassword(){
         return self::DEFAULT_HS_MAC_PASSWORD;
+    }
+    /**
+     * Return a list with all available countries
+     *
+     * @return array|object
+     */
+    public function getSellingLocations(){
+        $arr;
+        $filePath = __DIR__ . "/countries.xml";
+
+        if (file_exists($filePath)) {
+            $xmlElements = simplexml_load_file($filePath);
+            foreach($xmlElements as $country){
+                $arr[(string)$country->code] = (string)$country->name;
+            }
+        }
+
+        return $arr;
     }
 }

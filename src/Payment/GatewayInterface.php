@@ -108,5 +108,11 @@ interface GatewayInterface
      * @return array|object
      */
     public function getAcquirer();
+    /**
+     * Return a list with all available countries
+     *
+     * @return array|object
+     */
+    public function getSellingLocations();
     
 }

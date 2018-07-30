@@ -232,10 +232,14 @@ class Gateway implements \Payment\GatewayInterface
      */
     public function getPaymentInstruments(){
         return array(
-            'cc' => 'Credit Card',
-            'mybank' => 'MyBank',
-            'masterpass'  => 'Masterpass',
+            'visa' => 'Visa',
+            'mastercard' => 'Mastercard',
+            'maestro' => 'Maestro',
+            'diners' => 'Diners',
+            'americanexpress' => 'American Express',
             'findomestic' => 'Findomestic',
+            'masterpass'  => 'Masterpass',
+            'mybank' => 'MyBank',
             'paypal'      => 'PayPal'
           );
     }
@@ -249,7 +253,11 @@ class Gateway implements \Payment\GatewayInterface
     private function getInstrumentCode($inst){
         $code = '_S';
         switch ($inst) {
-            case 'cc':
+            case 'visa':
+            case 'mastercard':
+            case 'maestro':
+            case 'diners':
+            case 'americanexpress':
                 $code = '';
                 break;
             case 'mybank':
@@ -373,5 +381,13 @@ class Gateway implements \Payment\GatewayInterface
      */
     public function getTesthMacPassword(){
         return null;
+    }
+    /**
+     * Return a list with all available countries
+     *
+     * @return array|object
+     */
+    public function getSellingLocations(){
+        return array();
     }
 }
