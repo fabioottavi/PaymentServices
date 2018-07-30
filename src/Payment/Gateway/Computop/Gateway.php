@@ -460,7 +460,7 @@ class Gateway implements \Payment\GatewayInterface
      * @return array|object
      */
     public function getSellingLocations(){
-        $arr;
+        $arr = array();
         $filePath = __DIR__ . "/countries.xml";
 
         if (file_exists($filePath)) {
