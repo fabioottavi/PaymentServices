@@ -8,6 +8,9 @@ class Gateway implements \Payment\GatewayInterface
     private $test;
     private $dTid = '';
     private $dKsig = '';
+    private $allowedCurrencies = array('AUD','CAD','CHF','DKK','GBP','JPY',
+    'SEK','EUR','NOK','RUB','USD','AED','BRL','HKD','KWD','MXN','MYR',
+    'SAR','SGD','THB','TWD');
 
     // Extra informations
     const DEFAULT_INFO1 = '';
@@ -310,32 +313,13 @@ class Gateway implements \Payment\GatewayInterface
      */
     public function getCurrenciesAllowed(){
         $arr = array();
-        $filePath = __DIR__ . "/../../../currencies_it.xml";
+        $filePath = __DIR__ . "/../../Data/currencies_it.xml";
 
         if (file_exists($filePath)) {
+            $query = "//currency[code='".join("' or code='", $this->allowedCurrencies)."']";
+
             $xmlElements = simplexml_load_file($filePath);
-            $available = $xmlElements->xpath("//currency[".
-            "code='AUD' or ".
-            "code='CAD' or ".
-            "code='CHF' or ".
-            "code='DKK' or ".
-            "code='GBP' or ".
-            "code='JPY' or ".
-            "code='SEK' or ".
-            "code='EUR' or ".
-            "code='NOK' or ".
-            "code='RUB' or ".
-            "code='USD' or ".
-            "code='AED' or ".
-            "code='BRL' or ".
-            "code='HKD' or ".
-            "code='KWD' or ".
-            "code='MXN' or ".
-            "code='MYR' or ".
-            "code='SAR' or ".
-            "code='SGD' or ".
-            "code='THB' or ".
-            "code='TWD']");
+            $available = $xmlElements->xpath($query);
 
             foreach($available as $currency){
                 $cDetails = array(
@@ -348,23 +332,6 @@ class Gateway implements \Payment\GatewayInterface
         }
 
         return $arr;
-
-
-
-        //return array(
-        //    array(
-        //        'title' => __('Euro', 'bnppay'),
-        //        'code' => 'EUR',
-        //    ),
-        //    array(
-        //        'title' => __('Dollar', 'bnppay'),
-        //        'code' => 'USD',
-        //    ),
-        //    array(
-        //        'title' => __('Pound Sterling', 'bnppay'),
-        //        'code' => 'GBP',
-        //    )
-        //);
     }
     /**
      * Get Allowed Languages

@@ -76,12 +76,13 @@ class Gateway implements \Payment\GatewayInterface
         $url= ComputopUtils::getValue($params,'baseURL','');
         $acq= ComputopUtils::getValue($params,'acquirer');
         $pm = ComputopUtils::getValue($params,'paymentMethod');
+        $amount = str_replace('.', '', number_format(ComputopUtils::getValue($params, 'amount', '0'), 2, '.', ''));
 
         $initObj = $this->getInstrumentEndpoint($mId,$bPs,$hMcPd,$pm,$acq);
         $initObj->capture = ComputopUtils::getValue($params,'transactionType',self::TRASACTION_AUTO);
         $initObj->transId = ComputopUtils::getValue($params, 'paymentReference');
         $initObj->refNr = ComputopUtils::getValue($params, 'orderReference');
-        $initObj->amount = str_replace('.', '', number_format(ComputopUtils::getValue($params, 'amount', '0'), 2, '.', ''));
+        $initObj->amount = $amount;
         //$initObj->currency = ComputopUtils::getValue($params,'currency'); // There is only one the default = EN
         $initObj->description = ComputopUtils::getValue($params,'description');
         $initObj->language =ComputopUtils::normalizeLanguage(ComputopUtils::getValue($params, 'language')); // TODO: Don't exist yet and there isn't in the documentation
@@ -108,17 +109,26 @@ class Gateway implements \Payment\GatewayInterface
         $initObj->iban = ComputopUtils::getValue($params,'iban','');   
         $initObj->mobileNo = ComputopUtils::getValue($params,'mobileNo','');
 
+        //CustomFields
+        $initObj->CustomField1 = $amount.' '.ComputopUtils::getValue($params,'CustomField1','EURO');
+        $initObj->CustomField2 = ComputopUtils::getValue($params,ComputopUtils::getValue($params, 'orderReference'),'no');
+        $initObj->CustomField3 = ComputopUtils::getValue($params,'LogoUrl','no');
+        $initObj->CustomField6 = ComputopUtils::getValue($params,'ShippingDetails','no');
+        $initObj->CustomField7 = ComputopUtils::getValue($params,'InvoiceDetails','no');
+
         // Graphic customization
         $initObj->template = ComputopUtils::getValue($params,'Template');
-        $initObj->background = ComputopUtils::getValue($params,'Background');
-        $initObj->bgColor = ComputopUtils::getValue($params,'BGColor');
-        $initObj->bgImage = ComputopUtils::getValue($params,'BGImage');
-        $initObj->fColor = ComputopUtils::getValue($params,'FColor');
-        $initObj->fFace = ComputopUtils::getValue($params,'FFace');
-        $initObj->fSize = ComputopUtils::getValue($params,'FSize');
-        $initObj->centro = ComputopUtils::getValue($params,'Centro');
-        $initObj->tWidth = ComputopUtils::getValue($params,'tWidth');
-        $initObj->tHeight = ComputopUtils::getValue($params,'tHeight');
+
+        // Removed by BNL
+        //$initObj->background = ComputopUtils::getValue($params,'Background');
+        //$initObj->bgColor = ComputopUtils::getValue($params,'BGColor');
+        //$initObj->bgImage = ComputopUtils::getValue($params,'BGImage');
+        //$initObj->fColor = ComputopUtils::getValue($params,'FColor');
+        //$initObj->fFace = ComputopUtils::getValue($params,'FFace');
+        //$initObj->fSize = ComputopUtils::getValue($params,'FSize');
+        //$initObj->centro = ComputopUtils::getValue($params,'Centro');
+        //$initObj->tWidth = ComputopUtils::getValue($params,'tWidth');
+        //$initObj->tHeight = ComputopUtils::getValue($params,'tHeight');
 
         $resp = $initObj->execute();
         return array(
@@ -473,7 +483,7 @@ class Gateway implements \Payment\GatewayInterface
      */
     public function getSellingLocations(){
         $arr = array();
-        $filePath = __DIR__ . "/../../../countries_it.xml";
+        $filePath = __DIR__ . "/../../Data/countries_it.xml";
 
         if (file_exists($filePath)) {
             $xmlElements = simplexml_load_file($filePath);

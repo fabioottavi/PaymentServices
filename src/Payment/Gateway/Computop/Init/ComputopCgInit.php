@@ -35,6 +35,12 @@ class ComputopCgInit extends \Payment\Gateway\Computop\BaseComputopCg {
     public $tWidth;
     public $tHeight;
 
+    public $CustomField1;
+    public $CustomField2;
+    public $CustomField3;
+    public $CustomField6;
+    public $CustomField7;
+
     public $response = "encrypt";
 
     public function __construct($merchantId,$blowfishPassword,$hMacPassword,$serverUrl)
@@ -67,6 +73,12 @@ class ComputopCgInit extends \Payment\Gateway\Computop\BaseComputopCg {
         $this->centro = null;
         $this->tWidth = null;
         $this->tHeight = null;
+
+        $this->CustomField1 = null;
+        $this->CustomField2 = null;
+        $this->CustomField3 = null;
+        $this->CustomField6 = null;
+        $this->CustomField7 = null;
     }
 
     protected function checkFields() {
@@ -133,6 +145,22 @@ class ComputopCgInit extends \Payment\Gateway\Computop\BaseComputopCg {
         }
         if($this->tHeight){
             array_push($arr, "tHeight=$this->tHeight");
+        }
+        
+        if($this->CustomField1){
+            array_push($arr, "CustomField1=$this->CustomField1");
+        }
+        if($this->CustomField2){
+            array_push($arr, "CustomField2=$this->CustomField2");
+        }
+        if($this->CustomField3){
+            array_push($arr, "CustomField3=$this->CustomField3");
+        }
+        if($this->CustomField6){
+            array_push($arr, "CustomField6=$this->CustomField6");
+        }
+        if($this->CustomField7){
+            array_push($arr, "CustomField7=$this->CustomField7");
         }
         
         return $arr;
