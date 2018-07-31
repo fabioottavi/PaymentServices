@@ -96,10 +96,11 @@ class ComputopCgInit extends \Payment\Gateway\Computop\BaseComputopCg {
     public function getExtraParams(){}
 
     protected function getParams(){
-        $custom = join("|", array($this->addInfo1,$this->addInfo2,$this->addInfo3,$this->addInfo4,$this->addInfo5));
+        $this->userData = join("|", array($this->addInfo1,$this->addInfo2,$this->addInfo3,$this->addInfo4,$this->addInfo5));
         // format data which is to be transmitted - required
         $arr = parent::getParams();
 
+        $this->userData=null;
         $pTransId = "TransID=$this->transId";
         $pRefNr = "RefNr=$this->refNr";
         $pAmount = "Amount=$this->amount";
@@ -112,9 +113,8 @@ class ComputopCgInit extends \Payment\Gateway\Computop\BaseComputopCg {
         $pCapture = "Capture=$this->capture";
         $pOrderDesc = "OrderDesc=$this->description";
         $pReqId = "ReqID=$this->refNr";
-        $pCustom = "UserData=$custom";
 
-        array_push($arr,$pTransId, $pRefNr, $pAmount, $pCurrency, $pURLSuccess, $pURLFailure, $pResponse, $pURLNotify, $pUserData, $pCapture, $pOrderDesc, $pReqId, $pCustom);
+        array_push($arr,$pTransId, $pRefNr, $pAmount, $pCurrency, $pURLSuccess, $pURLFailure, $pResponse, $pURLNotify, $pUserData, $pCapture, $pOrderDesc, $pReqId);
         
         if($this->template){
             array_push($arr, "Template=$this->template");

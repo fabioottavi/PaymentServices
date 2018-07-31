@@ -125,7 +125,7 @@ abstract class BaseComputopCg{
         if (!$this->amount) {
             throw new CmptpMissingParException("Missing amount");
         }
-        if(trim($this->currency)){
+        if(!trim($this->currency)){
             $this->currency = self::DEFAULT_CURRENCY;
         }
     }

@@ -77,8 +77,9 @@ class Gateway implements \Payment\GatewayInterface
         $acq= ComputopUtils::getValue($params,'acquirer');
         $pm = ComputopUtils::getValue($params,'paymentMethod');
         $amount = str_replace('.', '', number_format(ComputopUtils::getValue($params, 'amount', '0'), 2, '.', ''));
-
-        $initObj = $this->getInstrumentEndpoint($mId,$bPs,$hMcPd,$pm,$acq);
+        
+        $this->loadBaseUrl($acq);
+        $initObj = $this->getInstrumentEndpoint($mId,$bPs,$hMcPd,$pm);
         $initObj->capture = ComputopUtils::getValue($params,'transactionType',self::TRASACTION_AUTO);
         $initObj->transId = ComputopUtils::getValue($params, 'paymentReference');
         $initObj->refNr = ComputopUtils::getValue($params, 'orderReference');
@@ -111,10 +112,10 @@ class Gateway implements \Payment\GatewayInterface
 
         //CustomFields
         $initObj->customField1 = $amount.' '.ComputopUtils::getValue($params,'customField1','EURO');
-        $initObj->customField2 = ComputopUtils::getValue($params,ComputopUtils::getValue($params, 'orderReference'),'no');
-        $initObj->customField3 = ComputopUtils::getValue($params,'logoUrl','no');
-        $initObj->customField6 = ComputopUtils::getValue($params,'shippingDetails','no');
-        $initObj->customField7 = ComputopUtils::getValue($params,'invoiceDetails','no');
+        $initObj->customField2 = ComputopUtils::getValue($params,ComputopUtils::getValue($params, 'orderReference'));
+        $initObj->customField3 = ComputopUtils::getValue($params,'logoUrl');
+        $initObj->customField6 = ComputopUtils::getValue($params,'shippingDetails');
+        $initObj->customField7 = ComputopUtils::getValue($params,'invoiceDetails');
 
         // Graphic customization
         $initObj->template = ComputopUtils::getValue($params,'template');
@@ -179,16 +180,15 @@ class Gateway implements \Payment\GatewayInterface
         $bPs = ComputopUtils::getValue($params,'hashMessage',$this->dBlowfishPassword);
         $hMcPd = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword);
         $acq= ComputopUtils::getValue($params,'acquirer');
-        $pm = ComputopUtils::getValue($params,'paymentMethod');
-
-        $initObj = $this->getInstrumentEndpoint($mId,$bPs,$hMcPd,$pm,$acq);
+        $amount = str_replace('.', '', number_format(ComputopUtils::getValue($params, 'amount', '0'), 2, '.', ''));
 
         $obj = new S2S\ComputopCgCapture($mId,$bPs,$hMcPd); 
-        $obj->serverUrl = $initObj->serverUrl.self::ACTION_CAPTURE;
+        $this->loadBaseUrl($acq);
+        $obj->serverUrl = $this->sUrl.self::ACTION_CAPTURE;
         
         $obj->payId = ComputopUtils::getValue($params,'payId','');     
         $obj->transId = ComputopUtils::getValue($params, 'paymentReference');
-        $obj->amount = ComputopUtils::getValue($params, 'amount', '0');
+        $obj->amount = $amount;
         $obj->currency = ComputopUtils::getValue($params,'currency',BaseComputopCg::DEFAULT_CURRENCY);
         $obj->refNr = ComputopUtils::getValue($params, 'orderReference');
 
@@ -222,12 +222,10 @@ class Gateway implements \Payment\GatewayInterface
         $bPs = ComputopUtils::getValue($params,'hashMessage',$this->dBlowfishPassword);
         $hMcPd = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword);
         $acq= ComputopUtils::getValue($params,'acquirer');
-        $pm = ComputopUtils::getValue($params,'paymentMethod');
 
-        $initObj = $this->getInstrumentEndpoint($mId,$bPs,$hMcPd,$pm,$acq);
-
-        $obj = new S2S\ComputopCgCredit($mId,$bPs,$hMcPd); 
-        $obj->serverUrl = $initObj->serverUrl.self::ACTION_CREDIT;
+        $obj = new S2S\ComputopCgCredit($mId,$bPs,$hMcPd);  
+        $this->loadBaseUrl($acq);
+        $obj->serverUrl = $this->sUrl.self::ACTION_CREDIT;
         
         $obj->payId = ComputopUtils::getValue($params,'payId','');     
         $obj->transId = ComputopUtils::getValue($params, 'paymentReference');
@@ -262,12 +260,10 @@ class Gateway implements \Payment\GatewayInterface
         $bPs = ComputopUtils::getValue($params,'hashMessage',$this->dBlowfishPassword);
         $hMcPd = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword);
         $acq= ComputopUtils::getValue($params,'acquirer');
-        $pm = ComputopUtils::getValue($params,'paymentMethod');
-
-        $initObj = $this->getInstrumentEndpoint($mId,$bPs,$hMcPd,$pm,$acq);
 
         $obj = new S2S\ComputopCgCapture($mId,$bPs,$hMcPd); 
-        $obj->serverUrl = $initObj->serverUrl.self::ACTION_REVERSE;
+        $this->loadBaseUrl($acq);
+        $obj->serverUrl = $this->sUrl.self::ACTION_REVERSE;
         
         $obj->payId = ComputopUtils::getValue($params,'payId','');   
         $obj->xId = ComputopUtils::getValue($params,'xId','');
@@ -318,20 +314,8 @@ class Gateway implements \Payment\GatewayInterface
             'zimpler' => 'Zimpler'
           );
     }
-    /**
-     * 
-     * Return the endpoint action
-     * 
-     * @param string $inst
-     * @return object
-     */
-    public function getInstrumentEndpoint($mId,$bPs,$hMcPd,$inst,$acq){
-        $obj;
 
-        if (!$inst) {
-            throw new CmptpMissingParException("Missing Payment Method");
-        }
-
+    private function loadBaseUrl($acq){
         if(self::ACQUIRER_POSITIVI == $acq){
             $this->sUrl = self::URL_POSITIVI;
         }else if(self::ACQUIRER_PARIBAS == $acq){
@@ -339,6 +323,21 @@ class Gateway implements \Payment\GatewayInterface
         }
         else{
             throw new CmptpMissingParException("Missing Acquirer");
+        }
+    }
+
+    /**
+     * 
+     * Return the endpoint action
+     * 
+     * @param string $inst
+     * @return object
+     */
+    public function getInstrumentEndpoint($mId,$bPs,$hMcPd,$inst){
+        $obj;
+
+        if (!$inst) {
+            throw new CmptpMissingParException("Missing Payment Method");
         }
 
         switch ($inst) {

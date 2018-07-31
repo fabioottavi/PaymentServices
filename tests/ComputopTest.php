@@ -19,10 +19,10 @@ final class ComputopTest extends TestCase
         
         $params = [
             //Same fields on both payment methods
-            'baseURL' => "",
-            'notifyUrl' => 'http://dev-wp.tk/checkout/order-received/145/?key=wc_order_5b6075a3a7336',
-            'callbackUrl' => 'http://dev-wp.tk/checkout/order-received/145/?key=wc_order_5b6075a3a7336',
-            'errorUrl' => 'http://dev-wp.tk/cart/?cancel_order=true&order=wc_order_5b6075a3a7336&order_id=145&redirect&_wpnonce=ac50bd5d4f',
+            'baseURL' => "https://localhost/ctPaygatePHP",
+            'notifyUrl' => '/notify.php',
+            'callbackUrl' => '/success.php',
+            'errorUrl' => '/failure.php',
             'amount' => 1.1,
             'orderReference' => $this->orderNumber,
             'paymentReference' => $this->orderNumber,
@@ -33,18 +33,18 @@ final class ComputopTest extends TestCase
             'terminalId' => null,
             'hashMessage' => null,
             'currency' => 'EUR',
-            'addInfo1' => '',
-            'addInfo2' => '',
-            'addInfo3' => '',
-            'addInfo4' => '',
-            'addInfo5' => '',
+            'addInfo1' => '[BNL Demo] Ordine da nuovo cliente (145) - {order_date}',
+            'addInfo2' => '[BNL Demo] Ordine da nuovo cliente (145) - {order_date}',
+            'addInfo3' => '[BNL Demo] Ordine da nuovo cliente (145) - {order_date}',
+            'addInfo4' => '[BNL Demo] Ordine da nuovo cliente (145) - {order_date}',
+            'addInfo5' => '[BNL Demo] Ordine da nuovo cliente (145) - {order_date}',
             'acquirer' => 'bnlpositivity',
 
             'hMacPassword' => null,
             
             // Extra values
-            'addrCountryCode' => null,
-            'sellingPoint' => null,
+            'addrCountryCode' => '380',
+            'sellingPoint' => 'BNL Demo',
             'accOwner' => null,
             'device' => null,
             'email' => null,
@@ -70,7 +70,6 @@ final class ComputopTest extends TestCase
             'logoUrl' => null,
             'shippingDetails' => null,
             'invoiceDetails' => null,
-            'device' => 'desktop',
         ];
 
         //get response from gateway
@@ -89,7 +88,7 @@ final class ComputopTest extends TestCase
         //ComputopUtils::getPaymentResultParam($_GET);
         $params = [
             'hashMessage' => null,
-            'UrlParams' => 'Len=353&Data=6256CF18B10A0FBE4D9028746090F3D1142EA6C0E628E99D7EE5BAF8B0DBBC1E2EE4D8AB32A0B76FE0757EB72A82F22748DD0EB16DF24E2A679E55F777A318569B8D27E780DC9E2C2D5AD56A884AD9688A684B3CF73099B2659ADCB3FA11DFCACAE587FCEA3E22FB58C7E18C5F1F560BF8C4FF62CC7A8A000772AD7255D2AD2F02D49A8353843CCC4DF6F890F90BD012C218E0597317C9D62FF02B9607E13B985E57CD4E1E8BB6537ADF915BC73F1E83B47BD92955874870D19E63CCE2B7F0744B653522F0AE29E3182119C371622208AD8F33D29EA379F647F2D86B4184F344F7D18ABAE062D92D6B2B40016612DB507B417BB6F205886E542955D95BEE29F369D41FF7D6817CEB9AF51ED6803A434CC40409489E74AF1640B76CF96F659AADE07C32794BF47A85E0FECFBBFD190F436234F696C0A846570BF9634EB303BD7CB5F274B6649FF0714655314C6F91F46BF5CDDE29F9A2B9BE86A3325C6F5812141A61FA2A48E77C05',
+            'UrlParams' => 'Len=361&Data=6256CF18B10A0FBE4D9028746090F3D1183DD61E4C65649C2B77EB3DEE35837EAD31FC2886FCB063E10F8C9004B281B98DEF79ED7C62C10BA8F91AADD41DFA6BCF835BD20F808E2D3578786DEE988D8049D65A9896C5B4C796311269FC12E202CB1A0504DFC748C082C77A8B540876EBBB3F62B18C18985AC648E481B77A509E8D8EECE8099CA005AC7CCC0B1514308338BC6E8DAC8193770CE8A2F831F7474A015147C66EAB7FCC5E57CD4E1E8BB6537ADF915BC73F1E83B47BD92955874870D19E63CCE2B7F0744B653522F0AE29E3182119C37162220887039550C30A00E49FC7C6221CFB366F502F514953DEF6831B34355744BC2D377B417BB6F205886E542955D95BEE29F369D41FF7D6817CEB9AF51ED6803A434CC40409489E74AF1640B76CF96F659AAD9D7093920458246BBD5E6EB93B19C9123754C07A3821EAFCC59425CFD517B33B403CF32ABE81422F0B3E3BEA82B649536D0E519A5360DB3A10221CC2312AF2B8DE4998C985A5A80A',
         ];
 
         //get response from gateway
@@ -110,16 +109,17 @@ final class ComputopTest extends TestCase
             'terminalId' => null,
             'hashMessage' => null,
             'hMacPassword' => null,
-            'payId' => '123123', // we retrieve it from them
-            'paymentReference' => $this->orderNumber,
-            'orderReference' => $this->orderNumber,
-            'amount' => 17,
+            'payId' => '65c4fe6b27944a8b84bad2c49d5fe098', // we retrieve it from them
+            'paymentReference' => '612365b608a07991679.62622481',
+            'orderReference' => '612365b608a07991679.62622481',
+            'amount' => 1.1,
             'currency' => null,
+            'acquirer' => 'bnlpositivity',
         ];
 
         //get response from gateway
-        //$pResult = $payg->confirm($params);
-        //var_dump($pResult);
+        $pResult = $payg->confirm($params);
+        var_dump($pResult);
     }
 
     public function testRefund()
@@ -134,10 +134,11 @@ final class ComputopTest extends TestCase
             'terminalId' => null,
             'hashMessage' => null,
             'hMacPassword' => null,
-            'payId' => '123123', // we retrieve it from them
-            'paymentReference' => $this->orderNumber,
-            'amount' => 17,
+            'payId' => '65c4fe6b27944a8b84bad2c49d5fe098', // we retrieve it from them
+            'paymentReference' => '612365b608a07991679.62622481',
+            'amount' => 1.1,
             'currency' => null,
+            'acquirer' => 'bnlpositivity',
         ];
 
         //get response from gateway
@@ -162,6 +163,7 @@ final class ComputopTest extends TestCase
             'orderReference' => $this->orderNumber,
             'amount' => 17,
             'currency' => null,
+            'acquirer' => 'bnlpositivity',
             'xId' => '',
         ];
 
