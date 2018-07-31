@@ -110,14 +110,14 @@ class Gateway implements \Payment\GatewayInterface
         $initObj->mobileNo = ComputopUtils::getValue($params,'mobileNo','');
 
         //CustomFields
-        $initObj->CustomField1 = $amount.' '.ComputopUtils::getValue($params,'CustomField1','EURO');
+        $initObj->CustomField1 = $amount.' '.ComputopUtils::getValue($params,'customField1','EURO');
         $initObj->CustomField2 = ComputopUtils::getValue($params,ComputopUtils::getValue($params, 'orderReference'),'no');
-        $initObj->CustomField3 = ComputopUtils::getValue($params,'LogoUrl','no');
-        $initObj->CustomField6 = ComputopUtils::getValue($params,'ShippingDetails','no');
-        $initObj->CustomField7 = ComputopUtils::getValue($params,'InvoiceDetails','no');
+        $initObj->CustomField3 = ComputopUtils::getValue($params,'logoUrl','no');
+        $initObj->CustomField6 = ComputopUtils::getValue($params,'shippingDetails','no');
+        $initObj->CustomField7 = ComputopUtils::getValue($params,'invoiceDetails','no');
 
         // Graphic customization
-        $initObj->template = ComputopUtils::getValue($params,'Template');
+        $initObj->template = ComputopUtils::getValue($params,'template');
 
         // Removed by BNL
         //$initObj->background = ComputopUtils::getValue($params,'Background');
