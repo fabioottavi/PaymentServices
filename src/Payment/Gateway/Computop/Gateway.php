@@ -110,11 +110,11 @@ class Gateway implements \Payment\GatewayInterface
         $initObj->mobileNo = ComputopUtils::getValue($params,'mobileNo','');
 
         //CustomFields
-        $initObj->CustomField1 = $amount.' '.ComputopUtils::getValue($params,'customField1','EURO');
-        $initObj->CustomField2 = ComputopUtils::getValue($params,ComputopUtils::getValue($params, 'orderReference'),'no');
-        $initObj->CustomField3 = ComputopUtils::getValue($params,'logoUrl','no');
-        $initObj->CustomField6 = ComputopUtils::getValue($params,'shippingDetails','no');
-        $initObj->CustomField7 = ComputopUtils::getValue($params,'invoiceDetails','no');
+        $initObj->customField1 = $amount.' '.ComputopUtils::getValue($params,'customField1','EURO');
+        $initObj->customField2 = ComputopUtils::getValue($params,ComputopUtils::getValue($params, 'orderReference'),'no');
+        $initObj->customField3 = ComputopUtils::getValue($params,'logoUrl','no');
+        $initObj->customField6 = ComputopUtils::getValue($params,'shippingDetails','no');
+        $initObj->customField7 = ComputopUtils::getValue($params,'invoiceDetails','no');
 
         // Graphic customization
         $initObj->template = ComputopUtils::getValue($params,'template');
@@ -178,9 +178,13 @@ class Gateway implements \Payment\GatewayInterface
         $mId = ComputopUtils::getValue($params,'terminalId',$this->dMerchantId);    
         $bPs = ComputopUtils::getValue($params,'hashMessage',$this->dBlowfishPassword);
         $hMcPd = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword);
+        $acq= ComputopUtils::getValue($params,'acquirer');
+        $pm = ComputopUtils::getValue($params,'paymentMethod');
+
+        $initObj = $this->getInstrumentEndpoint($mId,$bPs,$hMcPd,$pm,$acq);
 
         $obj = new S2S\ComputopCgCapture($mId,$bPs,$hMcPd); 
-        $obj->serverUrl = $this->sUrl.self::ACTION_CAPTURE;
+        $obj->serverUrl = $initObj->serverUrl.self::ACTION_CAPTURE;
         
         $obj->payId = ComputopUtils::getValue($params,'payId','');     
         $obj->transId = ComputopUtils::getValue($params, 'paymentReference');
@@ -217,9 +221,13 @@ class Gateway implements \Payment\GatewayInterface
         $mId = ComputopUtils::getValue($params,'terminalId',$this->dMerchantId);    
         $bPs = ComputopUtils::getValue($params,'hashMessage',$this->dBlowfishPassword);
         $hMcPd = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword);
+        $acq= ComputopUtils::getValue($params,'acquirer');
+        $pm = ComputopUtils::getValue($params,'paymentMethod');
+
+        $initObj = $this->getInstrumentEndpoint($mId,$bPs,$hMcPd,$pm,$acq);
 
         $obj = new S2S\ComputopCgCredit($mId,$bPs,$hMcPd); 
-        $obj->serverUrl = $this->sUrl.self::ACTION_CREDIT;
+        $obj->serverUrl = $initObj->serverUrl.self::ACTION_CREDIT;
         
         $obj->payId = ComputopUtils::getValue($params,'payId','');     
         $obj->transId = ComputopUtils::getValue($params, 'paymentReference');
@@ -253,9 +261,13 @@ class Gateway implements \Payment\GatewayInterface
         $mId = ComputopUtils::getValue($params,'terminalId',$this->dMerchantId);    
         $bPs = ComputopUtils::getValue($params,'hashMessage',$this->dBlowfishPassword);
         $hMcPd = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword);
+        $acq= ComputopUtils::getValue($params,'acquirer');
+        $pm = ComputopUtils::getValue($params,'paymentMethod');
+
+        $initObj = $this->getInstrumentEndpoint($mId,$bPs,$hMcPd,$pm,$acq);
 
         $obj = new S2S\ComputopCgCapture($mId,$bPs,$hMcPd); 
-        $obj->serverUrl = $this->sUrl.self::ACTION_REVERSE;
+        $obj->serverUrl = $initObj->serverUrl.self::ACTION_REVERSE;
         
         $obj->payId = ComputopUtils::getValue($params,'payId','');   
         $obj->xId = ComputopUtils::getValue($params,'xId','');
@@ -324,6 +336,9 @@ class Gateway implements \Payment\GatewayInterface
             $this->sUrl = self::URL_POSITIVI;
         }else if(self::ACQUIRER_PARIBAS == $acq){
             $this->sUrl = self::URL_PARIBAS;
+        }
+        else{
+            throw new CmptpMissingParException("Missing Acquirer");
         }
 
         switch ($inst) {

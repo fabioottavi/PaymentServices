@@ -19,25 +19,26 @@ final class ComputopTest extends TestCase
         
         $params = [
             //Same fields on both payment methods
-            'baseURL' => "https://localhost/ctPaygatePHP",
-            'notifyUrl' => '/notify.php',
-            'callbackUrl' => '/success.php',
-            'errorUrl' => '/failure.php',
+            'baseURL' => "",
+            'notifyUrl' => 'http://dev-wp.tk/checkout/order-received/145/?key=wc_order_5b6075a3a7336',
+            'callbackUrl' => 'http://dev-wp.tk/checkout/order-received/145/?key=wc_order_5b6075a3a7336',
+            'errorUrl' => 'http://dev-wp.tk/cart/?cancel_order=true&order=wc_order_5b6075a3a7336&order_id=145&redirect&_wpnonce=ac50bd5d4f',
             'amount' => 1.1,
             'orderReference' => $this->orderNumber,
             'paymentReference' => $this->orderNumber,
             'transactionType' => 'AUTO', 
-            'description' => 'test',
-            'language' => null, 
-            'paymentMethod' => 'cc', // test with: cc,mybank,alipay,cupay,wechat,giropay,sofort,ideal,p24,multibanco,zimpler
+            'description' => 'Casuale',
+            'language' => 'it_IT', 
+            'paymentMethod' => 'visa', // test with: cc,mybank,alipay,cupay,wechat,giropay,sofort,ideal,p24,multibanco,zimpler
             'terminalId' => null,
             'hashMessage' => null,
-            'currency' => null,
+            'currency' => 'EUR',
             'addInfo1' => '',
             'addInfo2' => '',
             'addInfo3' => '',
             'addInfo4' => '',
             'addInfo5' => '',
+            'acquirer' => 'bnlpositivity',
 
             'hMacPassword' => null,
             
@@ -56,20 +57,25 @@ final class ComputopTest extends TestCase
 
             // Configuration values
             'template' => null,
-            'background' => null,
-            'bgColor' => null,
-            'bgImage' => null,
-            'fColor' => null,
-            'fFace' => null,
-            'fSize' => null,
-            'centro' => null,
-            'tWidth' => null,
-            'tHeight' => null,
+            //'background' => null,
+            //'bgColor' => null,
+            //'bgImage' => null,
+            //'fColor' => null,
+            //'fFace' => null,
+            //'fSize' => null,
+            //'centro' => null,
+            //'tWidth' => null,
+            //'tHeight' => null,
+            
+            'logoUrl' => null,
+            'shippingDetails' => null,
+            'invoiceDetails' => null,
+            'device' => 'desktop',
         ];
 
         //get response from gateway
-        //$initResponse = $payg->init($params);
-        //var_dump($initResponse);
+        $initResponse = $payg->init($params);
+        var_dump($initResponse);
     }
 
     public function testVerify()
@@ -170,7 +176,7 @@ final class ComputopTest extends TestCase
             \Payment\Gateway\Computop\Gateway::class,
             $payg
         );
-        var_dump($payg->getSellingLocations());
+        //var_dump($payg->getSellingLocations());
     }
 }
 

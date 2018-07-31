@@ -35,11 +35,11 @@ class ComputopCgInit extends \Payment\Gateway\Computop\BaseComputopCg {
     public $tWidth;
     public $tHeight;
 
-    public $CustomField1;
-    public $CustomField2;
-    public $CustomField3;
-    public $CustomField6;
-    public $CustomField7;
+    public $customField1;
+    public $customField2;
+    public $customField3;
+    public $customField6;
+    public $customField7;
 
     public $response = "encrypt";
 
@@ -74,11 +74,11 @@ class ComputopCgInit extends \Payment\Gateway\Computop\BaseComputopCg {
         $this->tWidth = null;
         $this->tHeight = null;
 
-        $this->CustomField1 = null;
-        $this->CustomField2 = null;
-        $this->CustomField3 = null;
-        $this->CustomField6 = null;
-        $this->CustomField7 = null;
+        $this->customField1 = null;
+        $this->customField2 = null;
+        $this->customField3 = null;
+        $this->customField6 = null;
+        $this->customField7 = null;
     }
 
     protected function checkFields() {
@@ -147,20 +147,20 @@ class ComputopCgInit extends \Payment\Gateway\Computop\BaseComputopCg {
             array_push($arr, "tHeight=$this->tHeight");
         }
         
-        if($this->CustomField1){
-            array_push($arr, "CustomField1=$this->CustomField1");
+        if($this->customField1){
+            array_push($arr, "CustomField1=$this->customField1");
         }
-        if($this->CustomField2){
-            array_push($arr, "CustomField2=$this->CustomField2");
+        if($this->customField2){
+            array_push($arr, "CustomField2=$this->customField2");
         }
-        if($this->CustomField3){
-            array_push($arr, "CustomField3=$this->CustomField3");
+        if($this->customField3){
+            array_push($arr, "CustomField3=$this->customField3");
         }
-        if($this->CustomField6){
-            array_push($arr, "CustomField6=$this->CustomField6");
+        if($this->customField6){
+            array_push($arr, "CustomField6=$this->customField6");
         }
-        if($this->CustomField7){
-            array_push($arr, "CustomField7=$this->CustomField7");
+        if($this->customField7){
+            array_push($arr, "CustomField7=$this->customField7");
         }
         
         return $arr;
