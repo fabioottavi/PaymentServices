@@ -21,10 +21,10 @@ final class IgfcTest extends TestCase
         
         $params = [
             //Same fields on both payment methods
-            'baseURL' => "http://ipgadmin.sendabox.it/Callback",
-            'notifyUrl' => '/Save',
-            'callbackUrl' => '/Save',
-            'errorUrl' => '/Save',
+            'baseURL' => "https://localhost/ctPaygatePHP",
+            'notifyUrl' => '/igfs.php',
+            'callbackUrl' => '/test.php',
+            'errorUrl' => '/test.php',
             'amount' => 1.89,
             'orderReference' => $this->orderNumber,
             'transactionType' => 'AUTH', //TODO: Test with: PURCHASE, AUTH, VERIFY
@@ -42,15 +42,14 @@ final class IgfcTest extends TestCase
 
             //not used
             //'checkoutMode' => $payg::CHECK_OUT_NORMAL, //TODO: Test with: CHECK_OUT_SYNTHESIS, CHECK_OUT_SELECT
-            'payInstrToken' => '', // TODO:
+            'payInstrToken' => 'test', // TODO:
             'shopUserRef' => 'TestRef@sendabox.it', // It's the client email
             'shopUserName' => 'TestName',
-            'regenPayInstrToken' => '',  // TODO: how do i use it?
         ];
 
         //get response from gateway
-        $initResponse = $payg->init($params);
-        var_dump($initResponse);
+        //$initResponse = $payg->init($params);
+        //var_dump($initResponse);
     }
 
     public function testVerify(){
@@ -61,16 +60,16 @@ final class IgfcTest extends TestCase
         );
 
         $params = [
-            'orderReference' => '7251284915b4de217b183b5.95711638',
+            'orderReference' => '21316803735b5f1e251ad3b0.19051507',
             'language' => 'IT',
             'terminalId' => null,
             'hashMessage' => null,
 
-            'paymentID'=>'00198222215108845543', // paymentID => retrive from init() call
+            'paymentID'=>'00211978224108920891', // paymentID => retrive from init() call
         ];
         // response for verify method
-        $verifyResponse = $payg->verify($params);
-        var_dump($verifyResponse);
+        //$verifyResponse = $payg->verify($params);
+        //var_dump($verifyResponse);
     }
 
     public function testConfirm(){
@@ -133,5 +132,6 @@ final class IgfcTest extends TestCase
         //$refResponse = $ref->cancel($params);
         //var_dump($refResponse);
     }
+
 }
 

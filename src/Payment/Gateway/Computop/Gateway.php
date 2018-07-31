@@ -88,7 +88,6 @@ class Gateway implements \Payment\GatewayInterface
         $initObj->UrlSuccess = $url.ComputopUtils::getValue($params,'callbackUrl','');
         $initObj->UrlFailure = $url.ComputopUtils::getValue($params,'errorUrl','');
         $initObj->UrlNotify = $url.ComputopUtils::getValue($params,'notifyUrl','');
-        $initObj->userData = ComputopUtils::getValue($params,'userData'); // Empty
         $initObj->payId = ComputopUtils::getValue($params,'payId','');     
         $initObj->addInfo1 = substr(ComputopUtils::getValue($params,'addInfo1',self::DEFAULT_INFO1),0,204);
         $initObj->addInfo2 = substr(ComputopUtils::getValue($params,'addInfo2',self::DEFAULT_INFO2),0,204);
@@ -406,18 +405,31 @@ class Gateway implements \Payment\GatewayInterface
      */
     public function getLanguagesAllowed(){
         return array(
-            array(
-                'code' => 'IT',
-                'name' => 'Italiano',
-            ),
-            array(
-                'code' => 'EN',
-                'name' => 'Inglese',
-            ),
-            array(
-                'code' => 'FR',
-                'name' => 'Francese',
-            ),
+            array( 'code' => 'IT', 'name' => 'Italiano'),
+            array( 'code' => 'DE', 'name' => 'Tedesco'),
+            array( 'code' => 'AL', 'name' => 'Albanese'),
+            array( 'code' => 'AT', 'name' => 'Austriaco'),
+            array( 'code' => 'CZ', 'name' => 'Ceco'),
+            array( 'code' => 'CS', 'name' => 'Ceco'),
+            array( 'code' => 'DK', 'name' => 'Danese'),
+            array( 'code' => 'EN', 'name' => 'Inglese'),
+            array( 'code' => 'FI', 'name' => 'Finlandese'),
+            array( 'code' => 'FR', 'name' => 'Francese'),
+            array( 'code' => 'GR', 'name' => 'Greco'),
+            array( 'code' => 'HU', 'name' => 'Ungherese'),
+            array( 'code' => 'JP', 'name' => 'Giapponese'),
+            array( 'code' => 'NL', 'name' => 'Olandese'),
+            array( 'code' => 'NO', 'name' => 'Norvegese'),
+            array( 'code' => 'PL', 'name' => 'Polacco'),
+            array( 'code' => 'PT', 'name' => 'Portoghese'),
+            array( 'code' => 'RO', 'name' => 'Rumeno'),
+            array( 'code' => 'RU', 'name' => 'Russo'),
+            array( 'code' => 'ES', 'name' => 'Spagnolo'),
+            array( 'code' => 'SE', 'name' => 'Svedese'),
+            array( 'code' => 'SK', 'name' => 'Slovacco'),
+            array( 'code' => 'SL', 'name' => 'Sloveno'),
+            array( 'code' => 'TR', 'name' => 'Turco'),
+            array( 'code' => 'ZH', 'name' => 'Cinese semplificato'),
         );
     }
     
@@ -461,7 +473,7 @@ class Gateway implements \Payment\GatewayInterface
      */
     public function getSellingLocations(){
         $arr = array();
-        $filePath = __DIR__ . "/countries.xml";
+        $filePath = __DIR__ . "/../../../countries_it.xml";
 
         if (file_exists($filePath)) {
             $xmlElements = simplexml_load_file($filePath);

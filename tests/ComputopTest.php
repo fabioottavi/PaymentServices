@@ -4,11 +4,9 @@ use PHPUnit\Framework\TestCase;
 final class ComputopTest extends TestCase
 {
     private $orderNumber;
-    private $paymentNumber;
 
     public function setUp(){
         $this->orderNumber = uniqid(rand(0,100000), true);
-        $this->paymentNumber = uniqid(rand(0,100000), true);
     }
 
     public function testInit()
@@ -27,7 +25,7 @@ final class ComputopTest extends TestCase
             'errorUrl' => '/failure.php',
             'amount' => 1.1,
             'orderReference' => $this->orderNumber,
-            'paymentReference' => $this->paymentNumber,
+            'paymentReference' => $this->orderNumber,
             'transactionType' => 'AUTO', 
             'description' => 'test',
             'language' => null, 
@@ -41,7 +39,6 @@ final class ComputopTest extends TestCase
             'addInfo4' => '',
             'addInfo5' => '',
 
-            'userData' => 'test',
             'hMacPassword' => null,
             
             // Extra values
@@ -71,8 +68,8 @@ final class ComputopTest extends TestCase
         ];
 
         //get response from gateway
-        $initResponse = $payg->init($params);
-        var_dump($initResponse);
+        //$initResponse = $payg->init($params);
+        //var_dump($initResponse);
     }
 
     public function testVerify()
@@ -90,8 +87,8 @@ final class ComputopTest extends TestCase
         ];
 
         //get response from gateway
-        $pResult = $payg->verify($params);
-        var_dump($pResult);
+        //$pResult = $payg->verify($params);
+        //var_dump($pResult);
 
     }
 
@@ -108,7 +105,7 @@ final class ComputopTest extends TestCase
             'hashMessage' => null,
             'hMacPassword' => null,
             'payId' => '123123', // we retrieve it from them
-            'paymentReference' => $this->paymentNumber,
+            'paymentReference' => $this->orderNumber,
             'orderReference' => $this->orderNumber,
             'amount' => 17,
             'currency' => null,
@@ -132,7 +129,7 @@ final class ComputopTest extends TestCase
             'hashMessage' => null,
             'hMacPassword' => null,
             'payId' => '123123', // we retrieve it from them
-            'paymentReference' => $this->paymentNumber,
+            'paymentReference' => $this->orderNumber,
             'amount' => 17,
             'currency' => null,
         ];
@@ -155,7 +152,7 @@ final class ComputopTest extends TestCase
             'hashMessage' => null,
             'hMacPassword' => null,
             'payId' => '123123', // we retrieve it from them
-            'paymentReference' => $this->paymentNumber,
+            'paymentReference' => $this->orderNumber,
             'orderReference' => $this->orderNumber,
             'amount' => 17,
             'currency' => null,
@@ -165,6 +162,15 @@ final class ComputopTest extends TestCase
         //get response from gateway
         //$pResult = $payg->cancel($params);
         //var_dump($pResult);
+    }
+
+    public function testXml(){
+        $payg = PayGateway::getIstance(PayGateway::CMPT1, true);
+        $this->assertInstanceOf(
+            \Payment\Gateway\Computop\Gateway::class,
+            $payg
+        );
+        var_dump($payg->getSellingLocations());
     }
 }
 

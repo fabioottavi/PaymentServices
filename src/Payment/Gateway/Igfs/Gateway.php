@@ -309,23 +309,62 @@ class Gateway implements \Payment\GatewayInterface
      * @return array|object
      */
     public function getCurrenciesAllowed(){
-        return array(
-            array(
-                'title' => __('Euro', 'bnppay'),
-                'code' => 'EUR',
-                'symbol' => '&euro;',
-            ),
-            array(
-                'title' => __('Dollar', 'bnppay'),
-                'code' => 'USD',
-                'symbol' => '$',
-            ),
-            array(
-                'title' => __('Pound Sterling', 'bnppay'),
-                'code' => 'GBP',
-                'symbol' => '&pound;',
-            )
-        );
+        $arr = array();
+        $filePath = __DIR__ . "/../../../currencies_it.xml";
+
+        if (file_exists($filePath)) {
+            $xmlElements = simplexml_load_file($filePath);
+            $available = $xmlElements->xpath("//currency[".
+            "code='AUD' or ".
+            "code='CAD' or ".
+            "code='CHF' or ".
+            "code='DKK' or ".
+            "code='GBP' or ".
+            "code='JPY' or ".
+            "code='SEK' or ".
+            "code='EUR' or ".
+            "code='NOK' or ".
+            "code='RUB' or ".
+            "code='USD' or ".
+            "code='AED' or ".
+            "code='BRL' or ".
+            "code='HKD' or ".
+            "code='KWD' or ".
+            "code='MXN' or ".
+            "code='MYR' or ".
+            "code='SAR' or ".
+            "code='SGD' or ".
+            "code='THB' or ".
+            "code='TWD']");
+
+            foreach($available as $currency){
+                $cDetails = array(
+                    'title' => __((string)$currency->name, 'bnppay'),
+                    'code' => (string)$currency->code,
+                );
+
+                array_push($arr, $cDetails);
+            }
+        }
+
+        return $arr;
+
+
+
+        //return array(
+        //    array(
+        //        'title' => __('Euro', 'bnppay'),
+        //        'code' => 'EUR',
+        //    ),
+        //    array(
+        //        'title' => __('Dollar', 'bnppay'),
+        //        'code' => 'USD',
+        //    ),
+        //    array(
+        //        'title' => __('Pound Sterling', 'bnppay'),
+        //        'code' => 'GBP',
+        //    )
+        //);
     }
     /**
      * Get Allowed Languages
@@ -345,6 +384,10 @@ class Gateway implements \Payment\GatewayInterface
             array(
                 'code' => 'FR',
                 'name' => 'Francese',
+            ),
+            array(
+                'code' => 'DE',
+                'name' => 'Tedesco',
             ),
         );
     }

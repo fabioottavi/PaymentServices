@@ -100,7 +100,7 @@ class ComputopCgInit extends \Payment\Gateway\Computop\BaseComputopCg {
         $pCapture = "Capture=$this->capture";
         $pOrderDesc = "OrderDesc=$this->description";
         $pReqId = "ReqID=$this->refNr";
-        $pCustom = "Custom=$custom";
+        $pCustom = "UserData=$custom";
 
         array_push($arr,$pTransId, $pRefNr, $pAmount, $pCurrency, $pURLSuccess, $pURLFailure, $pResponse, $pURLNotify, $pUserData, $pCapture, $pOrderDesc, $pReqId, $pCustom);
         
