@@ -25,7 +25,7 @@ class ComputopCgCapture extends BaseComputopCgS2S{
     
     protected function parseResponseMap($response){
         parent::parseResponseMap($response);
-        $this->refNr = ComputopUtils::getValue($response, "RefNr");
+        $this->refNr = ComputopUtils::getValue($response, "refnr");
     }
 
     protected function getParams(){

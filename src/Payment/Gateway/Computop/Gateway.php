@@ -261,7 +261,7 @@ class Gateway implements \Payment\GatewayInterface
         $hMcPd = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword);
         $acq= ComputopUtils::getValue($params,'acquirer');
 
-        $obj = new S2S\ComputopCgCapture($mId,$bPs,$hMcPd); 
+        $obj = new S2S\ComputopCgReverse($mId,$bPs,$hMcPd); 
         $this->loadBaseUrl($acq);
         $obj->serverUrl = $this->sUrl.self::ACTION_REVERSE;
         

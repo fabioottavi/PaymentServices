@@ -1,8 +1,9 @@
 <?php
 
 namespace Payment\Gateway\Computop\S2S;
+use Payment\Gateway\Computop\ComputopUtils;
 
-class ComputopCgReverse{
+class ComputopCgReverse extends BaseComputopCgS2S{
 
     public $refNr;
     
@@ -17,7 +18,7 @@ class ComputopCgReverse{
     
     protected function parseResponseMap($response){
         parent::parseResponseMap($response);
-        $this->refNr = ComputopUtils::getValue($response, "RefNr");
+        $this->refNr = ComputopUtils::getValue($response, "refnr");
     }
 
     protected function getParams(){
