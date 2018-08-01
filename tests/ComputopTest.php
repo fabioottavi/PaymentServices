@@ -109,7 +109,7 @@ final class ComputopTest extends TestCase
             'terminalId' => null,
             'hashMessage' => null,
             'hMacPassword' => null,
-            'payId' => 'e4f7a864b72d4fe393ff805e7afbc7bc', // we retrieve it from them
+            'paymentID' => 'e4f7a864b72d4fe393ff805e7afbc7bc', // we retrieve it from them
             'paymentReference' => '516245b617fc265da67.16008640',
             'orderReference' => '516245b617fc265da67.16008640',
             'amount' => 1.1,
@@ -134,7 +134,7 @@ final class ComputopTest extends TestCase
             'terminalId' => null,
             'hashMessage' => null,
             'hMacPassword' => null,
-            'payId' => '1faa96e4a64a435ca34dc281ff632cc3', // we retrieve it from them
+            'paymentID' => '1faa96e4a64a435ca34dc281ff632cc3', // we retrieve it from them
             'paymentReference' => '972375b617710d47b89.25444934',
             'amount' => 1.1,
             'currency' => null,
@@ -158,7 +158,7 @@ final class ComputopTest extends TestCase
             'terminalId' => null,
             'hashMessage' => null,
             'hMacPassword' => null,
-            'payId' => 'a255a6b8dd6a42abaa61fd7a9c861862', // we retrieve it from them
+            'paymentID' => 'a255a6b8dd6a42abaa61fd7a9c861862', // we retrieve it from them
             'paymentReference' => '472605b617e6da848e9.37684960',
             'orderReference' => '472605b617e6da848e9.37684960',
             'amount' => 1.1,

@@ -186,7 +186,7 @@ class Gateway implements \Payment\GatewayInterface
         $this->loadBaseUrl($acq);
         $obj->serverUrl = $this->sUrl.self::ACTION_CAPTURE;
         
-        $obj->payId = ComputopUtils::getValue($params,'payId','');     
+        $obj->payId = ComputopUtils::getValue($params,'paymentID','');     
         $obj->transId = ComputopUtils::getValue($params, 'paymentReference');
         $obj->amount = $amount;
         $obj->currency = ComputopUtils::getValue($params,'currency',BaseComputopCg::DEFAULT_CURRENCY);
@@ -227,7 +227,7 @@ class Gateway implements \Payment\GatewayInterface
         $this->loadBaseUrl($acq);
         $obj->serverUrl = $this->sUrl.self::ACTION_CREDIT;
         
-        $obj->payId = ComputopUtils::getValue($params,'payId','');     
+        $obj->payId = ComputopUtils::getValue($params,'paymentID','');     
         $obj->transId = ComputopUtils::getValue($params, 'paymentReference');
         $obj->amount = str_replace('.', '', number_format(ComputopUtils::getValue($params, 'amount', '0'), 2, '.', ''));
         $obj->currency = ComputopUtils::getValue($params,'currency',BaseComputopCg::DEFAULT_CURRENCY);
@@ -265,7 +265,7 @@ class Gateway implements \Payment\GatewayInterface
         $this->loadBaseUrl($acq);
         $obj->serverUrl = $this->sUrl.self::ACTION_REVERSE;
         
-        $obj->payId = ComputopUtils::getValue($params,'payId','');   
+        $obj->payId = ComputopUtils::getValue($params,'paymentID','');   
         $obj->xId = ComputopUtils::getValue($params,'xId','');
         $obj->transId = ComputopUtils::getValue($params, 'paymentReference');
         $obj->refNr = ComputopUtils::getValue($params, 'orderReference');
