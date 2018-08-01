@@ -174,7 +174,9 @@ class ComputopCgInit extends \Payment\Gateway\Computop\BaseComputopCg {
         return array(
             'returnCode' => '',
             'error' => '',
-            'paymentID' => '',
+            'paymentID' => '0',
+            'orderReference' => $this->refNr,
+            'notifyURL' => $this->UrlNotify,
             'redirectURL' => $retUrl,
         );
     }
