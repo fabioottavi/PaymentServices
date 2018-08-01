@@ -76,14 +76,14 @@ class Gateway implements \Payment\GatewayInterface
         $url= ComputopUtils::getValue($params,'baseURL','');
         $acq= ComputopUtils::getValue($params,'acquirer');
         $pm = ComputopUtils::getValue($params,'paymentMethod');
-        $amount = str_replace('.', '', number_format(ComputopUtils::getValue($params, 'amount', '0'), 2, '.', ''));
+        $amount = ComputopUtils::getValue($params, 'amount', '0');
         
         $this->loadBaseUrl($acq);
         $initObj = $this->getInstrumentEndpoint($mId,$bPs,$hMcPd,$pm);
         $initObj->capture = ComputopUtils::getValue($params,'transactionType',self::TRASACTION_AUTO);
         $initObj->transId = ComputopUtils::getValue($params, 'paymentReference');
         $initObj->refNr = ComputopUtils::getValue($params, 'orderReference');
-        $initObj->amount = $amount;
+        $initObj->amount = str_replace('.', '', number_format($amount, 2, '.', ''));
         //$initObj->currency = ComputopUtils::getValue($params,'currency'); // There is only one the default = EN
         $initObj->description = ComputopUtils::getValue($params,'description');
         $initObj->language =ComputopUtils::normalizeLanguage(ComputopUtils::getValue($params, 'language')); // TODO: Don't exist yet and there isn't in the documentation
@@ -229,7 +229,7 @@ class Gateway implements \Payment\GatewayInterface
         
         $obj->payId = ComputopUtils::getValue($params,'payId','');     
         $obj->transId = ComputopUtils::getValue($params, 'paymentReference');
-        $obj->amount = ComputopUtils::getValue($params, 'amount', '0');
+        $obj->amount = str_replace('.', '', number_format(ComputopUtils::getValue($params, 'amount', '0'), 2, '.', ''));
         $obj->currency = ComputopUtils::getValue($params,'currency',BaseComputopCg::DEFAULT_CURRENCY);
 
         $obj->execute();
@@ -269,7 +269,7 @@ class Gateway implements \Payment\GatewayInterface
         $obj->xId = ComputopUtils::getValue($params,'xId','');
         $obj->transId = ComputopUtils::getValue($params, 'paymentReference');
         $obj->refNr = ComputopUtils::getValue($params, 'orderReference');
-        $obj->amount = ComputopUtils::getValue($params, 'amount', '0');
+        $obj->amount = str_replace('.', '', number_format(ComputopUtils::getValue($params, 'amount', '0'), 2, '.', ''));
         $obj->currency = ComputopUtils::getValue($params,'currency',BaseComputopCg::DEFAULT_CURRENCY);
 
         $obj->execute();

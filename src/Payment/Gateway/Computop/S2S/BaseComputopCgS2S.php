@@ -25,7 +25,7 @@ abstract class BaseComputopCgS2S extends \Payment\Gateway\Computop\BaseComputopC
     
     protected function parseResponseMap($response){
         parent::parseResponseMap($response);
-        $this->mId = ComputopUtils::getValue($response, "MID");
+        $this->mId = ComputopUtils::getValue($response, "mid");
         $this->xId = ComputopUtils::getValue($response, "XID"); 
         $this->status = ComputopUtils::getValue($response, "Status");
         $this->description = ComputopUtils::getValue($response, "Description");
