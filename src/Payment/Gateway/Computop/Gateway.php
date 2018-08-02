@@ -337,7 +337,8 @@ class Gateway implements \Payment\GatewayInterface
         $obj;
 
         if (!$inst) {
-            throw new CmptpMissingParException("Missing Payment Method");
+            return new Init\ComputopCgInit($mId,$bPs,$hMcPd,$this->sUrl); 
+            //throw new CmptpMissingParException("Missing Payment Method");
         }
 
         switch ($inst) {
