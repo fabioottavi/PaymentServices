@@ -160,6 +160,6 @@ class ctPaygate extends Blowfish
             return false;
         }
         $this->bf_set_key($password);
-        return mb_substr($this->decrypt($cipher), 0, $len);
+        return mb_substr($this->decrypt($cipher), 0, intval($len));
     }
 }
