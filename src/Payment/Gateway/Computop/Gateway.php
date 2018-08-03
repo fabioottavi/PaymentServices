@@ -12,8 +12,8 @@ class Gateway implements \Payment\GatewayInterface
 
     //const URL_POSITIVI = 'https://ecpay.bnlpositivity.it/paymentpage';
     //const URL_PARIBAS = 'https://ecpay.bnlpositivity.it/paymentpage';
-    const URL_POSITIVI ='https://www.computop-paygate.com';
-    const URL_PARIBAS ='https://www.computop-paygate.com';
+    const URL_POSITIVI ='https://ecpay-test.bnlpositivity.it/paymentpage';
+    const URL_PARIBAS ='https://ecpay-test.bnlpositivity.it/paymentpage';
     
     // Default credentials 
     const DEFAULT_MERCHANT_ID = 'bnlp_test';
