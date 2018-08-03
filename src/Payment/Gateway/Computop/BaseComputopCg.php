@@ -156,15 +156,19 @@ abstract class BaseComputopCg{
         
         // PHP <5.5.0
         defined("CURLE_OPERATION_TIMEDOUT") || define("CURLE_OPERATION_TIMEDOUT", CURLE_OPERATION_TIMEOUTED);
-        $result = curl_exec($ch);
-        curl_close($ch);
         
-            /* uncomment the next four lines for error searching */
-
-            /* $error  = curl_error($ch);
-            $error .= curl_errno($ch);
-            echo "<br>Error: ".$error."<br>";
-            echo "Result: ".$result; */
+        //execute post
+        $result = curl_exec($ch);
+        if (curl_errno($ch)) {
+            if (curl_errno($ch) == CURLE_OPERATION_TIMEDOUT) {
+                throw new ReadWriteException($url, curl_error($ch));
+            } else {
+                throw new ConnectionException($url, curl_error($ch));
+            }
+        } else {
+            //close connection
+            curl_close($ch);
+        }
 
         $this->parseResponseMap($this->decryptResponse($result));
     }
