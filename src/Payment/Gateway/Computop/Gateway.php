@@ -114,8 +114,8 @@ class Gateway implements \Payment\GatewayInterface
         $initObj->customField1 = $amount.' '.ComputopUtils::getValue($params,'customField1','EURO');
         $initObj->customField2 = ComputopUtils::getValue($params,ComputopUtils::getValue($params, 'orderReference'));
         $initObj->customField3 = ComputopUtils::getValue($params,'logoUrl');
-        $initObj->customField6 = ComputopUtils::getValue($params,'shippingDetails');
-        $initObj->customField7 = ComputopUtils::getValue($params,'invoiceDetails');
+        $initObj->customField6 = substr(ComputopUtils::getValue($params,'shippingDetails'),0,204);
+        $initObj->customField7 = substr(ComputopUtils::getValue($params,'invoiceDetails'),0,204);
 
         // Graphic customization
         $initObj->template = ComputopUtils::getValue($params,'template');
