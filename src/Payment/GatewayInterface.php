@@ -58,6 +58,14 @@ interface GatewayInterface
     public function getPaymentInstruments();
     /**
      * 
+     * Return all the possible payment instruments for credit cards
+     * 
+     * @param 
+     * @return array|object
+     */
+    public function getCcPaymentInstruments();
+    /**
+     * 
      * Return all the possible transaction types
      * 
      * @param 

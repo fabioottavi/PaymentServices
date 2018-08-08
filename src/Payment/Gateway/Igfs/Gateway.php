@@ -248,6 +248,23 @@ class Gateway implements \Payment\GatewayInterface
     }
     /**
      * 
+     * Return all the possible payment instruments for credit cards
+     * 
+     * @param 
+     * @return array|object
+     */
+    public function getCcPaymentInstruments(){
+        return array(
+            'visa' => 'Visa',
+            'mastercard' => 'Mastercard',
+            'maestro' => 'Maestro',
+            'diners' => 'Diners',
+            'americanexpress' => 'American Express',
+            'findomestic' => 'Findomestic',
+          );
+    }
+    /**
+     * 
      * Return the extra characters that has to be added in the tId during the initialization
      * 
      * @param string $inst
@@ -256,6 +273,7 @@ class Gateway implements \Payment\GatewayInterface
     private function getInstrumentCode($inst){
         $code = '_S';
         switch ($inst) {
+            case 'cc':
             case 'visa':
             case 'mastercard':
             case 'maestro':

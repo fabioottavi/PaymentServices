@@ -314,6 +314,23 @@ class Gateway implements \Payment\GatewayInterface
             'zimpler' => 'Zimpler'
           );
     }
+    /**
+     * 
+     * Return all the possible payment instruments for credit cards
+     * 
+     * @param 
+     * @return array|object
+     */
+    public function getCcPaymentInstruments(){
+        return array(
+            'visa' => 'Visa',
+            'mastercard' => 'Mastercard',
+            'maestro' => 'Maestro',
+            'americanexpress' => 'American Express',
+            'diners' => 'Diners',
+            'findomestic' => 'Findomestic',
+          );
+    }
 
     private function loadBaseUrl($acq){
         if(self::ACQUIRER_POSITIVI == $acq){
@@ -342,6 +359,7 @@ class Gateway implements \Payment\GatewayInterface
         }
 
         switch ($inst) {
+            case 'cc':
             case 'visa':
             case 'mastercard':
             case 'maestro':
