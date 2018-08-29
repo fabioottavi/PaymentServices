@@ -267,7 +267,7 @@ class Gateway implements \Payment\GatewayInterface
             'maestro' => 'Maestro',
             'diners' => 'Diners',
             'americanexpress' => 'American Express',
-            'findomestic' => 'Findomestic',
+            //'findomestic' => 'Findomestic',
           );
     }
     /**
