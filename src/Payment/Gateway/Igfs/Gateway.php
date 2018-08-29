@@ -70,7 +70,14 @@ class Gateway implements \Payment\GatewayInterface
         if($this->test){
             $initObj->disableCheckSSLCert();
         }
-        $initObj->tid = IgfsUtils::getValue($params,'terminalId',$this->dTid).$this->getInstrumentCode(IgfsUtils::getValue($params,'paymentMethod'));
+
+        $paymentMethod = IgfsUtils::getValue($params,'paymentMethod');
+        if($paymentMethod ==="findomestic"){
+            $initObj->tid = IgfsUtils::getValue($params,'terminalIdFindomestic');
+        }else{
+            $initObj->tid = IgfsUtils::getValue($params,'terminalId',$this->dTid).$this->getInstrumentCode($paymentMethod);
+        }
+        
         $initObj->shopID = $unique;
         $initObj->amount = str_replace('.', '', number_format(IgfsUtils::getValue($params, 'amount', '0'), 2, '.', ''));
         $initObj->currencyCode =IgfsUtils::getValue($params,'currency','EUR');
@@ -287,9 +294,9 @@ class Gateway implements \Payment\GatewayInterface
             case 'masterpass':
                 $code = 'P';
                 break;
-            case 'findomestic':
-                $code = ''; //TODO: ????
-                break;
+            //case 'findomestic':
+            //    $code = '';
+            //    break;
             case 'paypal':
                 $code = 'PP';
                 break;

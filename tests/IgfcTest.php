@@ -45,11 +45,13 @@ final class IgfcTest extends TestCase
             'payInstrToken' => 'test', // TODO:
             'shopUserRef' => 'TestRef@sendabox.it', // It's the client email
             'shopUserName' => 'TestName',
+            
+            'terminalIdFindomestic' => 'TestName',
         ];
 
         //get response from gateway
-        //$initResponse = $payg->init($params);
-        //var_dump($initResponse);
+        $initResponse = $payg->init($params);
+        var_dump($initResponse);
     }
 
     public function testVerify(){
