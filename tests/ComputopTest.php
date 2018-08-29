@@ -180,5 +180,17 @@ final class ComputopTest extends TestCase
         );
         //var_dump($payg->getSellingLocations());
     }
+
+    public function testSplit(){
+
+        $urls = array('https://dev-wp.tk/checkout/order-received/232/?key=wc_order_5b680faa8b145',
+                    'https://dev-wp.tk/checkout/order-received/232/?key=wc_order_5b680faa8b145',
+                    'https://dev-wp.tk/cart/?cancel_order=true&order=wc_order_5b680faa8b145&order_id=232&redirect&_wpnonce=8f275c8cd6');
+        $onlyParams = \Payment\Gateway\Computop\ComputopUtils::combineQueryParams($urls);
+        
+        var_dump($onlyParams);
+        var_dump(\Payment\Gateway\Computop\ComputopUtils::clearUrl('https://dev-wp.tk/checkout/order-received/232/?key=wc_order_5b680faa8b145'));
+        var_dump(\Payment\Gateway\Computop\ComputopUtils::clearUrl('https://dev-wp.tk/cart/?cancel_order=true&order=wc_order_5b680faa8b145&order_id=232&redirect&_wpnonce=8f275c8cd6'));
+    }
 }
 
