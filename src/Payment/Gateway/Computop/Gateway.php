@@ -10,15 +10,15 @@ class Gateway implements \Payment\GatewayInterface
     private $dHsMacPassword = '';
     private $sUrl;
 
-    //const URL_POSITIVI = 'https://ecpay.bnlpositivity.it/paymentpage';
-    //const URL_PARIBAS = 'https://ecpay.bnlpositivity.it/paymentpage';
-    const URL_POSITIVI ='https://ecpay-test.bnlpositivity.it/paymentpage';
-    const URL_PARIBAS ='https://ecpay-test.bnlpositivity.it/paymentpage';
+    const URL_POSITIVI = 'https://ecpay.bnlpositivity.it/paymentpage';
+    const URL_PARIBAS = 'https://ecpay.bnlpositivity.it/paymentpage';
+    //const URL_POSITIVI ='https://ecpay-test.bnlpositivity.it/paymentpage';
+    //const URL_PARIBAS ='https://ecpay-test.bnlpositivity.it/paymentpage';
     
     // Default credentials 
-    const DEFAULT_MERCHANT_ID = 'bnlp_test';
-    const DEFAULT_BLOWFISH_PASSWORD = 'X*b89Q=eG!s23rJ[';
-    const DEFAULT_HS_MAC_PASSWORD = '8d)N?7Zg2Jz=(4Gs3y!T_Wx59k[R*6Cn';
+    const DEFAULT_MERCHANT_ID = 'bnl_test';
+    const DEFAULT_BLOWFISH_PASSWORD = 'Fw3[7(bAP8=or*D2';
+    const DEFAULT_HS_MAC_PASSWORD = '3Hn)[7Pe2Qf(!j8TK=t9*6DsJk5?m4_C';
     
     // Action methods 
     const ACTION_CAPTURE = '/capture.aspx';

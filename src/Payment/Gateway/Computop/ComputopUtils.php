@@ -36,11 +36,13 @@ class ComputopUtils{
 
         foreach($urls as $url){
             $parsed_url = parse_url($url);
-            $parts = explode("&",$parsed_url['query']);
-            foreach($parts as $p){
-                array_push($arrayParam,$p);
-                //$paramData = explode("=",$p);
-                //$arrayParam[$paramData[0]]=$paramData[1];
+            if(isset($parsed_url['query'])){
+                $parts = explode("&",$parsed_url['query']);
+                foreach($parts as $p){
+                    array_push($arrayParam,$p);
+                    //$paramData = explode("=",$p);
+                    //$arrayParam[$paramData[0]]=$paramData[1];
+                }
             }
         }
 
