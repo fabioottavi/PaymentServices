@@ -2,6 +2,7 @@
 
 namespace Payment\Gateway\Igfs\tran;
 use Payment\Gateway\Igfs\IgfsUtils;
+use Payment\Gateway\Igfs\IgfsMissingParException;
 
 class IgfsCgCredit extends BaseIgfsCgTran {
 
