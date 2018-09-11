@@ -1,6 +1,7 @@
 <?php
 namespace Payment\Gateway\Computop\Init;
 use Payment\Gateway\Computop\CmptpMissingParException;
+use Payment\Gateway\Computop\ComputopUtils;
 
 /**
  * Computop class
@@ -105,10 +106,10 @@ class ComputopCgInit extends \Payment\Gateway\Computop\BaseComputopCg {
         $pRefNr = "RefNr=$this->refNr";
         $pAmount = "Amount=$this->amount";
         $pCurrency = "Currency=$this->currency";
-        $pURLSuccess = "URLSuccess=$this->UrlSuccess";
-        $pURLFailure = "URLFailure=$this->UrlFailure";
+        $pURLSuccess = "URLSuccess=".ComputopUtils::clearUrl($this->UrlSuccess);
+        $pURLFailure = "URLFailure=".ComputopUtils::clearUrl($this->UrlFailure);
+        $pURLNotify = "URLNotify=".ComputopUtils::clearUrl($this->UrlNotify);
         $pResponse = "Response=$this->response";
-        $pURLNotify = "URLNotify=$this->UrlNotify";
         $pUserData = "UserData=$this->userData";
         $pCapture = "Capture=$this->capture";
         $pOrderDesc = "OrderDesc=$this->description";

@@ -88,13 +88,9 @@ class Gateway implements \Payment\GatewayInterface
         $initObj->description = ComputopUtils::getValue($params,'description');
         $initObj->language =ComputopUtils::normalizeLanguage(ComputopUtils::getValue($params, 'language')); // TODO: Don't exist yet and there isn't in the documentation
         
-        $successUrl=$url.ComputopUtils::getValue($params,'callbackUrl','');
-        $failureUrl=$url.ComputopUtils::getValue($params,'errorUrl','');
-        $notifyUrl=$url.ComputopUtils::getValue($params,'notifyUrl','');
-        
-        $initObj->UrlSuccess = ComputopUtils::clearUrl($successUrl);
-        $initObj->UrlFailure = ComputopUtils::clearUrl($failureUrl);
-        $initObj->UrlNotify = ComputopUtils::clearUrl($notifyUrl);
+        $initObj->UrlSuccess = $url.ComputopUtils::getValue($params,'callbackUrl','');
+        $initObj->UrlFailure = $url.ComputopUtils::getValue($params,'errorUrl','');
+        $initObj->UrlNotify = $url.ComputopUtils::getValue($params,'notifyUrl','');
 
         $initObj->payId = ComputopUtils::getValue($params,'payId','');     
         $initObj->addInfo1 = substr(ComputopUtils::getValue($params,'addInfo1',self::DEFAULT_INFO1),0,204);
@@ -102,7 +98,7 @@ class Gateway implements \Payment\GatewayInterface
         $initObj->addInfo3 = substr(ComputopUtils::getValue($params,'addInfo3',self::DEFAULT_INFO3),0,204);
         $initObj->addInfo4 = substr(ComputopUtils::getValue($params,'addInfo4',self::DEFAULT_INFO4),0,204);
         //$initObj->addInfo5 = substr(ComputopUtils::getValue($params,'addInfo5',self::DEFAULT_INFO5),0,204);
-        $initObj->addInfo5 = ComputopUtils::combineQueryParams(array($successUrl,$failureUrl,$notifyUrl));
+        $initObj->addInfo5 = ComputopUtils::combineQueryParams(array($initObj->UrlSuccess,$initObj->UrlFailure,$initObj->UrlNotify));
 
         // Extra values
         $initObj->addrCountryCode = ComputopUtils::getValue($params,'addrCountryCode','');     
