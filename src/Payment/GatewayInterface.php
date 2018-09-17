@@ -122,5 +122,11 @@ interface GatewayInterface
      * @return array|object
      */
     public function getSellingLocations();
+    /**
+     * Return a test Id for the Findomestic payment
+     *
+     * @return array|object
+     */
+    public function getTestFindomesticTerminalId();
     
 }

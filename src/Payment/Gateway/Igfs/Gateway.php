@@ -425,4 +425,12 @@ class Gateway implements \Payment\GatewayInterface
     public function getSellingLocations(){
         return array();
     }
+    /**
+     * Return a test Id for the Findomestic payment
+     *
+     * @return string
+     */
+    public function getTestFindomesticTerminalId(){
+        return 93885445;
+    }
 }

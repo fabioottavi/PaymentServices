@@ -530,4 +530,12 @@ class Gateway implements \Payment\GatewayInterface
 
         return $arr;
     }
+    /**
+     * Return a test Id for the Findomestic payment
+     *
+     * @return string
+     */
+    public function getTestFindomesticTerminalId(){
+        return null;
+    }
 }
