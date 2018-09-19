@@ -80,9 +80,9 @@ class IgfsUtils
         return null;
     }
 
-    public static function getValue($map, $key, $default = null)
+    public static function getValue($map, $key, $default = null, $acceptWhiteSpace = true)
     {
-        return isset($map[$key]) ? $map[$key] : $default;
+        return isset($map[$key]) && ($acceptWhiteSpace || $map[$key]!=='') ? $map[$key] : $default;
     }
 
     public static function appendParameter($url, $param){

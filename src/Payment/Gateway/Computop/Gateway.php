@@ -70,9 +70,9 @@ class Gateway implements \Payment\GatewayInterface
      */
     public function init(array $params = [])
     {
-        $mId = ComputopUtils::getValue($params,'terminalId',$this->dMerchantId);    
-        $bPs = ComputopUtils::getValue($params,'hashMessage',$this->dBlowfishPassword);
-        $hMcPd = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword);
+        $mId = ComputopUtils::getValue($params,'terminalId',$this->dMerchantId,false);    
+        $bPs = ComputopUtils::getValue($params,'hashMessage',$this->dBlowfishPassword,false);
+        $hMcPd = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword,false);
         $url= ComputopUtils::getValue($params,'baseURL','');
         $acq= ComputopUtils::getValue($params,'acquirer');
         $pm = ComputopUtils::getValue($params,'paymentMethod');

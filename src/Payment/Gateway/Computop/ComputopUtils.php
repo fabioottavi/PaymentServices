@@ -2,9 +2,9 @@
 namespace Payment\Gateway\Computop;
 
 class ComputopUtils{
-    public static function getValue($map, $key, $default = null)
+    public static function getValue($map, $key, $default = null, $acceptWhiteSpace = true)
     {
-        return isset($map[$key]) ? $map[$key] : $default;
+        return isset($map[$key]) && ($acceptWhiteSpace || $map[$key]!=='') ? $map[$key] : $default;
     }
     public static function getPaymentResultParam($obj)
     {
@@ -39,7 +39,13 @@ class ComputopUtils{
             if(isset($parsed_url['query'])){
                 $parts = explode("&",$parsed_url['query']);
                 foreach($parts as $p){
+
+                   if(strpos($p, '=') !== false){
                     array_push($arrayParam,$p);
+
+                   }else{
+                    array_push($arrayParam,$p.'=');
+                   }
                     //$paramData = explode("=",$p);
                     //$arrayParam[$paramData[0]]=$paramData[1];
                 }

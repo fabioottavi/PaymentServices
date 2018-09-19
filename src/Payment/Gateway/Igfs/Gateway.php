@@ -75,13 +75,13 @@ class Gateway implements \Payment\GatewayInterface
         if($paymentMethod ==="findomestic"){
             $initObj->tid = IgfsUtils::getValue($params,'terminalIdFindomestic');
         }else{
-            $initObj->tid = IgfsUtils::getValue($params,'terminalId',$this->dTid).$this->getInstrumentCode($paymentMethod);
+            $initObj->tid = IgfsUtils::getValue($params,'terminalId',$this->dTid,false).$this->getInstrumentCode($paymentMethod);
         }
         
         $initObj->shopID = $unique;
         $initObj->amount = str_replace('.', '', number_format(IgfsUtils::getValue($params, 'amount', '0'), 2, '.', ''));
         $initObj->currencyCode =IgfsUtils::getValue($params,'currency','EUR');
-        $initObj->kSig = IgfsUtils::getValue($params,'hashMessage',$this->dKsig);
+        $initObj->kSig = IgfsUtils::getValue($params,'hashMessage',$this->dKsig,false);
         $initObj->notifyURL = IgfsUtils::appendParameter($url.IgfsUtils::getValue($params,'notifyUrl',''), 'token='.urlencode($unique));
         $initObj->errorURL = IgfsUtils::appendParameter($url.IgfsUtils::getValue($params,'errorUrl',''), 'token='.urlencode($unique));
         $initObj->callbackURL = IgfsUtils::appendParameter($url.IgfsUtils::getValue($params,'callbackUrl',''), 'token='.urlencode($unique));
