@@ -179,9 +179,9 @@ class Gateway implements \Payment\GatewayInterface
      * @return array|object
      */
     public function confirm(array $params = []){
-        $mId = ComputopUtils::getValue($params,'terminalId',$this->dMerchantId);    
-        $bPs = ComputopUtils::getValue($params,'hashMessage',$this->dBlowfishPassword);
-        $hMcPd = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword);
+        $mId = ComputopUtils::getValue($params,'terminalId',$this->dMerchantId,false);    
+        $bPs = ComputopUtils::getValue($params,'hashMessage',$this->dBlowfishPassword,false);
+        $hMcPd = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword,false);
         $acq= ComputopUtils::getValue($params,'acquirer');
         $amount = str_replace('.', '', number_format(ComputopUtils::getValue($params, 'amount', '0'), 2, '.', ''));
 
@@ -221,9 +221,9 @@ class Gateway implements \Payment\GatewayInterface
      */
     public function refund(array $params = []){
 
-        $mId = ComputopUtils::getValue($params,'terminalId',$this->dMerchantId);    
-        $bPs = ComputopUtils::getValue($params,'hashMessage',$this->dBlowfishPassword);
-        $hMcPd = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword);
+        $mId = ComputopUtils::getValue($params,'terminalId',$this->dMerchantId,false);    
+        $bPs = ComputopUtils::getValue($params,'hashMessage',$this->dBlowfishPassword,false);
+        $hMcPd = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword,false);
         $acq= ComputopUtils::getValue($params,'acquirer');
 
         $obj = new S2S\ComputopCgCredit($mId,$bPs,$hMcPd);  
@@ -259,9 +259,9 @@ class Gateway implements \Payment\GatewayInterface
      */
     public function cancel(array $params){
         
-        $mId = ComputopUtils::getValue($params,'terminalId',$this->dMerchantId);    
-        $bPs = ComputopUtils::getValue($params,'hashMessage',$this->dBlowfishPassword);
-        $hMcPd = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword);
+        $mId = ComputopUtils::getValue($params,'terminalId',$this->dMerchantId,false);    
+        $bPs = ComputopUtils::getValue($params,'hashMessage',$this->dBlowfishPassword,false);
+        $hMcPd = ComputopUtils::getValue($params,'hMacPassword',$this->dHsMacPassword,false);
         $acq= ComputopUtils::getValue($params,'acquirer');
 
         $obj = new S2S\ComputopCgReverse($mId,$bPs,$hMcPd); 
