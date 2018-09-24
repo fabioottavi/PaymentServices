@@ -336,7 +336,7 @@ class Gateway implements \Payment\GatewayInterface
      *
      * @return array|object
      */
-    public function getCurrenciesAllowed(){
+    public function getCurrenciesAllowed($simple = false){
         $arr = array();
         $filePath = __DIR__ . "/../../Data/currencies_it.xml";
 
@@ -346,13 +346,24 @@ class Gateway implements \Payment\GatewayInterface
             $xmlElements = simplexml_load_file($filePath);
             $available = $xmlElements->xpath($query);
 
-            foreach($available as $currency){
-                $cDetails = array(
-                    'title' => __((string)$currency->name, 'bnppay'),
-                    'code' => (string)$currency->code,
-                );
-
-                array_push($arr, $cDetails);
+            if($simple){
+                foreach($available as $currency){
+                    $cDetails = array(
+                        'title' => (string)$currency->name,
+                        'code' => (string)$currency->code,
+                    );
+    
+                    array_push($arr, $cDetails);
+                }
+            }else{
+                foreach($available as $currency){
+                    $cDetails = array(
+                        'title' => __((string)$currency->name, 'bnppay'),
+                        'code' => (string)$currency->code,
+                    );
+    
+                    array_push($arr, $cDetails);
+                }
             }
         }
 

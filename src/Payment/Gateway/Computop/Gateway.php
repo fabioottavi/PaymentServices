@@ -435,14 +435,25 @@ class Gateway implements \Payment\GatewayInterface
      *
      * @return array|object
      */
-    public function getCurrenciesAllowed(){
-        return array(
-            array(
-                'title' => __('Euro', 'bnppay'),
-                'code' => 'EUR',
-                'symbol' => '&euro;',
-            )
-        );
+    public function getCurrenciesAllowed($simple = false){
+        if($simple){
+            return array(
+                array(
+                    'title' => 'Euro',
+                    'code' => 'EUR',
+                    'symbol' => '&euro;',
+                )
+            );
+        }else{
+            return array(
+                array(
+                    'title' => __('Euro', 'bnppay'),
+                    'code' => 'EUR',
+                    'symbol' => '&euro;',
+                )
+            );
+        }
+        
     }
     /**
      * Get Allowed Languages

@@ -85,7 +85,7 @@ interface GatewayInterface
      *
      * @return array|object
      */
-    public function getCurrenciesAllowed();
+    public function getCurrenciesAllowed($simple);
     /**
      * Get Allowed Languages
      *
