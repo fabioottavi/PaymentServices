@@ -326,9 +326,9 @@ class Gateway implements \Payment\GatewayInterface
      */
     public function getCheckoutTypes(){
         return array(
-            '1'  => 'Checkout BNLP',
-            '2'  => 'Checkout BNLP con sintesi in web store',
-            '3'  => 'Checkout BNLP con selezione strumento di pagamento su web store',
+            '1'  => 'Reindirizzamento sulla pagina di pagamento',
+            '2'  => 'Reindirizzamento sulla pagina di pagamento con sintesi disponibilità strumenti di oagamento',
+            '3'  => 'Reindirizzamento sulla pagina di pagamento con selezione preventiva dello strumento di pagamento',
           );
       }
     /**
@@ -401,7 +401,7 @@ class Gateway implements \Payment\GatewayInterface
      * @return array|object
      */
     public function getAcquirer(){
-        return array(self::ACQUIRER_POSITIVI=> 'BNLPositivity',self::ACQUIRER_PARIBAS  => 'BNLParibas');
+        return array(self::ACQUIRER_POSITIVI=> 'BNL Positivity 1',self::ACQUIRER_PARIBAS  => 'Prossime gestioni');
     }
     
     /**

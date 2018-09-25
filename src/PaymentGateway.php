@@ -11,7 +11,7 @@ final class PayGateway
      * @return array|object
      */
     public static function getPaymentTypes(){
-        return array(self::IGFC=> 'IGFS',self::CMPT1  => 'Computop');
+        return array(self::IGFC=> 'BNL POSitivity 1',self::CMPT1  => 'BNL POSitivity 2');
     }
 
     /**
