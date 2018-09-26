@@ -9,6 +9,9 @@ class Gateway implements \Payment\GatewayInterface
     private $dBlowfishPassword = '';
     private $dHsMacPassword = '';
     private $sUrl;
+    private $allowedCurrencies = array('EUR');
+    private $allowedLanguages = null;
+    private $sellingLocations = null;
 
     const URL_POSITIVI = 'https://ecpay.bnlpositivity.it/paymentpage';
     const URL_PARIBAS = 'https://ecpay.bnlpositivity.it/paymentpage';
@@ -435,59 +438,70 @@ class Gateway implements \Payment\GatewayInterface
      *
      * @return array|object
      */
-    public function getCurrenciesAllowed($simple = false){
-        if($simple){
-            return array(
-                array(
-                    'title' => 'Euro',
-                    'code' => 'EUR',
-                    'symbol' => '&euro;',
-                )
-            );
-        }else{
-            return array(
-                array(
-                    'title' => __('Euro', 'bnppay'),
-                    'code' => 'EUR',
-                    'symbol' => '&euro;',
-                )
-            );
-        }
+    public function getCurrenciesAllowed($simple = false, $cLang = 'en'){
+        $arr = array();
+        $filePath = __DIR__ . "/../../data/currencies.xml";
         
+        if(defined('BNLPOSITIVITY_LANG')){
+            $cLang = ComputopUtils::normalizeLanguage(BNLPOSITIVITY_LANG);
+        }
+        if (file_exists($filePath)) {
+            $xmlElements = simplexml_load_file($filePath);
+
+            if($this->allowedCurrencies!=null){
+                $query = "//currency[code='".join("' or code='", $this->allowedCurrencies)."']";
+                $xmlElements = $xmlElements->xpath($query);
+            }
+
+            if($simple){
+                foreach($xmlElements as $currency){
+                    $cDetails = array(
+                        'title' => (string)$currency->{'name_' . $cLang},
+                        'code' => (string)$currency->code,
+                    );
+    
+                    array_push($arr, $cDetails);
+                }
+            }else{
+                foreach($xmlElements as $currency){
+                    $cDetails = array(
+                        'title' => __((string)$currency->{'name_' . $cLang}, 'bnppay'),
+                        'code' => (string)$currency->code,
+                    );
+    
+                    array_push($arr, $cDetails);
+                }
+            }
+        }
+        return $arr;
     }
     /**
      * Get Allowed Languages
      *
      * @return array|object
      */
-    public function getLanguagesAllowed(){
-        return array(
-            array( 'code' => 'IT', 'name' => 'Italiano'),
-            array( 'code' => 'DE', 'name' => 'Tedesco'),
-            array( 'code' => 'AL', 'name' => 'Albanese'),
-            array( 'code' => 'AT', 'name' => 'Austriaco'),
-            array( 'code' => 'CZ', 'name' => 'Ceco'),
-            array( 'code' => 'CS', 'name' => 'Ceco'),
-            array( 'code' => 'DK', 'name' => 'Danese'),
-            array( 'code' => 'EN', 'name' => 'Inglese'),
-            array( 'code' => 'FI', 'name' => 'Finlandese'),
-            array( 'code' => 'FR', 'name' => 'Francese'),
-            array( 'code' => 'GR', 'name' => 'Greco'),
-            array( 'code' => 'HU', 'name' => 'Ungherese'),
-            array( 'code' => 'JP', 'name' => 'Giapponese'),
-            array( 'code' => 'NL', 'name' => 'Olandese'),
-            array( 'code' => 'NO', 'name' => 'Norvegese'),
-            array( 'code' => 'PL', 'name' => 'Polacco'),
-            array( 'code' => 'PT', 'name' => 'Portoghese'),
-            array( 'code' => 'RO', 'name' => 'Rumeno'),
-            array( 'code' => 'RU', 'name' => 'Russo'),
-            array( 'code' => 'ES', 'name' => 'Spagnolo'),
-            array( 'code' => 'SE', 'name' => 'Svedese'),
-            array( 'code' => 'SK', 'name' => 'Slovacco'),
-            array( 'code' => 'SL', 'name' => 'Sloveno'),
-            array( 'code' => 'TR', 'name' => 'Turco'),
-            array( 'code' => 'ZH', 'name' => 'Cinese semplificato'),
-        );
+    public function getLanguagesAllowed($cLang = 'en'){
+        $arr = array();
+        $filePath = __DIR__ . "/../../data/languages.xml";
+        
+        if(defined('BNLPOSITIVITY_LANG')){
+            $cLang = ComputopUtils::normalizeLanguage(BNLPOSITIVITY_LANG);
+        }
+
+        if (file_exists($filePath)) {
+            $xmlElements = simplexml_load_file($filePath);
+
+            if($this->allowedLanguages != null){
+                $query = "//language[code='".join("' or code='", $this->allowedLanguages)."']";
+                $xmlElements = $xmlElements->xpath($query);
+            }
+
+            foreach($xmlElements as $lang){
+                array_push($arr,array( 'code' => (string)$lang->code, 'name' => (string)$lang->{'name_' . $cLang}));
+            }
+        }
+        
+        return $arr;
     }
     
     /**
@@ -528,14 +542,24 @@ class Gateway implements \Payment\GatewayInterface
      *
      * @return array|object
      */
-    public function getSellingLocations(){
+    public function getSellingLocations($cLang = 'en'){
         $arr = array();
-        $filePath = __DIR__ . "/../../Data/countries_it.xml";
+        $filePath = __DIR__ . "/../../data/countries.xml";
+
+        if(defined('BNLPOSITIVITY_LANG')){
+            $cLang = ComputopUtils::normalizeLanguage(BNLPOSITIVITY_LANG);
+        }
 
         if (file_exists($filePath)) {
             $xmlElements = simplexml_load_file($filePath);
+
+            if($this->sellingLocations != null){
+                $query = "//currency[code='".join("' or code='", $this->sellingLocations)."']";
+                $xmlElements = $xmlElements->xpath($query);
+            }
+
             foreach($xmlElements as $country){
-                $arr[(string)$country->code] = (string)$country->name;
+                $arr[(string)$country->code] = (string)$country->{'name_' . $cLang};
             }
         }
 

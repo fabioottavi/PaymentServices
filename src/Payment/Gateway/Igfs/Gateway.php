@@ -11,6 +11,8 @@ class Gateway implements \Payment\GatewayInterface
     private $allowedCurrencies = array('AUD','CAD','CHF','DKK','GBP','JPY',
     'SEK','EUR','NOK','RUB','USD','AED','BRL','HKD','KWD','MXN','MYR',
     'SAR','SGD','THB','TWD');
+    private $allowedLanguages = array('IT','EN','FR','DE');
+    private $sellingLocations = null;
 
     // Extra informations
     const DEFAULT_INFO1 = '';
@@ -336,29 +338,34 @@ class Gateway implements \Payment\GatewayInterface
      *
      * @return array|object
      */
-    public function getCurrenciesAllowed($simple = false){
+    public function getCurrenciesAllowed($simple = false, $cLang = 'en'){
         $arr = array();
-        $filePath = __DIR__ . "/../../Data/currencies_it.xml";
-
+        $filePath = __DIR__ . "/../../data/currencies.xml";
+        
+        if(defined('BNLPOSITIVITY_LANG')){
+            $cLang = IgfsUtils::normalizeLanguage(BNLPOSITIVITY_LANG);
+        }
         if (file_exists($filePath)) {
-            $query = "//currency[code='".join("' or code='", $this->allowedCurrencies)."']";
-
             $xmlElements = simplexml_load_file($filePath);
-            $available = $xmlElements->xpath($query);
+
+            if($this->allowedCurrencies!=null){
+                $query = "//currency[code='".join("' or code='", $this->allowedCurrencies)."']";
+                $xmlElements = $xmlElements->xpath($query);
+            }
 
             if($simple){
-                foreach($available as $currency){
+                foreach($xmlElements as $currency){
                     $cDetails = array(
-                        'title' => (string)$currency->name,
+                        'title' => (string)$currency->{'name_' . $cLang},
                         'code' => (string)$currency->code,
                     );
     
                     array_push($arr, $cDetails);
                 }
             }else{
-                foreach($available as $currency){
+                foreach($xmlElements as $currency){
                     $cDetails = array(
-                        'title' => __((string)$currency->name, 'bnppay'),
+                        'title' => __((string)$currency->{'name_' . $cLang}, 'bnppay'),
                         'code' => (string)$currency->code,
                     );
     
@@ -366,7 +373,6 @@ class Gateway implements \Payment\GatewayInterface
                 }
             }
         }
-
         return $arr;
     }
     /**
@@ -374,25 +380,28 @@ class Gateway implements \Payment\GatewayInterface
      *
      * @return array|object
      */
-    public function getLanguagesAllowed(){
-        return array(
-            array(
-                'code' => 'IT',
-                'name' => 'Italiano',
-            ),
-            array(
-                'code' => 'EN',
-                'name' => 'Inglese',
-            ),
-            array(
-                'code' => 'FR',
-                'name' => 'Francese',
-            ),
-            array(
-                'code' => 'DE',
-                'name' => 'Tedesco',
-            ),
-        );
+    public function getLanguagesAllowed($cLang = 'en'){
+        $arr = array();
+        $filePath = __DIR__ . "/../../data/languages.xml";
+        
+        if(defined('BNLPOSITIVITY_LANG')){
+            $cLang = IgfsUtils::normalizeLanguage(BNLPOSITIVITY_LANG);
+        }
+
+        if (file_exists($filePath)) {
+            $xmlElements = simplexml_load_file($filePath);
+
+            if($this->allowedLanguages != null){
+                $query = "//language[code='".join("' or code='", $this->allowedLanguages)."']";
+                $xmlElements = $xmlElements->xpath($query);
+            }
+
+            foreach($xmlElements as $lang){
+                array_push($arr,array( 'code' => (string)$lang->code, 'name' => (string)$lang->{'name_' . $cLang}));
+            }
+        }
+        
+        return $arr;
     }
     
     /**
