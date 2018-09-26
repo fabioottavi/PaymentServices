@@ -1,7 +1,8 @@
 <?php
 namespace Payment\Gateway\Igfs;
+use Payment\PaymentUtils;
 
-class IgfsUtils
+class IgfsUtils extends PaymentUtils
 {
     public static function getSignature($ksig, $fields)
     {
@@ -78,18 +79,5 @@ class IgfsUtils
             }
         }
         return null;
-    }
-
-    public static function getValue($map, $key, $default = null, $acceptWhiteSpace = true)
-    {
-        return isset($map[$key]) && ($acceptWhiteSpace || $map[$key]!=='') ? $map[$key] : $default;
-    }
-
-    public static function appendParameter($url, $param){
-        return strpos($url, '?') ? $url.'&'.$param : $url.'?'.$param;
-    }
-
-    public static function normalizeLanguage($language){
-        return strtoupper(substr($language,0,2));
     }
 }

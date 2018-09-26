@@ -1,21 +1,15 @@
 <?php
 namespace Payment\Gateway\Computop;
+use Payment\PaymentUtils;
 
-class ComputopUtils{
-    public static function getValue($map, $key, $default = null, $acceptWhiteSpace = true)
-    {
-        return isset($map[$key]) && ($acceptWhiteSpace || $map[$key]!=='') ? $map[$key] : $default;
-    }
+class ComputopUtils extends PaymentUtils{
+    
     public static function getPaymentResultParam($obj)
     {
         return $params = [
             'Data' => $obj["Data"],
             'Len' => $obj["Len"],
         ];
-    }
-
-    public static function normalizeLanguage($language){
-        return strtoupper(substr($language,0,2));
     }
 
     public static function clearUrl($url){

@@ -314,9 +314,9 @@ class Gateway implements \Payment\GatewayInterface
      */
     public function getTransactionTypes(){
         return array(
-            'PURCHASE'  => 'Acquisto',
-            'AUTH'      => 'Preautorizzazione',
-            'VERIFY'    => 'Verifica',
+            'PURCHASE'  => IgfsUtils::getLabelText('TRANSACTION_TYPE_PURCHASE'),
+            'AUTH'      => IgfsUtils::getLabelText('TRANSACTION_TYPE_AUTH'),
+            'VERIFY'    => IgfsUtils::getLabelText('TRANSACTION_TYPE_VERIFY'),
           );
     }
     /**
@@ -328,9 +328,9 @@ class Gateway implements \Payment\GatewayInterface
      */
     public function getCheckoutTypes(){
         return array(
-            '1'  => 'Reindirizzamento sulla pagina di pagamento',
-            '2'  => 'Reindirizzamento sulla pagina di pagamento con sintesi disponibilità strumenti di oagamento',
-            '3'  => 'Reindirizzamento sulla pagina di pagamento con selezione preventiva dello strumento di pagamento',
+            '1'  => IgfsUtils::getLabelText('CHECK_OUT_TYPE_1'),
+            '2'  => IgfsUtils::getLabelText('CHECK_OUT_TYPE_2'),
+            '3'  => IgfsUtils::getLabelText('CHECK_OUT_TYPE_3'),
           );
       }
     /**
@@ -410,7 +410,7 @@ class Gateway implements \Payment\GatewayInterface
      * @return array|object
      */
     public function getAcquirer(){
-        return array(self::ACQUIRER_POSITIVI=> 'BNL Positivity 1',self::ACQUIRER_PARIBAS  => 'Prossime gestioni');
+        return array(self::ACQUIRER_POSITIVI=> IgfsUtils::getLabelText('ACQUIRER_POSITIVI'),self::ACQUIRER_PARIBAS  => IgfsUtils::getLabelText('ACQUIRER_PARIBAS'));
     }
     
     /**

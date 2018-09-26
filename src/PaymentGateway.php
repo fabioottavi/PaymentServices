@@ -1,4 +1,7 @@
 <?php
+
+use Payment\PaymentUtils;
+
 final class PayGateway
 {
     const IGFC = 'igfs';
@@ -11,7 +14,7 @@ final class PayGateway
      * @return array|object
      */
     public static function getPaymentTypes(){
-        return array(self::IGFC=> 'BNL POSitivity 1',self::CMPT1  => 'BNL POSitivity 2');
+        return array(self::IGFC=> PaymentUtils::getLabelText('PAYMENT_TYPE_IGFS'),self::CMPT1  => PaymentUtils::getLabelText('PAYMENT_TYPE_CMPT'));
     }
 
     /**
