@@ -19,17 +19,17 @@ final class ComputopTest extends TestCase
         
         $params = [
             //Same fields on both payment methods
-            'baseURL' => "https://localhost/ctPaygatePHP",
-            'notifyUrl' => '/notify.php',
-            'callbackUrl' => '/success.php',
-            'errorUrl' => '/failure.php',
+            'baseURL' => "",
+            'notifyUrl' => 'https://dev-wp.tk/checkout/order-received/232/?key=wc_order_5b680faa8b145',
+            'callbackUrl' => 'https://dev-wp.tk/checkout/order-received/232/?key=wc_order_5b680faa8b145',
+            'errorUrl' => 'https://dev-wp.tk/cart/?cancel_order=true&order=wc_order_5b680faa8b145&order_id=232&redirect&_wpnonce=8f275c8cd6',
             'amount' => 1.1,
             'orderReference' => $this->orderNumber,
             'paymentReference' => $this->orderNumber,
             'transactionType' => 'MANUAL', 
             'description' => 'Casuale',
             'language' => 'it_IT', 
-            'paymentMethod' => 'visa', // test with: cc,mybank,alipay,cupay,wechat,giropay,sofort,ideal,p24,multibanco,zimpler
+            'paymentMethod' => '', // test with: cc,mybank,alipay,cupay,wechat,giropay,sofort,ideal,p24,multibanco,zimpler
             'terminalId' => null,
             'hashMessage' => null,
             'currency' => 'EUR',
@@ -172,6 +172,27 @@ final class ComputopTest extends TestCase
         //var_dump($pResult);
     }
 
+    public function testSplit(){
+
+        $urls = array('https://dev-wp.tk/checkout/order-received/232/?key=wc_order_5b680faa8b145',
+                    'https://dev-wp.tk/checkout/order-received/232/?key=wc_order_5b680faa8b145',
+                    'https://dev-wp.tk/cart/?cancel_order=true&order=wc_order_5b680faa8b145&order_id=232&redirect&_wpnonce=8f275c8cd6');
+        $onlyParams = \Payment\Gateway\Computop\ComputopUtils::combineQueryParams($urls);
+        
+        //var_dump($onlyParams);
+        //var_dump(\Payment\Gateway\Computop\ComputopUtils::clearUrl('https://dev-wp.tk/checkout/order-received/232/?key=wc_order_5b680faa8b145'));
+        //var_dump(\Payment\Gateway\Computop\ComputopUtils::clearUrl('https://dev-wp.tk/cart/?cancel_order=true&order=wc_order_5b680faa8b145&order_id=232&redirect&_wpnonce=8f275c8cd6'));
+    }
+
+    public function testXmlCurrencies(){
+        $payg = PayGateway::getIstance(PayGateway::CMPT1, true);
+        $this->assertInstanceOf(
+            \Payment\Gateway\Computop\Gateway::class,
+            $payg
+        );
+        //var_dump($payg->getCurrenciesAllowed(true));
+    }
+
     public function testXml(){
         $payg = PayGateway::getIstance(PayGateway::CMPT1, true);
         $this->assertInstanceOf(
@@ -181,16 +202,22 @@ final class ComputopTest extends TestCase
         //var_dump($payg->getSellingLocations());
     }
 
-    public function testSplit(){
+    public function testGetLanguagesAllowed(){
+        $payg = PayGateway::getIstance(PayGateway::CMPT1, true);
+        $this->assertInstanceOf(
+            \Payment\Gateway\Computop\Gateway::class,
+            $payg
+        );
+        //var_dump($payg->getLanguagesAllowed());
+    }
 
-        $urls = array('https://dev-wp.tk/checkout/order-received/232/?key=wc_order_5b680faa8b145',
-                    'https://dev-wp.tk/checkout/order-received/232/?key=wc_order_5b680faa8b145',
-                    'https://dev-wp.tk/cart/?cancel_order=true&order=wc_order_5b680faa8b145&order_id=232&redirect&_wpnonce=8f275c8cd6');
-        $onlyParams = \Payment\Gateway\Computop\ComputopUtils::combineQueryParams($urls);
-        
-        var_dump($onlyParams);
-        var_dump(\Payment\Gateway\Computop\ComputopUtils::clearUrl('https://dev-wp.tk/checkout/order-received/232/?key=wc_order_5b680faa8b145'));
-        var_dump(\Payment\Gateway\Computop\ComputopUtils::clearUrl('https://dev-wp.tk/cart/?cancel_order=true&order=wc_order_5b680faa8b145&order_id=232&redirect&_wpnonce=8f275c8cd6'));
+    public function testGetCheckoutTypes(){
+        $payg = PayGateway::getIstance(PayGateway::CMPT1, true);
+        $this->assertInstanceOf(
+            \Payment\Gateway\Computop\Gateway::class,
+            $payg
+        );
+        var_dump($payg->getCheckoutTypes());
     }
 }
 

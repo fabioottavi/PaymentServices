@@ -23,16 +23,16 @@ final class IgfcTest extends TestCase
             //Same fields on both payment methods
             'baseURL' => "https://localhost/ctPaygatePHP",
             'notifyUrl' => '/igfs.php',
-            'callbackUrl' => '/test.php',
-            'errorUrl' => '/test.php',
+            'callbackUrl' => '/testCback.php',
+            'errorUrl' => '/testError.php',
             'amount' => 1.89,
             'orderReference' => $this->orderNumber,
             'transactionType' => 'AUTH', //TODO: Test with: PURCHASE, AUTH, VERIFY
             'description' => 'this is a test',
             'language' => 'it_IT',
             'paymentMethod'=>'', //TODO: Test with: cc,mybank,masterpass,findomestic,paypal
-            'terminalId' => null, // null => if it's in test mode it will point to the test tId
-            'hashMessage' => null,
+            'terminalId' => '', // null => if it's in test mode it will point to the test tId
+            'hashMessage' => '',
             'currency' => 'EUR',
             'addInfo1' => '',
             'addInfo2' => '',
@@ -46,12 +46,12 @@ final class IgfcTest extends TestCase
             'shopUserRef' => 'TestRef@sendabox.it', // It's the client email
             'shopUserName' => 'TestName',
             
-            'terminalIdFindomestic' => 'TestName',
+            'terminalIdFindomestic' => '93885445',
         ];
 
         //get response from gateway
-        $initResponse = $payg->init($params);
-        var_dump($initResponse);
+        //$initResponse = $payg->init($params);
+        //var_dump($initResponse);
     }
 
     public function testVerify(){
@@ -133,6 +133,31 @@ final class IgfcTest extends TestCase
         // response for cancel method
         //$refResponse = $ref->cancel($params);
         //var_dump($refResponse);
+    }
+
+    public function testXmlCurrencies(){
+        $payg = PayGateway::getIstance(PayGateway::IGFC, true);
+        $this->assertInstanceOf(
+            \Payment\Gateway\Igfs\Gateway::class,
+            $payg
+        );
+        //var_dump($payg->getCurrenciesAllowed(true));
+    }
+    public function testgetLanguagesAllowed(){
+        $payg = PayGateway::getIstance(PayGateway::IGFC, true);
+        $this->assertInstanceOf(
+            \Payment\Gateway\Igfs\Gateway::class,
+            $payg
+        );
+        //var_dump($payg->getLanguagesAllowed());
+    }
+    public function testXml(){
+        $payg = PayGateway::getIstance(PayGateway::IGFC, true);
+        $this->assertInstanceOf(
+            \Payment\Gateway\Igfs\Gateway::class,
+            $payg
+        );
+        //var_dump($payg->getSellingLocations());
     }
 
 }

@@ -96,7 +96,7 @@ class Gateway implements \Payment\GatewayInterface
         $initObj->description =IgfsUtils::getValue($params, 'description');
         $initObj->shopUserRef =IgfsUtils::getValue($params, 'shopUserRef');
         $initObj->shopUserName =IgfsUtils::getValue($params, 'shopUserName');
-        $initObj->langID =  IgfsUtils::normalizeLanguage(IgfsUtils::getValue($params, 'language', self::DEFAULT_LANGUAGE));
+        $initObj->langID = strtoupper(IgfsUtils::normalizeLanguage(IgfsUtils::getValue($params, 'language', self::DEFAULT_LANGUAGE)));
         $initObj->payInstrToken = IgfsUtils::getValue($params, 'payInstrToken');
         $initObj->regenPayInstrToken = IgfsUtils::getValue($params, 'regenPayInstrToken');
 
@@ -129,7 +129,7 @@ class Gateway implements \Payment\GatewayInterface
         $verifyObj->kSig = IgfsUtils::getValue($params,'hashMessage',$this->dKsig,false);
         $verifyObj->tid = IgfsUtils::getValue($params,'terminalId',$this->dTid,false).'_S';
         $verifyObj->shopID = IgfsUtils::getValue($params, 'orderReference');
-        $verifyObj->langID = IgfsUtils::normalizeLanguage(IgfsUtils::getValue($params, 'language', self::DEFAULT_LANGUAGE));
+        $verifyObj->langID = strtoupper(IgfsUtils::normalizeLanguage(IgfsUtils::getValue($params, 'language', self::DEFAULT_LANGUAGE)));
         $verifyObj->paymentID =IgfsUtils::getValue($params, 'paymentID', '00179695241108714733');
 
 
@@ -343,7 +343,7 @@ class Gateway implements \Payment\GatewayInterface
         $filePath = __DIR__ . "/../../data/currencies.xml";
         
         if(defined('BNLPOSITIVITY_LANG')){
-            $cLang = IgfsUtils::normalizeLanguage(BNLPOSITIVITY_LANG);
+            $cLang = strtolower(IgfsUtils::normalizeLanguage(BNLPOSITIVITY_LANG));
         }
         if (file_exists($filePath)) {
             $xmlElements = simplexml_load_file($filePath);
@@ -385,7 +385,7 @@ class Gateway implements \Payment\GatewayInterface
         $filePath = __DIR__ . "/../../data/languages.xml";
         
         if(defined('BNLPOSITIVITY_LANG')){
-            $cLang = IgfsUtils::normalizeLanguage(BNLPOSITIVITY_LANG);
+            $cLang = strtolower(IgfsUtils::normalizeLanguage(BNLPOSITIVITY_LANG));
         }
 
         if (file_exists($filePath)) {

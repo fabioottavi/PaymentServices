@@ -89,7 +89,7 @@ class Gateway implements \Payment\GatewayInterface
         $initObj->amount = str_replace('.', '', number_format($amount, 2, '.', ''));
         //$initObj->currency = ComputopUtils::getValue($params,'currency'); // There is only one the default = EN
         $initObj->description = ComputopUtils::getValue($params,'description');
-        $initObj->language =ComputopUtils::normalizeLanguage(ComputopUtils::getValue($params, 'language')); // TODO: Don't exist yet and there isn't in the documentation
+        $initObj->language = strtoupper(ComputopUtils::normalizeLanguage(ComputopUtils::getValue($params, 'language'))); // TODO: Don't exist yet and there isn't in the documentation
         
         $initObj->UrlSuccess = $url.ComputopUtils::getValue($params,'callbackUrl','');
         $initObj->UrlFailure = $url.ComputopUtils::getValue($params,'errorUrl','');
@@ -443,7 +443,7 @@ class Gateway implements \Payment\GatewayInterface
         $filePath = __DIR__ . "/../../data/currencies.xml";
         
         if(defined('BNLPOSITIVITY_LANG')){
-            $cLang = ComputopUtils::normalizeLanguage(BNLPOSITIVITY_LANG);
+            $cLang = strtolower(ComputopUtils::normalizeLanguage(BNLPOSITIVITY_LANG));
         }
         if (file_exists($filePath)) {
             $xmlElements = simplexml_load_file($filePath);
@@ -485,7 +485,7 @@ class Gateway implements \Payment\GatewayInterface
         $filePath = __DIR__ . "/../../data/languages.xml";
         
         if(defined('BNLPOSITIVITY_LANG')){
-            $cLang = ComputopUtils::normalizeLanguage(BNLPOSITIVITY_LANG);
+            $cLang = strtolower(ComputopUtils::normalizeLanguage(BNLPOSITIVITY_LANG));
         }
 
         if (file_exists($filePath)) {
@@ -547,7 +547,7 @@ class Gateway implements \Payment\GatewayInterface
         $filePath = __DIR__ . "/../../data/countries.xml";
 
         if(defined('BNLPOSITIVITY_LANG')){
-            $cLang = ComputopUtils::normalizeLanguage(BNLPOSITIVITY_LANG);
+            $cLang = strtolower(ComputopUtils::normalizeLanguage(BNLPOSITIVITY_LANG));
         }
 
         if (file_exists($filePath)) {
