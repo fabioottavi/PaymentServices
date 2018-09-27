@@ -338,13 +338,12 @@ class Gateway implements \Payment\GatewayInterface
      *
      * @return array|object
      */
-    public function getCurrenciesAllowed($simple = false, $cLang = 'en'){
+    public function getCurrenciesAllowed($simple = false){
         $arr = array();
         $filePath = __DIR__ . "/../../data/currencies.xml";
         
-        if(defined('BNLPOSITIVITY_LANG')){
-            $cLang = strtolower(IgfsUtils::normalizeLanguage(BNLPOSITIVITY_LANG));
-        }
+        $cLang = IgfsUtils::getGlobalLanguage();
+        
         if (file_exists($filePath)) {
             $xmlElements = simplexml_load_file($filePath);
 
@@ -380,13 +379,11 @@ class Gateway implements \Payment\GatewayInterface
      *
      * @return array|object
      */
-    public function getLanguagesAllowed($cLang = 'en'){
+    public function getLanguagesAllowed(){
         $arr = array();
         $filePath = __DIR__ . "/../../data/languages.xml";
         
-        if(defined('BNLPOSITIVITY_LANG')){
-            $cLang = strtolower(IgfsUtils::normalizeLanguage(BNLPOSITIVITY_LANG));
-        }
+        $cLang = IgfsUtils::getGlobalLanguage();
 
         if (file_exists($filePath)) {
             $xmlElements = simplexml_load_file($filePath);

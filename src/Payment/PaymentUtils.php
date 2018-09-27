@@ -15,12 +15,19 @@ class PaymentUtils{
         return substr($language,0,2);
     }
 
-    public static function getLabelText($label){
-        $filePath = __DIR__ . "/data/labels.xml";
-        $cLang = 'en';
+    public static function getGlobalLanguage(){
         if(defined('BNLPOSITIVITY_LANG')){
-            $cLang = strtolower(self::normalizeLanguage(BNLPOSITIVITY_LANG));
+            if(!empty(BNLPOSITIVITY_LANG))
+            {
+                return strtolower(self::normalizeLanguage(BNLPOSITIVITY_LANG));
+            }
         }
+        return 'en';
+    }
+
+    public static function getLabelText($label){
+        $filePath = __DIR__ . "/Data/labels.xml";
+        $cLang = self::getGlobalLanguage();
 
         if (file_exists($filePath)) {
             $xmlElements = simplexml_load_file($filePath);
