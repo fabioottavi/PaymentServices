@@ -340,7 +340,7 @@ class Gateway implements \Payment\GatewayInterface
      */
     public function getCurrenciesAllowed($simple = false){
         $arr = array();
-        $filePath = __DIR__ . "/../../data/currencies.xml";
+        $filePath = __DIR__ . "/../../Data/currencies.xml";
         
         $cLang = IgfsUtils::getGlobalLanguage();
         
@@ -381,7 +381,7 @@ class Gateway implements \Payment\GatewayInterface
      */
     public function getLanguagesAllowed(){
         $arr = array();
-        $filePath = __DIR__ . "/../../data/languages.xml";
+        $filePath = __DIR__ . "/../../Data/languages.xml";
         
         $cLang = IgfsUtils::getGlobalLanguage();
 
