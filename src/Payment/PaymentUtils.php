@@ -19,7 +19,7 @@ class PaymentUtils{
         $filePath = __DIR__ . "/data/labels.xml";
         $cLang = 'en';
         if(defined('BNLPOSITIVITY_LANG')){
-            $cLang = ComputopUtils::normalizeLanguage(BNLPOSITIVITY_LANG);
+            $cLang = self::normalizeLanguage(BNLPOSITIVITY_LANG);
         }
 
         if (file_exists($filePath)) {
