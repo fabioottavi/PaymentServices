@@ -92,8 +92,8 @@ final class ComputopTest extends TestCase
         ];
 
         //get response from gateway
-        //$pResult = $payg->verify($params);
-        //var_dump($pResult);
+        $pResult = $payg->verify($params);
+        var_dump($pResult);
 
     }
 
@@ -217,7 +217,7 @@ final class ComputopTest extends TestCase
             \Payment\Gateway\Computop\Gateway::class,
             $payg
         );
-        var_dump($payg->getCheckoutTypes());
+        //var_dump($payg->getCheckoutTypes());
     }
 }
 

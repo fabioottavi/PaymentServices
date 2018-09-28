@@ -157,7 +157,7 @@ class Gateway implements \Payment\GatewayInterface
      */
     public function verify(array $params = [])
     {
-        $obj = new Init\ComputopCgVerify(ComputopUtils::getValue($params,'hashMessage',$this->dBlowfishPassword),ComputopUtils::getValue($params, 'UrlParams')); 
+        $obj = new Init\ComputopCgVerify(ComputopUtils::getValue($params,'hashMessage',$this->dBlowfishPassword,false),ComputopUtils::getValue($params, 'UrlParams')); 
         $verifyObj = $obj->execute();
         return array(
             'terminalId' =>ComputopUtils::getValue($verifyObj,'mid',''),
