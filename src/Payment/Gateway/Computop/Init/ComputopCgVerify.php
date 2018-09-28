@@ -21,7 +21,13 @@ class ComputopCgVerify extends BaseComputopCg {
     public function execute(){
         $this->checkFields();
 
-        $respDetails = $this->decryptResponse($this->responseParams);
+        //$respDetails = $this->decryptResponse($this->responseParams);
+        $respDetails = array(); 
+        $spl = explode('&', $this->responseParams);
+        foreach($spl as $p){
+            $paramData = explode("=",$p);
+            $respDetails[$paramData[0]] = $paramData[1];
+        }
 
         $status = ComputopUtils::getValue($respDetails, "Status");
 
