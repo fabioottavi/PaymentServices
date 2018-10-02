@@ -203,7 +203,7 @@ class Gateway implements \Payment\GatewayInterface
             'terminalId' => $obj->mId,
             'returnCode' => $obj->code,
             'message' => $obj->description,
-            'error' => $obj->description !== 'success',
+            'error' => $obj->code !== '00000000',
             'refTranID' => '',
             'tranID' => $obj->transId,
 
@@ -243,7 +243,7 @@ class Gateway implements \Payment\GatewayInterface
             'terminalId' => $obj->mId,
             'returnCode' => $obj->code,
             'message' => $obj->description,
-            'error' => $obj->description !== 'success',
+            'error' => $obj->code !== '00000000',
             'orderReference' => '',
             'tranID' => $obj->transId,
 
@@ -286,7 +286,7 @@ class Gateway implements \Payment\GatewayInterface
             'refTranID' => '',
             'returnCode' => $obj->code,
             'message' => $obj->description,
-            'error' => $obj->description !== 'success',
+            'error' => $obj->code !== '00000000',
 
             'paymentID' => $obj->payId, // check if we need it or not
             'XID' => $obj->xId, // check if we need it or not
