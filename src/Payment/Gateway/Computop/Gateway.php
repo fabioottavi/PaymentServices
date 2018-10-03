@@ -360,7 +360,7 @@ class Gateway implements \Payment\GatewayInterface
         $obj;
 
         if (!$inst) {
-            return new Init\ComputopCgInit($mId,$bPs,$hMcPd,$this->sUrl); 
+            return new Init\ComputopCgInitCC($mId,$bPs,$hMcPd,$this->sUrl); 
             //throw new CmptpMissingParException("Missing Payment Method");
         }
 
@@ -372,7 +372,7 @@ class Gateway implements \Payment\GatewayInterface
             case 'americanexpress':
             case 'diners':
             case 'findomestic': // To be verified
-                $obj = new Init\ComputopCgInit($mId,$bPs,$hMcPd,$this->sUrl); 
+                $obj = new Init\ComputopCgInitCC($mId,$bPs,$hMcPd,$this->sUrl); 
                 break;
             case 'mybank':
                 $obj = new Init\ComputopCgInitMyBank($mId,$bPs,$hMcPd,$this->sUrl); 

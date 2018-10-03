@@ -41,8 +41,9 @@ abstract class BaseComputopCg{
     protected function getParams(){
         $arr = array();
 
+        array_push($arr, "MerchantID=$this->merchantId");
         if($this->language){
-            array_push($arr, "language=$this->language");
+            array_push($arr, "Lingua=$this->language");
         }
         
         return $arr;
