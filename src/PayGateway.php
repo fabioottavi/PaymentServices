@@ -1,4 +1,5 @@
 <?php
+namespace Bnlpositivity\Payment;
 
 use Payment\PaymentUtils;
 
@@ -18,23 +19,36 @@ final class PayGateway
     }
 
     /**
-     * Undocumented function
+     * Manage all main integration function
      *
      * @param string $paymenttype
+     * @param bool $test
+     * @return \Payment\Gateway\Igfs\Gateway|\Payment\Gateway\Computop\Gateway|boolean
+     */
+    public function get($paymenttype, $test = false)
+    {
+        return self::getIstance($paymenttype, $test);
+    }
+
+    /**
+     * Manage all main integration function
+     *
+     * @param string $paymenttype
+     * @param bool $test
      * @return \Payment\Gateway\Igfs\Gateway|\Payment\Gateway\Computop\Gateway|boolean
      */
     public static function getIstance($paymenttype, $test)
     {
         $return =null;
         switch ($paymenttype) {
-        case self::IGFC:
-            $return = new \Payment\Gateway\Igfs\Gateway($test);
-            break;
-        case self::CMPT1:
-            $return = new \Payment\Gateway\Computop\Gateway($test);
-            break;
-        default:
-            break;
+            case self::IGFC:
+                $return = new \Payment\Gateway\Igfs\Gateway($test);
+                break;
+            case self::CMPT1:
+                $return = new \Payment\Gateway\Computop\Gateway($test);
+                break;
+            default:
+                break;
         }
         return $return;
     }

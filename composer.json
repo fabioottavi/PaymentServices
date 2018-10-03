@@ -1,8 +1,28 @@
 {
+    "name": "Bnlpositivity/PaymentServices",
+    "version": "1.0.0",
+    "authors": [
+        {
+            "name": "Thanasis nikolaidis",
+            "email": "sakis.nikolaidis@sendabox.it",
+            "homepage": "http://www.sendabox.it",
+            "role": "Developer"
+        },
+        {
+            "name": "Alessandro Palladino",
+            "email": "alessandro.palladino@sendabox.it",
+            "homepage": "http://www.sendabox.it",
+            "role": "Architect"
+        }
+    ],
     "autoload": {
-        "classmap": [
-            "src/"
-        ]
+        "psr-0": {
+            "Bnlpositivity_Payment_": "src/"
+        },
+        "psr-4": {
+            "Payment\\": "src/Payment",
+            "Bnlpositivity\\Payment\\": "src/"
+        }
     },
     "require-dev": {
         "phpunit/phpunit": "6"

@@ -22,7 +22,13 @@ composer install
 This prject use [PHPUnit](https://phpunit.de/getting-started/phpunit-6.html)
 
 ```sh
-$ ./vendor/bin/phpunit --bootstrap vendor/autoload.php tests/EmailTest
+$ ./vendor/bin/phpunit --bootstrap vendor/autoload.php tests/IgfcTest
+```
+
+or a simple method:
+
+```sh
+$ ./vendor/bin/phpunit --bootstrap vendor/autoload.php --filter testInit tests/IgfcTest
 ```
 
 ## Debug
