@@ -43,10 +43,11 @@ class ComputopCgInit extends \Payment\Gateway\Computop\BaseComputopCg {
     public $customField7;
 
     public $response = "encrypt";
+    public $encryptResponse = false;
 
     public function __construct($merchantId,$blowfishPassword,$hMacPassword,$serverUrl)
     {
-        parent::__construct($merchantId,$blowfishPassword,$hMacPassword,$serverUrl.'/payssl.aspx');
+        parent::__construct($merchantId,$blowfishPassword,$hMacPassword,$serverUrl);
     }
 
     protected function resetFields(){
@@ -101,9 +102,6 @@ class ComputopCgInit extends \Payment\Gateway\Computop\BaseComputopCg {
         // format data which is to be transmitted - required
         $arr = parent::getParams();
 
-        $partsSpl = explode("&",$this->addInfo5);
-        $parts = join("|", $partsSpl);
-
         $pTransId = "TransID=$this->transId";
         $pRefNr = "RefNr=$this->refNr";
         $pAmount = "Amount=$this->amount";
@@ -111,61 +109,22 @@ class ComputopCgInit extends \Payment\Gateway\Computop\BaseComputopCg {
         $pURLSuccess = "URLSuccess=".ComputopUtils::clearUrl($this->UrlSuccess);
         $pURLFailure = "URLFailure=".ComputopUtils::clearUrl($this->UrlFailure);
         $pURLNotify = "URLNotify=".ComputopUtils::clearUrl($this->UrlNotify);
-        //$pResponse = "Response=$this->response";
-        $pUserData = "Custom=$parts";
-        $pCapture = "Capture=$this->capture";
         $pOrderDesc = "OrderDesc=$this->description";
         $pReqId = "ReqID=$this->refNr";
 
-        array_push($arr,$pTransId, $pRefNr, $pAmount, $pCurrency, $pURLSuccess, $pURLFailure, $pURLNotify, $pUserData, $pCapture, $pOrderDesc, $pReqId);
-        
-        if($this->template){
-            array_push($arr, "Template=$this->template");
-        }
-        if($this->background){
-            array_push($arr, "Background=$this->background");
-        }
-        if($this->bgColor){
-            array_push($arr, "BGColor=$this->bgColor");
-        }
-        if($this->bgImage){
-            array_push($arr, "BGImage=$this->bgImage");
-        }
-        if($this->fColor){
-            array_push($arr, "FColor=$this->fColor");
-        }
-        if($this->fFace){
-            array_push($arr, "FFace=$this->fFace");
-        }
-        if($this->fSize){
-            array_push($arr, "FSize=$this->fSize");
-        }
-        if($this->centro){
-            array_push($arr, "Centro=$this->centro");
-        }
-        if($this->tWidth){
-            array_push($arr, "tWidth=$this->tWidth");
-        }
-        if($this->tHeight){
-            array_push($arr, "tHeight=$this->tHeight");
+        array_push($arr,$pTransId, $pRefNr, $pAmount, $pCurrency, $pURLSuccess, $pURLFailure, $pURLNotify, $pOrderDesc, $pReqId);
+
+        $partsSpl = explode("&",$this->addInfo5);
+        $parts = join("|", $partsSpl);
+
+        if($parts){
+            array_push($arr, "Custom=$parts");
         }
         
-        if($this->customField1){
-            array_push($arr, "CustomField1=$this->customField1");
+        if($this->encryptResponse){
+            array_push($arr, "Response=$this->response");
         }
-        if($this->customField2){
-            array_push($arr, "CustomField2=$this->customField2");
-        }
-        if($this->customField3){
-            array_push($arr, "CustomField3=$this->customField3");
-        }
-        if($this->customField6){
-            array_push($arr, "CustomField6=$this->customField6");
-        }
-        if($this->customField7){
-            array_push($arr, "CustomField7=$this->customField7");
-        }
-        
+
         return $arr;
     }
     public function execute(){

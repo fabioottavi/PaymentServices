@@ -203,7 +203,7 @@ class Gateway implements \Payment\GatewayInterface
             'terminalId' => $obj->mId,
             'returnCode' => $obj->code,
             'message' => $obj->description,
-            'error' => $obj->description !== 'success',
+            'error' => $obj->code !== '00000000',
             'refTranID' => '',
             'tranID' => $obj->transId,
 
@@ -243,7 +243,7 @@ class Gateway implements \Payment\GatewayInterface
             'terminalId' => $obj->mId,
             'returnCode' => $obj->code,
             'message' => $obj->description,
-            'error' => $obj->description !== 'success',
+            'error' => $obj->code !== '00000000',
             'orderReference' => '',
             'tranID' => $obj->transId,
 
@@ -286,7 +286,7 @@ class Gateway implements \Payment\GatewayInterface
             'refTranID' => '',
             'returnCode' => $obj->code,
             'message' => $obj->description,
-            'error' => $obj->description !== 'success',
+            'error' => $obj->code !== '00000000',
 
             'paymentID' => $obj->payId, // check if we need it or not
             'XID' => $obj->xId, // check if we need it or not
@@ -360,7 +360,7 @@ class Gateway implements \Payment\GatewayInterface
         $obj;
 
         if (!$inst) {
-            return new Init\ComputopCgInit($mId,$bPs,$hMcPd,$this->sUrl); 
+            return new Init\ComputopCgInitCC($mId,$bPs,$hMcPd,$this->sUrl); 
             //throw new CmptpMissingParException("Missing Payment Method");
         }
 
@@ -372,7 +372,7 @@ class Gateway implements \Payment\GatewayInterface
             case 'americanexpress':
             case 'diners':
             case 'findomestic': // To be verified
-                $obj = new Init\ComputopCgInit($mId,$bPs,$hMcPd,$this->sUrl); 
+                $obj = new Init\ComputopCgInitCC($mId,$bPs,$hMcPd,$this->sUrl); 
                 break;
             case 'mybank':
                 $obj = new Init\ComputopCgInitMyBank($mId,$bPs,$hMcPd,$this->sUrl); 
