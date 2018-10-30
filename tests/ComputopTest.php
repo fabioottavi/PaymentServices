@@ -1,5 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
+use Bnlpositivity\Payment\PayGateway;
 
 final class ComputopTest extends TestCase
 {
