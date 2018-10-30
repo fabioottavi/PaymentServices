@@ -1,12 +1,13 @@
 <?php
 use PHPUnit\Framework\TestCase;
+use Bnlpositivity\Payment\PayGateway;
 
 final class ComputopTest extends TestCase
 {
     private $orderNumber;
 
     public function setUp(){
-        $this->orderNumber = uniqid(rand(0,100000), true);
+        $this->orderNumber = str_replace('.','',uniqid(rand(0,100000), true));
     }
 
     public function testInit()
@@ -20,18 +21,18 @@ final class ComputopTest extends TestCase
         $params = [
             //Same fields on both payment methods
             'baseURL' => "",
-            'notifyUrl' => 'https://dev-wp.tk/checkout/order-received/232/?key=wc_order_5b680faa8b145',
-            'callbackUrl' => 'https://dev-wp.tk/checkout/order-received/232/?key=wc_order_5b680faa8b145',
-            'errorUrl' => 'https://dev-wp.tk/cart/?cancel_order=true&order=wc_order_5b680faa8b145&order_id=232&redirect&_wpnonce=8f275c8cd6',
-            'amount' => 1.1,
-            'orderReference' => $this->orderNumber,
-            'paymentReference' => $this->orderNumber,
-            'transactionType' => 'MANUAL', 
+            'notifyUrl' => 'https://dev-ma1.tk/bnlpositivity_paymentservice/init/notify/orderid/100000036/',
+            'callbackUrl' => 'https://dev-ma1.tk/bnlpositivity_paymentservice/init/success/orderid/100000036/',
+            'errorUrl' => 'https://dev-ma1.tk/bnlpositivity_paymentservice/init/error/orderid/100000036/',
+            'amount' => 6.0000,
+            'orderReference' => 1540805977,
+            'paymentReference' => 1540805977,
+            'transactionType' => 'AUTO', 
             'description' => 'Casuale',
             'language' => 'it_IT', 
-            'paymentMethod' => '', // test with: cc,mybank,alipay,cupay,wechat,giropay,sofort,ideal,p24,multibanco,zimpler
-            'terminalId' => null,
-            'hashMessage' => null,
+            'paymentMethod' => 'cc', // test with: cc,mybank,alipay,cupay,wechat,giropay,sofort,ideal,p24,multibanco,zimpler
+            'terminalId' => 'bnl_test',
+            'hashMessage' => 'Fw3[7(bAP8=or*D2',
             'currency' => 'EUR',
             'addInfo1' => '[BNL Demo] Ordine da nuovo cliente (145) - {order_date}',
             'addInfo2' => '[BNL Demo] Ordine da nuovo cliente (145) - {order_date}',
@@ -40,18 +41,18 @@ final class ComputopTest extends TestCase
             'addInfo5' => '[BNL Demo] Ordine da nuovo cliente (145) - {order_date}',
             'acquirer' => 'bnlpositivity',
 
-            'hMacPassword' => null,
+            'hMacPassword' => '3Hn)[7Pe2Qf(!j8TK=t9*6DsJk5\?m4_C',
             
             // Extra values
-            'addrCountryCode' => '380',
-            'sellingPoint' => 'BNL Demo',
+            'addrCountryCode' => '004',
+            'sellingPoint' => 'Default Store View',
             'accOwner' => null,
-            'device' => null,
-            'email' => null,
+            'device' => 'desktop',
+            'email' => 'owner@example.com',
             'phone' => null,
             'scheme' => null,
             'bic' => null,
-            'expirationTime' => null,
+            'expirationTime' => '2018-10-30UTC09:39:37',
             'iban' => null,
             'mobileNo' => null,
 
@@ -68,13 +69,13 @@ final class ComputopTest extends TestCase
             //'tHeight' => null,
             
             'logoUrl' => null,
-            'shippingDetails' => null,
-            'invoiceDetails' => null,
+            'shippingDetails' => 'oih, 20156, IT',
+            'invoiceDetails' => 'ji, lkj, oih',
         ];
 
         //get response from gateway
-        //$initResponse = $payg->init($params);
-        //var_dump($initResponse);
+        $initResponse = $payg->init($params);
+        var_dump($initResponse);
     }
 
     public function testVerify()
@@ -88,13 +89,12 @@ final class ComputopTest extends TestCase
         //ComputopUtils::getPaymentResultParam($_GET);
         $params = [
             'hashMessage' => null,
-            'UrlParams' => 'Len=361&Data=6256CF18B10A0FBE4D9028746090F3D1BC22DF6328C51BB6448378724C502F35217D5862879D0BC2170F60583FD9A9FEF0D5A999813D4AB7DAC36C420246EAB4F3F1DB085F9F30015D7ECDEC92DDD412DC198E50C46752542E048BB84916185862168E8CB744D7E62052A95458C8AB965808EDD67F125F6C69C7E9DEA375777A8D8EECE8099CA005AC7CCC0B1514308338BC6E8DAC8193770CE8A2F831F7474A015147C66EAB7FCC5E57CD4E1E8BB6537ADF915BC73F1E83B47BD92955874870D19E63CCE2B7F0744B653522F0AE29E3182119C371622208A7093C00CF0E1C227D424F2461E7CB820BCD581B6D512274F44C3897B791A8007B417BB6F205886E542955D95BEE29F369D41FF7D6817CEB9AF51ED6803A434CC40409489E74AF1640B76CF96F659AAD5A5E76385EAD47E1D4AD70E0FB26D1C9D9297EDD1D6155E454C40E501659F690B35ABCA38BF0B6669ECC7F5F32915A7598E8B921B1D0AD2F241A249CED053783DCEF67BD1688AB2A',
+            'UrlParams' => 'mid=bnl_test&PayID=cf79a82132944c698ecbabe3d239ee31&XID=e4cab57b078a4ec78e6b0258ac9a1c20&TransID=748405bb33d6ae8b9c4.98465381&Type=SSL&customfield1=1.1%20EURO&refnr=748405bb33d6ae8b9c4.98465381&Code=00000000&Status=OK&Description=success&MAC=5F5C34868B5857B6DD583BCB0E03B9B08F0E9B4F91F7CFD66CD4397D02677167',
         ];
 
         //get response from gateway
-        $pResult = $payg->verify($params);
-        var_dump($pResult);
-
+        //$pResult = $payg->verify($params);
+        //var_dump($pResult);
     }
 
     public function testConfirm()
@@ -109,9 +109,9 @@ final class ComputopTest extends TestCase
             'terminalId' => null,
             'hashMessage' => null,
             'hMacPassword' => null,
-            'paymentID' => 'e4f7a864b72d4fe393ff805e7afbc7bc', // we retrieve it from them
-            'paymentReference' => '516245b617fc265da67.16008640',
-            'orderReference' => '516245b617fc265da67.16008640',
+            'paymentID' => '4146830fd2274fb296c8f5e24425ac0b', // we retrieve it from them
+            'paymentReference' => '548465bb335daccf4e1.99383120',
+            'orderReference' => '548465bb335daccf4e1.99383120',
             'amount' => 1.1,
             'currency' => null,
             'acquirer' => 'bnlpositivity',
@@ -134,8 +134,8 @@ final class ComputopTest extends TestCase
             'terminalId' => null,
             'hashMessage' => null,
             'hMacPassword' => null,
-            'paymentID' => '1faa96e4a64a435ca34dc281ff632cc3', // we retrieve it from them
-            'paymentReference' => '972375b617710d47b89.25444934',
+            'paymentID' => '4b14cc77abbf4a6d98755e0ddbe17cd7', // we retrieve it from them
+            'paymentReference' => '669325bb3397ad6f677.04866787',
             'amount' => 1.1,
             'currency' => null,
             'acquirer' => 'bnlpositivity',
@@ -155,14 +155,15 @@ final class ComputopTest extends TestCase
         );
 
         $params = [
-            'terminalId' => null,
-            'hashMessage' => null,
-            'hMacPassword' => null,
-            'paymentID' => 'a255a6b8dd6a42abaa61fd7a9c861862', // we retrieve it from them
-            'paymentReference' => '472605b617e6da848e9.37684960',
-            'orderReference' => '472605b617e6da848e9.37684960',
-            'amount' => 1.1,
-            'currency' => null,
+            'terminalId' => 'bnl_test',
+            'hashMessage' => 'Fw3[7(bAP8=or*D2',
+            'hMacPassword' => '3Hn)[7Pe2Qf(!j8TK=t9*6DsJk5?m4_C',
+            'paymentID' => '5455bbabb1df44e884a618b1978f72e1', // we retrieve it from them
+            'paymentReference' => '1539157394',
+            'orderReference' => '1539157394',
+            'amount' => 10.00,
+            'testmode' => 1,
+            'currency' => 'EUR',
             'acquirer' => 'bnlpositivity',
             'xId' => '',
         ];
