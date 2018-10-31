@@ -9,9 +9,42 @@ use Payment\Gateway\Computop\ComputopUtils;
  */
 class ComputopCgInitCC extends ComputopCgInit {
 
+    public $urlBack;
+
+    protected function resetFields(){
+        parent::resetFields();
+        $this->urlBack = null;
+    }
+
     public function __construct($merchantId,$blowfishPassword,$hMacPassword,$serverUrl)
     {
         parent::__construct($merchantId,$blowfishPassword,$hMacPassword,$serverUrl.'/payssl.aspx');
+    }
+
+    public function getParamsDecrypted(){
+        $arr = parent::getParamsDecrypted();
+        if($this->template){
+            array_push($arr, "Template=$this->template");
+        }
+        if($this->urlBack){
+            array_push($arr, "URLBack=$this->urlBack");
+        }
+        if($this->customField1){
+            array_push($arr, "CustomField1=$this->customField1");
+        }
+        if($this->customField2){
+            array_push($arr, "CustomField2=$this->customField2");
+        }
+        if($this->customField3){
+            array_push($arr, "CustomField3=$this->customField3");
+        }
+        if($this->customField6){
+            array_push($arr, "CustomField6=$this->customField6");
+        }
+        if($this->customField7){
+            array_push($arr, "CustomField7=$this->customField7");
+        }
+        return $arr;
     }
 
     protected function getParams(){
@@ -19,10 +52,7 @@ class ComputopCgInitCC extends ComputopCgInit {
         $arr = parent::getParams();
 
         array_push($arr, "Capture=$this->capture");
-
-        if($this->template){
-            array_push($arr, "Template=$this->template");
-        }
+        
         if($this->background){
             array_push($arr, "Background=$this->background");
         }
@@ -51,22 +81,7 @@ class ComputopCgInitCC extends ComputopCgInit {
             array_push($arr, "tHeight=$this->tHeight");
         }
         
-        if($this->customField1){
-            array_push($arr, "CustomField1=$this->customField1");
-        }
-        if($this->customField2){
-            array_push($arr, "CustomField2=$this->customField2");
-        }
-        if($this->customField3){
-            array_push($arr, "CustomField3=$this->customField3");
-        }
-        if($this->customField6){
-            array_push($arr, "CustomField6=$this->customField6");
-        }
-        if($this->customField7){
-            array_push($arr, "CustomField7=$this->customField7");
-        }
-        
+                
         return $arr;
     }
 }

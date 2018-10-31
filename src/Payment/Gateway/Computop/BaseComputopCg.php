@@ -40,17 +40,26 @@ abstract class BaseComputopCg{
 
     protected function getParams(){
         $arr = array();
-
         array_push($arr, "MerchantID=$this->merchantId");
+        return $arr;
+    }
+
+    /**
+     * Return an array of parameters that will be added to the final url 
+     *
+     * @return array|array|string
+     */
+    public function getParamsDecrypted(){
+        $arr = array();
         if($this->language){
             array_push($arr, "Lingua=$this->language");
         }
-        
         return $arr;
     }
 
     protected function encryptRequestParams(){
         $params = $this->getParams();
+        $paramsDec = $this->getParamsDecrypted();
 
         $myPayGate = new ctPaygate;
         
@@ -69,6 +78,10 @@ abstract class BaseComputopCg{
         $pUrlData = "Data=$data";
 
         $rQuery = array($pUrlMerchant,$pUrlLen,$pUrlData);
+
+        if($paramsDec){
+            $rQuery = array_merge($rQuery, $paramsDec);
+        }
 
         return join("&", $rQuery);
     }

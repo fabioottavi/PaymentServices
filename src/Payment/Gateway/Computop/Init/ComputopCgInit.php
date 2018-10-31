@@ -124,7 +124,7 @@ class ComputopCgInit extends \Payment\Gateway\Computop\BaseComputopCg {
         if($this->encryptResponse){
             array_push($arr, "Response=$this->response");
         }
-
+        
         return $arr;
     }
     public function execute(){

@@ -115,6 +115,7 @@ class Gateway implements \Payment\GatewayInterface
         $initObj->expirationTime = ComputopUtils::getValue($params,'expirationTime','');     
         $initObj->iban = ComputopUtils::getValue($params,'iban','');   
         $initObj->mobileNo = ComputopUtils::getValue($params,'mobileNo','');
+        $initObj->urlBack = ComputopUtils::getValue($params,'urlBack','');
 
         //CustomFields
         $initObj->customField1 = $amount.' '.ComputopUtils::getValue($params,'customField1','EURO');
