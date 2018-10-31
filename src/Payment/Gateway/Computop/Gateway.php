@@ -94,6 +94,7 @@ class Gateway implements \Payment\GatewayInterface
         $initObj->UrlSuccess = $url.ComputopUtils::getValue($params,'callbackUrl','');
         $initObj->UrlFailure = $url.ComputopUtils::getValue($params,'errorUrl','');
         $initObj->UrlNotify = $url.ComputopUtils::getValue($params,'notifyUrl','');
+        $initObj->urlBack = $url.ComputopUtils::getValue($params,'errorUrl','');
 
         $initObj->payId = ComputopUtils::getValue($params,'payId','');     
         $initObj->addInfo1 = substr(ComputopUtils::getValue($params,'addInfo1',self::DEFAULT_INFO1),0,204);
@@ -115,7 +116,6 @@ class Gateway implements \Payment\GatewayInterface
         $initObj->expirationTime = ComputopUtils::getValue($params,'expirationTime','');     
         $initObj->iban = ComputopUtils::getValue($params,'iban','');   
         $initObj->mobileNo = ComputopUtils::getValue($params,'mobileNo','');
-        $initObj->urlBack = ComputopUtils::getValue($params,'urlBack','');
 
         //CustomFields
         $initObj->customField1 = $amount.' '.ComputopUtils::getValue($params,'customField1','EURO');
