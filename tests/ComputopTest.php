@@ -21,16 +21,16 @@ final class ComputopTest extends TestCase
         $params = [
             //Same fields on both payment methods
             'baseURL' => "",
-            'notifyUrl' => 'https://dev-wp.tk/checkout/order-received/232/?key=wc_order_5b680faa8b145',
-            'callbackUrl' => 'https://dev-wp.tk/checkout/order-received/232/?key=wc_order_5b680faa8b145',
-            'errorUrl' => 'https://dev-wp.tk/cart/?cancel_order=true&order=wc_order_5b680faa8b145&order_id=232&redirect&_wpnonce=8f275c8cd6',
+            'notifyUrl' => 'https://dev-ma1.tk/bnlpositivity_paymentservice/init/notify/orderid/100000045/',
+            'callbackUrl' => 'https://dev-ma1.tk/bnlpositivity_paymentservice/init/success/orderid/100000045/',
+            'errorUrl' => 'https://dev-ma1.tk/bnlpositivity_paymentservice/init/error/orderid/100000045/',
             'amount' => 1.1,
             'orderReference' => $this->orderNumber,
             'paymentReference' => $this->orderNumber,
             'transactionType' => 'MANUAL', 
             'description' => 'Casuale',
             'language' => 'it_IT', 
-            'paymentMethod' => '', // test with: cc,mybank,alipay,cupay,wechat,giropay,sofort,ideal,p24,multibanco,zimpler
+            'paymentMethod' => 'cc', // test with: cc,mybank,alipay,cupay,wechat,giropay,sofort,ideal,p24,multibanco,zimpler
             'terminalId' => null,
             'hashMessage' => null,
             'currency' => 'EUR',
@@ -74,8 +74,8 @@ final class ComputopTest extends TestCase
         ];
 
         //get response from gateway
-        //$initResponse = $payg->init($params);
-        //var_dump($initResponse);
+        $initResponse = $payg->init($params);
+        var_dump($initResponse);
     }
 
     public function testVerify()
@@ -93,8 +93,8 @@ final class ComputopTest extends TestCase
         ];
 
         //get response from gateway
-        $pResult = $payg->verify($params);
-        var_dump($pResult);
+        //$pResult = $payg->verify($params);
+        //var_dump($pResult);
 
     }
 
