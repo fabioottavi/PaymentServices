@@ -30,7 +30,7 @@ class Gateway implements \Payment\GatewayInterface
     const ACQUIRER_PARIBAS = 'bnlparibas';
     
     // Endpoints
-    const URL = 'https://merchant.s2stest.bnlpositivity.it/BNL_CG_SERVICES/services/';
+    const URL = 'https://merchant.s2s.bnlpositivity.it/BNL_CG_SERVICES/services/';
     const URL_TEST = 'https://merchant.s2stest.bnlpositivity.it/BNL_CG_SERVICES/services/';
 
     const DEFAULT_LANGUAGE = 'EN';
