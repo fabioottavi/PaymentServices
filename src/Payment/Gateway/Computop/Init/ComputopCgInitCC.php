@@ -30,19 +30,19 @@ class ComputopCgInitCC extends ComputopCgInit {
             array_push($arr, "URLBack=$this->urlBack");
         }
         if($this->customField1){
-            array_push($arr, "CustomField1=$this->customField1");
+            array_push($arr, "CustomField1=".urlencode($this->customField1));
         }
         if($this->customField2){
-            array_push($arr, "CustomField2=$this->customField2");
+            array_push($arr, "CustomField2=".urlencode($this->customField2));
         }
         if($this->customField3){
-            array_push($arr, "CustomField3=$this->customField3");
+            array_push($arr, "CustomField3=".urlencode($this->customField3));
         }
         if($this->customField6){
-            array_push($arr, "CustomField6=$this->customField6");
+            array_push($arr, "CustomField6=".urlencode($this->customField6));
         }
         if($this->customField7){
-            array_push($arr, "CustomField7=$this->customField7");
+            array_push($arr, "CustomField7=".urlencode($this->customField7));
         }
         return $arr;
     }
