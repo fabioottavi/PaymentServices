@@ -94,6 +94,7 @@ class Gateway implements \Payment\GatewayInterface
         $initObj->UrlSuccess = $url.ComputopUtils::getValue($params,'callbackUrl','');
         $initObj->UrlFailure = $url.ComputopUtils::getValue($params,'errorUrl','');
         $initObj->UrlNotify = $url.ComputopUtils::getValue($params,'notifyUrl','');
+        $initObj->urlBack = $url.ComputopUtils::getValue($params,'errorUrl','');
 
         $initObj->payId = ComputopUtils::getValue($params,'payId','');     
         $initObj->addInfo1 = substr(ComputopUtils::getValue($params,'addInfo1',self::DEFAULT_INFO1),0,204);
