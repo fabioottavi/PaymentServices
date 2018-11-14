@@ -55,10 +55,13 @@ class ComputopCgInitMyBank extends ComputopCgInit {
         $arr = parent::getParams();
         
         $pAddrCountryCode = "AddrCountryCode=$this->addrCountryCode";
-        $pSellingPoint = "SellingPoint=$this->sellingPoint";
         $pAccOwner = "AccOwner=$this->accOwner";
+        array_push($arr,$pAddrCountryCode,$pAccOwner);
 
-        array_push($arr,$pAddrCountryCode,$pSellingPoint,$pAccOwner);
+        if($this->sellingPoint){
+            array_push($arr, "SellingPoint=$this->sellingPoint");
+        }
+
         return $arr;
     }
 }

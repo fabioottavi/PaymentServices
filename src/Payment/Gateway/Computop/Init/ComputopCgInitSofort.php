@@ -61,12 +61,19 @@ class ComputopCgInitSofort extends ComputopCgInit {
         $arr = parent::getParams();
         
         $pAddrCountryCode = "AddrCountryCode=$this->addrCountryCode";
-        $pSellingPoint = "SellingPoint=$this->sellingPoint";
         $pAccOwner = "AccOwner=$this->accOwner";
-        $pBic = "BIC=$this->bic";
-        $pIban = "IBAN=$this->iban";
+        array_push($arr,$pAddrCountryCode,$pAccOwner);
+        
+        if($this->sellingPoint){
+            array_push($arr, "SellingPoint=$this->sellingPoint");
+        }
+        if($this->bic){
+            array_push($arr, "BIC=$this->bic");
+        }
+        if($this->iban){
+            array_push($arr, "IBAN=$this->iban");
+        }
 
-        array_push($arr,$pAddrCountryCode,$pSellingPoint,$pAccOwner,$pBic,$pIban);
         return $arr;
     }
 }

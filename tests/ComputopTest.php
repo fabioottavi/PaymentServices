@@ -76,6 +76,10 @@ final class ComputopTest extends TestCase
         //get response from gateway
         $initResponse = $payg->init($params);
         var_dump($initResponse);
+        var_dump(substr($initResponse["redirectURL"], 0, 400));
+        var_dump(substr($initResponse["redirectURL"], 400));
+        var_dump(substr($initResponse["redirectURL"], 800));
+        var_dump(substr($initResponse["redirectURL"], 1200));
     }
 
     public function testVerify()
