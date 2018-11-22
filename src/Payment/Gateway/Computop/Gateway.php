@@ -15,9 +15,9 @@ class Gateway implements \Payment\GatewayInterface
 
     const URL_POSITIVI = 'https://ecpay.bnlpositivity.it/paymentpage';
     const URL_PARIBAS = 'https://ecpay.bnlpositivity.it/paymentpage';
-    //const URL_POSITIVI ='https://ecpay-test.bnlpositivity.it/paymentpage';
-    //const URL_PARIBAS ='https://ecpay-test.bnlpositivity.it/paymentpage';
-    
+    const URL_POSITIVI_TEST = 'https://ecpay-test.bnlpositivity.it/paymentpage';
+    const URL_PARIBAS_TEST = 'https://ecpay-test.bnlpositivity.it/paymentpage';
+
     // Default credentials 
     const DEFAULT_MERCHANT_ID = 'bnl_test';
     const DEFAULT_BLOWFISH_PASSWORD = 'Fw3[7(bAP8=or*D2';
@@ -97,7 +97,7 @@ class Gateway implements \Payment\GatewayInterface
         $initObj->urlBack = $url.ComputopUtils::getValue($params,'errorUrl','');
 
         $initObj->payId = ComputopUtils::getValue($params,'payId','');     
-        $initObj->addInfo1 = substr(ComputopUtils::getValue($params,'addInfo1',self::DEFAULT_INFO1),0,204);
+        $initObj->addInfo1 =  $initObj->amount;//substr(ComputopUtils::getValue($params,'addInfo1',self::DEFAULT_INFO1),0,204);
         $initObj->addInfo2 = substr(ComputopUtils::getValue($params,'addInfo2',self::DEFAULT_INFO2),0,204);
         $initObj->addInfo3 = substr(ComputopUtils::getValue($params,'addInfo3',self::DEFAULT_INFO3),0,204);
         $initObj->addInfo4 = substr(ComputopUtils::getValue($params,'addInfo4',self::DEFAULT_INFO4),0,204);
@@ -341,9 +341,9 @@ class Gateway implements \Payment\GatewayInterface
 
     private function loadBaseUrl($acq){
         if(self::ACQUIRER_POSITIVI == $acq){
-            $this->sUrl = self::URL_POSITIVI;
+            $this->sUrl = $this->test ? self::URL_POSITIVI_TEST : self::URL_POSITIVI;
         }else if(self::ACQUIRER_PARIBAS == $acq){
-            $this->sUrl = self::URL_PARIBAS;
+            $this->sUrl = $this->test ? self::URL_PARIBAS_TEST : self::URL_PARIBAS;
         }
         else{
             throw new CmptpMissingParException("Missing Acquirer");

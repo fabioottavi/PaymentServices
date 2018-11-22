@@ -2,14 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e268a359-0ed0-4638-9f63-82e515257279" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/PaymentServices.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/PaymentServices.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Payment/Gateway/Igfs/Gateway.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Payment/Gateway/Igfs/Gateway.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Payment/Gateway/Igfs/Init/IgfsCgVerify.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Payment/Gateway/Igfs/Init/IgfsCgVerify.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/IgfcTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/IgfcTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Payment/Gateway/Computop/Gateway.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Payment/Gateway/Computop/Gateway.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
-    <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,31 +15,70 @@
   <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
   </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="312744948">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.open.time.0" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="php" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="PHP" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="php" value="50" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="PHP" value="50" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Gateway.php" pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Payment/Gateway/Igfs/Gateway.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="89" column="36" lean-forward="true" selection-start-line="89" selection-start-column="36" selection-end-line="89" selection-end-column="36" />
+            <state relative-caret-position="827">
+              <caret line="89" column="36" selection-start-line="89" selection-start-column="36" selection-end-line="89" selection-end-column="36" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IgfcTest.php" pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Payment/Gateway/Computop/Gateway.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="15" selection-start-line="15" selection-end-line="18" selection-end-column="79" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/IgfcTest.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="38" column="37" selection-start-line="38" selection-start-column="37" selection-end-line="38" selection-end-column="37" />
+            <state relative-caret-position="203">
+              <caret line="16" column="10" selection-start-line="16" selection-start-column="10" selection-end-line="16" selection-end-column="10" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IgfsCgVerify.php" pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Payment/Gateway/Igfs/Init/IgfsCgVerify.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="327">
-              <caret line="174" column="32" lean-forward="true" selection-start-line="174" selection-start-column="32" selection-end-line="174" selection-end-column="32" />
+            <state relative-caret-position="2550">
+              <caret line="174" column="32" selection-start-line="174" selection-start-column="32" selection-end-line="174" selection-end-column="32" />
               <folding>
                 <element signature="e#44#80#0#PHP" expanded="true" />
               </folding>
@@ -56,7 +92,15 @@
     <findStrings>
       <find>SimpleXMLElement</find>
       <find>Base</find>
+      <find>test</find>
+      <find>URL_POSITIVI_TEST</find>
+      <find>URL_POSITIVI</find>
+      <find>URL_PARIBAS_TEST</find>
+      <find>$this-&gt;test</find>
     </findStrings>
+    <dirStrings>
+      <dir>$PROJECT_DIR$/src/Payment/Gateway</dir>
+    </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -67,6 +111,7 @@
         <option value="$PROJECT_DIR$/src/Payment/Gateway/Igfs/Gateway.php" />
         <option value="$PROJECT_DIR$/src/Payment/Gateway/Igfs/Init/IgfsCgVerify.php" />
         <option value="$PROJECT_DIR$/tests/IgfcTest.php" />
+        <option value="$PROJECT_DIR$/src/Payment/Gateway/Computop/Gateway.php" />
       </list>
     </option>
   </component>
@@ -75,9 +120,6 @@
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
-  </component>
-  <component name="NodePackageJsonFileManager">
-    <packageJsonPaths />
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP 7.1">
     <include_path>
@@ -109,24 +151,48 @@
       <path value="$PROJECT_DIR$/vendor/sebastian/recursion-context" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-1" />
-    <option name="y" value="-11" />
-    <option name="width" value="1362" />
-    <option name="height" value="780" />
+  <component name="ProjectFrameBounds">
+    <option name="y" value="23" />
+    <option name="width" value="2560" />
+    <option name="height" value="1337" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="PaymentServices" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PaymentServices" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="PaymentServices" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PaymentServices" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PaymentServices" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PaymentServices" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PaymentServices" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Payment" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PaymentServices" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PaymentServices" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Payment" type="462c0819:PsiDirectoryNode" />
+              <item name="Gateway" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PaymentServices" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PaymentServices" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Payment" type="462c0819:PsiDirectoryNode" />
+              <item name="Gateway" type="462c0819:PsiDirectoryNode" />
+              <item name="Computop" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="PaymentServices" type="b2602c69:ProjectViewProjectNode" />
@@ -136,6 +202,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -159,15 +226,19 @@
   <component name="RunManager" selected="PHPUnit.IgfcTest.testInit">
     <configuration name="EmailTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
       <TestRunner class="EmailTest" file="$PROJECT_DIR$/tests/EmailTest.php" scope="Class" />
+      <method v="2" />
     </configuration>
     <configuration name="EmailTest.testCanBeCreatedFromValidEmailAddress" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
       <TestRunner class="EmailTest" file="$PROJECT_DIR$/tests/EmailTest.php" method="testCanBeCreatedFromValidEmailAddress" scope="Method" />
+      <method v="2" />
     </configuration>
     <configuration name="EmailTest.testCannotBeCreatedFromInvalidEmailAddress" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
       <TestRunner class="EmailTest" file="$PROJECT_DIR$/tests/EmailTest.php" method="testCannotBeCreatedFromInvalidEmailAddress" scope="Method" />
+      <method v="2" />
     </configuration>
     <configuration name="IgfcTest.testInit" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
       <TestRunner class="IgfcTest" file="$PROJECT_DIR$/tests/IgfcTest.php" method="testInit" scope="Method" />
+      <method v="2" />
     </configuration>
     <list>
       <item itemvalue="PHPUnit.EmailTest" />
@@ -197,6 +268,7 @@
       <workItem from="1529573512804" duration="206000" />
       <workItem from="1529573744025" duration="9414000" />
       <workItem from="1530280626780" duration="385000" />
+      <workItem from="1542902225886" duration="259000" />
     </task>
     <servers />
   </component>
@@ -230,31 +302,31 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10005000" />
+    <option name="totallyTimeSpent" value="10264000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="-4" width="1360" height="772" extended-state="6" />
+    <frame x="0" y="23" width="2560" height="1337" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19411765" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19539317" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.30818278" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3990461" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.30818278" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3990461" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="9" />
+      <window_info anchor="bottom" id="Version Control" order="10" />
+      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -267,37 +339,14 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/tests/IgfcTest.php</url>
-          <line>7</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/src/Payment/Gateway/Igfs/BaseIgfsCg.php</url>
           <line>188</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/tests/IgfcTest.php</url>
-          <line>13</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/tests/IgfcTest.php</url>
-          <line>17</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="6" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Payment/Gateway/Igfs/Gateway.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="36" column="67" selection-start-line="36" selection-start-column="67" selection-end-line="36" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Payment/Gateway/Igfs/Init/BaseIgfsCgInit.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -312,21 +361,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/EmailTest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/EmailTest.php" />
     <entry file="file://$PROJECT_DIR$/vendor/composer/ClassLoader.php" />
-    <entry file="file://$PROJECT_DIR$/src/PaymentGateway.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/PaymentGateway.php" />
     <entry file="file://$PROJECT_DIR$/vendor/phpunit/phpunit/src/Framework/TestCase.php" />
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
@@ -355,25 +392,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Payment/Gateway/Igfs/Init/IgfsCgVerify.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="327">
-          <caret line="174" column="32" lean-forward="true" selection-start-line="174" selection-start-column="32" selection-end-line="174" selection-end-column="32" />
+        <state relative-caret-position="2550">
+          <caret line="174" column="32" selection-start-line="174" selection-start-column="32" selection-end-line="174" selection-end-column="32" />
           <folding>
             <element signature="e#44#80#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Payment/Gateway/Igfs/Gateway.php">
+    <entry file="file://$PROJECT_DIR$/tests/IgfcTest.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="89" column="36" lean-forward="true" selection-start-line="89" selection-start-column="36" selection-end-line="89" selection-end-column="36" />
+        <state relative-caret-position="203">
+          <caret line="16" column="10" selection-start-line="16" selection-start-column="10" selection-end-line="16" selection-end-column="10" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/IgfcTest.php">
+    <entry file="file://$PROJECT_DIR$/src/Payment/Gateway/Igfs/Gateway.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="38" column="37" selection-start-line="38" selection-start-column="37" selection-end-line="38" selection-end-column="37" />
+        <state relative-caret-position="827">
+          <caret line="89" column="36" selection-start-line="89" selection-start-column="36" selection-end-line="89" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Payment/Gateway/Computop/Gateway.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" selection-start-line="15" selection-end-line="18" selection-end-column="79" />
         </state>
       </provider>
     </entry>
