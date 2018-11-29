@@ -13,8 +13,17 @@ Payment services for BNL POSitivity
 
 ## Install
 
+Add the repository in your composer.json file. Run the command below in your terminal/console under root/ folder
 ```sh
-composer install
+composer config repositories.Bnlpositivity/PaymentServices vcs https://github.com/AXEPTAPLUGIN/PaymentServices
+```
+Run the following command: 
+```sh
+composer require Bnlpositivity/PaymentServices:dev-master
+```
+Composer will install necessary files,then run the following command to re-generate classmap and autoload files
+```sh
+ composer dump-autoload 
 ```
 
 ## Testing
